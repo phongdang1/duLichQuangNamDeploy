@@ -1,0 +1,381 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\duLichQuangNam.bundle.scp.css",
+      "PackagePath": "staticwebassets\\duLichQuangNam.u61uxhxz0a.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\images\\ava.png",
+      "PackagePath": "staticwebassets\\images\\ava.png"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\images\\culaocham.JPG",
+      "PackagePath": "staticwebassets\\images\\culaocham.JPG"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\images\\hoian.jpg",
+      "PackagePath": "staticwebassets\\images\\hoian.jpg"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\images\\thanh-dia-my-son.jpg",
+      "PackagePath": "staticwebassets\\images\\thanh-dia-my-son.jpg"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\destinations\\10\\ef60fecc-13ec-4f2c-ac09-865ff64920b5.png",
+      "PackagePath": "staticwebassets\\uploads\\destinations\\10\\ef60fecc-13ec-4f2c-ac09-865ff64920b5.png"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\destinations\\13\\9c0ad3f8-e31d-43e5-9b6a-145a05c58f7c.png",
+      "PackagePath": "staticwebassets\\uploads\\destinations\\13\\9c0ad3f8-e31d-43e5-9b6a-145a05c58f7c.png"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\destinations\\14\\a7791c6c-c4d4-4e96-bd0b-c0d6719641bd.png",
+      "PackagePath": "staticwebassets\\uploads\\destinations\\14\\a7791c6c-c4d4-4e96-bd0b-c0d6719641bd.png"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\destinations\\15\\3ece5502-5c06-4bb4-aa7c-071f60fa67f0.JPG",
+      "PackagePath": "staticwebassets\\uploads\\destinations\\15\\3ece5502-5c06-4bb4-aa7c-071f60fa67f0.JPG"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\destinations\\16\\bcfc0314-4dd6-441f-8eba-8b28e08ecb97.JPG",
+      "PackagePath": "staticwebassets\\uploads\\destinations\\16\\bcfc0314-4dd6-441f-8eba-8b28e08ecb97.JPG"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\destinations\\19\\5267748d-8a62-4182-bc87-87678666805f.png",
+      "PackagePath": "staticwebassets\\uploads\\destinations\\19\\5267748d-8a62-4182-bc87-87678666805f.png"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\destinations\\20\\d8e30356-787e-4cd3-9b62-c0d5dabb633b.jpg",
+      "PackagePath": "staticwebassets\\uploads\\destinations\\20\\d8e30356-787e-4cd3-9b62-c0d5dabb633b.jpg"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\destinations\\3\\06f72e67-80e2-4d1f-b3d5-92e5fe245f41.png",
+      "PackagePath": "staticwebassets\\uploads\\destinations\\3\\06f72e67-80e2-4d1f-b3d5-92e5fe245f41.png"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\destinations\\4\\e7e256fe-451c-4a65-9cbc-d567e1ae479d.png",
+      "PackagePath": "staticwebassets\\uploads\\destinations\\4\\e7e256fe-451c-4a65-9cbc-d567e1ae479d.png"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\destinations\\5\\f10e7e1e-e9cc-4918-bb52-392da5669c87.png",
+      "PackagePath": "staticwebassets\\uploads\\destinations\\5\\f10e7e1e-e9cc-4918-bb52-392da5669c87.png"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\destinations\\6\\f87186c2-73ab-483f-b57b-db9c111e9e9f.png",
+      "PackagePath": "staticwebassets\\uploads\\destinations\\6\\f87186c2-73ab-483f-b57b-db9c111e9e9f.png"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\destinations\\7\\ef1c955e-0b81-4f24-9075-3e97bf0c4ba0.png",
+      "PackagePath": "staticwebassets\\uploads\\destinations\\7\\ef1c955e-0b81-4f24-9075-3e97bf0c4ba0.png"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\destinations\\8\\c945a590-ada8-4f53-8406-f52b4f5a8896.png",
+      "PackagePath": "staticwebassets\\uploads\\destinations\\8\\c945a590-ada8-4f53-8406-f52b4f5a8896.png"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\destinations\\9\\6fd527c4-473d-454a-8bb6-596278b496bd.png",
+      "PackagePath": "staticwebassets\\uploads\\destinations\\9\\6fd527c4-473d-454a-8bb6-596278b496bd.png"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\foods\\3\\da72b88e-671b-4ed3-a2e5-10c6e9d03e07.png",
+      "PackagePath": "staticwebassets\\uploads\\foods\\3\\da72b88e-671b-4ed3-a2e5-10c6e9d03e07.png"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\foods\\4\\f3e222e5-8b72-43cd-a809-4fd0a1749fc2.JPG",
+      "PackagePath": "staticwebassets\\uploads\\foods\\4\\f3e222e5-8b72-43cd-a809-4fd0a1749fc2.JPG"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\foods\\5\\d0331ae0-eb9a-433c-a8e7-2906f4b99caf.png",
+      "PackagePath": "staticwebassets\\uploads\\foods\\5\\d0331ae0-eb9a-433c-a8e7-2906f4b99caf.png"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\foods\\6\\3b75b603-5ca5-4795-847d-05d7d76a2632.jpg",
+      "PackagePath": "staticwebassets\\uploads\\foods\\6\\3b75b603-5ca5-4795-847d-05d7d76a2632.jpg"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\foods\\7\\30d8f20c-ec4b-4f14-8865-007f6e2a9783.JPG",
+      "PackagePath": "staticwebassets\\uploads\\foods\\7\\30d8f20c-ec4b-4f14-8865-007f6e2a9783.JPG"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\foods\\8\\3ae72a9f-4bc1-41e4-ab75-be56345d9bed.JPG",
+      "PackagePath": "staticwebassets\\uploads\\foods\\8\\3ae72a9f-4bc1-41e4-ab75-be56345d9bed.JPG"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\services\\8\\33645a8c-60e5-4219-a1b8-45a92d52aa0d.jpg",
+      "PackagePath": "staticwebassets\\uploads\\services\\8\\33645a8c-60e5-4219-a1b8-45a92d52aa0d.jpg"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\services\\9\\57f64a12-8172-4c4b-8484-70d4285241c5.JPG",
+      "PackagePath": "staticwebassets\\uploads\\services\\9\\57f64a12-8172-4c4b-8484-70d4285241c5.JPG"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\stays\\3\\bd223310-d4c3-4c4a-8572-6f66199b801c.jpg",
+      "PackagePath": "staticwebassets\\uploads\\stays\\3\\bd223310-d4c3-4c4a-8572-6f66199b801c.jpg"
+    },
+    {
+      "Id": "C:\\Users\\phong\\source\\repos\\duLichQuangNam\\duLichQuangNam\\wwwroot\\uploads\\thanh-dia-my-son.jpg",
+      "PackagePath": "staticwebassets\\uploads\\thanh-dia-my-son.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.duLichQuangNam.props",
+      "PackagePath": "build\\duLichQuangNam.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.duLichQuangNam.props",
+      "PackagePath": "buildMultiTargeting\\duLichQuangNam.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.duLichQuangNam.props",
+      "PackagePath": "buildTransitive\\duLichQuangNam.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.duLichQuangNam.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.duLichQuangNam.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

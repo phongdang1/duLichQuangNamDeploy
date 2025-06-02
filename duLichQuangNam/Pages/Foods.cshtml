@@ -1,0 +1,71 @@
+﻿@page
+@model duLichQuangNam.Pages.FoodsModel
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Ẩm thực Quảng Nam";
+    var culture = new CultureInfo("vi-VN");
+}
+
+@if (Model.id.HasValue && Model.SelectedFood != null)
+{
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">@Model.SelectedFood.Name</h2>
+
+        <div class="card mx-auto" style="max-width: 600px;">
+            <img src="@Model.SelectedFood.Images.FirstOrDefault()?.ImgUrl" class="card-img-top" style="height: 300px; object-fit: cover;" />
+            <div class="card-body">
+                <p class="card-text"><strong>Mô tả:</strong> @Model.SelectedFood.Description</p>
+                <p class="card-text text-success">
+                    <strong>
+                        @(Model.SelectedFood.Price % 1 == 0
+                            ? Model.SelectedFood.Price.ToString("C0", culture) 
+                            : Model.SelectedFood.Price.ToString("C", culture)) 
+                    </strong>
+                </p>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h1 class="text-center mb-5">@ViewData["Title"]</h1>
+    <form method="get" class="mb-4 d-flex justify-content-center">
+        <input type="text"
+               name="SearchName"
+               value="@Model.SearchName"
+               class="form-control w-50"
+               placeholder="Tìm kiếm món ăn theo tên..." />
+        <button type="submit" class="btn btn-primary ms-2">Tìm</button>
+    </form>
+    @if (Model.FoodList != null && Model.FoodList.Any())
+    {
+        <div class="row">
+            @foreach (var food in Model.FoodList)
+            {
+                <div class="col-md-4 mb-4">
+                    <a href="/Foods?id=@food.Id" class="text-decoration-none">
+                        <div class="card shadow-sm border-light rounded-lg overflow-hidden">
+                            <img src="@food.Images.FirstOrDefault()?.ImgUrl" class="card-img-top" alt="@food.Name" style="object-fit: cover; height: 200px;" />
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">@food.Name</h5>
+                                <p class="card-text">@food.Description</p>
+                                <p class="card-text text-success">
+                                    <strong>
+                                        @(food.Price % 1 == 0
+                                            ? food.Price.ToString("C0", culture)
+                                            : food.Price.ToString("C", culture))
+                                    </strong>
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="text-center">Không có món ăn nào.</p>
+    }
+}

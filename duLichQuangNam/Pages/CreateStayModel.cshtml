@@ -1,0 +1,132 @@
+﻿@page
+@model duLichQuangNam.Pages.CreateStayModel
+@{
+    ViewData["Title"] = "Thêm chỗ lưu trú";
+}
+
+<h2 class="mb-4">Thêm chỗ lưu trú mới</h2>
+
+<form asp-page-handler="Create"
+      method="post"
+      enctype="multipart/form-data"
+      class="row g-3 needs-validation"
+      novalidate>
+
+
+    <div class="col-md-6">
+        <label asp-for="Input.Name" class="form-label">Tên chỗ ở</label>
+        <input asp-for="Input.Name" class="form-control" required />
+        <span asp-validation-for="Input.Name" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="Input.Type" class="form-label">Loại hình</label>
+        <input asp-for="Input.Type" class="form-control" placeholder="Khách sạn, Homestay…" />
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="Input.Price" class="form-label">Giá /đêm (VNĐ)</label>
+        <input asp-for="Input.Price" type="number" min="0" step="1000" class="form-control" />
+    </div>
+
+
+    <div class="col-md-6">
+        <label asp-for="Input.Address" class="form-label">Địa chỉ</label>
+        <input asp-for="Input.Address" class="form-control" />
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Input.ServiceStay" class="form-label">Loại Dịch vụ</label>
+        <input asp-for="Input.ServiceStay" class="form-control" />
+    </div>
+
+
+    <div class="col-md-4">
+        <label asp-for="Input.Phone" class="form-label">Điện thoại</label>
+        <input asp-for="Input.Phone" class="form-control" />
+    </div>
+
+    <div class="col-md-4">
+        <label asp-for="Input.Mail" class="form-label">Email</label>
+        <input asp-for="Input.Mail" type="email" class="form-control" />
+    </div>
+
+    <div class="col-md-4">
+        <label asp-for="Input.Website" class="form-label">Website</label>
+        <input asp-for="Input.Website" class="form-control" />
+    </div>
+
+
+    <div class="col-12">
+        <label asp-for="Input.Description" class="form-label">Mô tả</label>
+        <textarea asp-for="Input.Description" rows="3" class="form-control"></textarea>
+    </div>
+
+
+    <div class="col-12">
+        <label class="form-label">Hình ảnh (có thể chọn nhiều)</label>
+        <input asp-for="Input.Images" id="imgInput" type="file"
+               class="form-control" multiple accept="image/*" />
+        <div class="form-text">Tick ô “Primary” cho ảnh đại diện.</div>
+    </div>
+
+    <div id="preview" class="d-flex flex-wrap gap-3 mt-3"></div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Lưu</button>
+        <a asp-page="/Index" class="btn btn-secondary ms-2">Hủy</a>
+    </div>
+</form>
+
+
+<div aria-live="polite" aria-atomic="true"
+     class="position-fixed top-0 end-0 p-3" style="z-index:1080">
+    <div id="successToast"
+         class="toast align-items-center text-bg-success border-0"
+         role="alert" style="display:none;">
+        <div class="d-flex">
+            <div id="toastMsg" class="toast-body"></div>
+            <button type="button"
+                    class="btn-close btn-close-white me-2 m-auto"
+                    data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"/>
+
+    <script>
+
+        document.getElementById('imgInput').addEventListener('change', e=>{
+            const pre=document.getElementById('preview');
+            pre.innerHTML='';
+            Array.from(e.target.files).forEach((f,i)=>{
+                const url=URL.createObjectURL(f);
+                pre.insertAdjacentHTML('beforeend',`
+                    <div class="position-relative">
+                        <img src="${url}" class="rounded shadow-sm" style="height:120px;width:auto;">
+                        <div class="form-check position-absolute top-0 start-0 translate-middle">
+                            <input class="form-check-input" type="radio"
+                                   name="PrimaryIndex" value="${i}" ${i===0?'checked':''}>
+                            <label class="form-check-label bg-white small px-1">Primary</label>
+                        </div>
+                    </div>`);
+            });
+        });
+
+
+        (()=>{
+            const s='@TempData["Success"]',e='@TempData["Error"]',
+                  el=document.getElementById('successToast'),
+                  txt=document.getElementById('toastMsg');
+            if(!s&&!e) return;
+            const t=new bootstrap.Toast(el,{delay:2000});
+            txt.textContent=s||e;
+            el.classList.toggle('text-bg-danger',!!e);
+            el.classList.toggle('text-bg-success',!!s);
+            el.style.display='flex'; t.show();
+            if(s) el.addEventListener('hidden.bs.toast',()=>location.href='/Index');
+        })();
+    </script>
+}

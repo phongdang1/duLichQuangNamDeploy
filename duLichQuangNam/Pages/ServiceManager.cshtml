@@ -1,0 +1,89 @@
+﻿@page
+@model duLichQuangNam.Pages.ServiceManagerModel
+@{
+    ViewData["Title"] = "Quản lý dịch vụ";
+}
+
+<h2>Quản lý dịch vụ</h2>
+
+<div class="d-flex justify-content-end mb-3">
+    <a href="https://localhost:7270/CreateServiceModel" class="btn btn-primary">Thêm mới</a>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.SuccessMessage))
+{
+    <div id="successMessage" class="alert alert-success">@Model.SuccessMessage</div>
+    <script>
+        setTimeout(function () {
+            var alert = document.getElementById("successMessage");
+            if (alert) {
+                alert.style.transition = "opacity 0.5s ease-out";
+                alert.style.opacity = "0";
+                setTimeout(function () {
+                    alert.style.display = "none";
+                }, 500);
+            }
+        }, 1000);
+    </script>
+}
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div id="errorMessage" class="alert alert-danger">@Model.ErrorMessage</div>
+    <script>
+        setTimeout(function () {
+            var alert = document.getElementById("errorMessage");
+            if (alert) {
+                alert.style.transition = "opacity 0.5s ease-out";
+                alert.style.opacity = "0";
+                setTimeout(function () {
+                    alert.style.display = "none";
+                }, 500);
+            }
+        }, 1000);
+    </script>
+}
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Vị trí</th>
+            <th>Loại</th>
+            <th>Giờ mở cửa</th>
+            <th>Giờ đóng cửa</th>
+            <th>Email</th>
+            <th>Website</th>
+            <th>Điện thoại</th>
+            <th>Dịch vụ chính</th>
+            <th>Mô tả</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model.Services)
+        {
+            <tr>
+                <td>@s.Id</td>
+                <td>@s.Name</td>
+                <td>@s.Location</td>
+                <td>@s.Type</td>
+                <td>@s.OpenTime.ToString("HH:mm")</td>
+                <td>@s.CloseTime.ToString("HH:mm")</td>
+                <td>@s.Email</td>
+                <td>
+                    <a href="@s.Website" target="_blank">@s.Website</a>
+                </td>
+                <td>@s.Phone</td>
+                <td>@s.MainService</td>
+                <td>@s.Description</td>
+                <td>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@s.Id" onsubmit="return confirm('Bạn có chắc muốn xóa dịch vụ này?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,189 @@
+﻿    @page "{userId:int?}"
+    @model MyScheduleModel
+    @{
+        ViewData["Title"] = "Lịch trình của tôi";
+    }
+
+    <h2 style="margin-bottom: 30px;">🗓️ Lịch trình của tôi</h2>
+
+    @if (!Model.Schedules.Any())
+    {
+        <div class="no-schedule">Không có lịch trình nào.</div>
+    }
+    else
+    {
+        <div class="schedule-container">
+            @foreach (var schedule in Model.Schedules)
+            {
+                <div class="schedule-card">
+                    <div class="schedule-header">
+                        <h3>@schedule.Name</h3>
+                        <p class="schedule-date">📅 @schedule.StartDate.ToShortDateString() - @schedule.EndDate.ToShortDateString()</p>
+                    </div>
+                    <p class="schedule-description">@schedule.Description</p>
+
+                    @if (schedule.ScheduleItems.Any())
+                    {
+                        <div class="schedule-items">
+                            @foreach (var item in schedule.ScheduleItems)
+                            {
+                                <div class="item-card">
+                                    <div class="item-header">
+                                        <span class="day-order">Thứ tự @item.DayOrder</span>
+                                        <span class="item-type">@item.EntityType</span>
+                                    </div>
+
+                                    @if (item.EntityType == "destination" && item.Destination != null)
+                                    {
+                                        <div class="item-content">
+                                            @if (item.Destination.Images != null && item.Destination.Images.Any())
+                                            {
+                                                <div class="item-images">
+                                                    <img src="@item.Destination.Images.First().ImgUrl" alt="Ảnh điểm đến" />
+                                                </div>
+                                            }
+                                            <div class="item-info">
+                                                <h4>@item.Destination.Name</h4>
+                                                <p><strong>Vị trí:</strong> @item.Destination.Location</p>
+                                                <p><strong>Giờ mở cửa:</strong> @item.Destination.OpenTime.ToShortTimeString() - @item.Destination.CloseTime.ToShortTimeString()</p>
+                                                <p>@item.Destination.Description</p>
+                                            </div>
+                                        </div>
+                                    }
+                                    else if ((item.EntityType == "muasam" || item.EntityType == "vanchuyen" || item.EntityType == "service") && item.Service != null)
+                                    {
+                                        <div class="item-content">
+                                            @if (item.Service.Images != null && item.Service.Images.Any())
+                                            {
+                                                <div class="item-images">
+                                                    <img src="@item.Service.Images.First().ImgUrl" alt="Ảnh dịch vụ" />
+                                                </div>
+                                            }
+                                            <div class="item-info">
+                                                <h4>@item.Service.Name</h4>
+                                                <p><strong>Vị trí:</strong> @item.Service.Location</p>
+                                                <p><strong>Giờ hoạt động:</strong> @item.Service.OpenTime.ToShortTimeString() - @item.Service.CloseTime.ToShortTimeString()</p>
+                                                <p><strong>Điện thoại:</strong> @item.Service.Phone</p>
+                                                <p><strong>Dịch vụ chính:</strong> @item.Service.MainService</p>
+                                                <p>@item.Service.Description</p>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="no-items">Không có mục nào trong lịch trình này.</p>
+                    }
+                </div>
+            }
+        </div>
+    }
+
+    <style>
+        h2 {
+            font-size: 28px;
+            color: #2c3e50;
+        }
+
+        .no-schedule {
+            font-style: italic;
+            color: gray;
+        }
+
+        .schedule-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .schedule-card {
+            background: #f9f9f9;
+            padding: 20px;
+            border-left: 6px solid #3498db;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .schedule-header h3 {
+            margin: 0;
+            font-size: 22px;
+            color: #2980b9;
+        }
+
+        .schedule-date {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .schedule-description {
+            margin-top: 10px;
+            color: #555;
+        }
+
+        .schedule-items {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .item-card {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            transition: box-shadow 0.3s ease;
+        }
+
+            .item-card:hover {
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .day-order {
+            color: #34495e;
+        }
+
+        .item-type {
+            color: #16a085;
+            text-transform: uppercase;
+            font-size: 12px;
+            background: #e0f7f4;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .item-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .item-images img {
+            width: 200px;
+            height: 200px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            object-fit: cover; 
+        }
+
+
+        .item-info {
+            flex: 1;
+        }
+
+        .no-items {
+            color: #888;
+            font-style: italic;
+            margin-top: 10px;
+        }
+    </style>

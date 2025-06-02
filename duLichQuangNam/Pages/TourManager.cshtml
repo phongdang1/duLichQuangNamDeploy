@@ -1,0 +1,77 @@
+﻿@page
+@model duLichQuangNam.Pages.TourManagerModel
+@{
+    ViewData["Title"] = "Quản lý Tour";
+}
+
+<h2>Quản lý Tour</h2>
+
+<div class="d-flex justify-content-end mb-3">
+    <a href="/CreateTourModel" class="btn btn-primary">Thêm mới</a>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.SuccessMessage))
+{
+    <div id="successMessage" class="alert alert-success">@Model.SuccessMessage</div>
+    <script>
+        setTimeout(function () {
+            var alert = document.getElementById("successMessage");
+            if (alert) {
+                alert.style.transition = "opacity 0.5s ease-out";
+                alert.style.opacity = "0";
+                setTimeout(function () {
+                    alert.style.display = "none";
+                }, 500);
+            }
+        }, 1000);
+    </script>
+}
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div id="errorMessage" class="alert alert-danger">@Model.ErrorMessage</div>
+    <script>
+        setTimeout(function () {
+            var alert = document.getElementById("errorMessage");
+            if (alert) {
+                alert.style.transition = "opacity 0.5s ease-out";
+                alert.style.opacity = "0";
+                setTimeout(function () {
+                    alert.style.display = "none";
+                }, 500);
+            }
+        }, 1000);
+    </script>
+}
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Loại</th>
+            <th>Tên</th>
+            <th>Mô tả</th>
+            <th>Chi tiết</th>
+            <th>Ghi chú</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tour in Model.Tours)
+        {
+            <tr>
+                <td>@tour.Id</td>
+                <td>@tour.Type</td>
+                <td>@tour.Name</td>
+                <td>@tour.Description</td>
+                <td>@tour.Detail</td>
+                <td>@tour.Note</td>
+                <td>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@tour.Id" onsubmit="return confirm('Bạn có chắc muốn xóa tour này?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

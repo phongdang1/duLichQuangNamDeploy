@@ -1,0 +1,75 @@
+﻿@page
+@model duLichQuangNam.Pages.FoodsManagerModel
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Quản lý món ăn";
+}
+
+<h2>Quản lý món ăn</h2>
+
+<div class="d-flex justify-content-end mb-3">
+    <a href="https://localhost:7270/CreateFoodModel" class="btn btn-primary">Thêm mới</a>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.SuccessMessage))
+{
+    <div id="successMessage" class="alert alert-success">@Model.SuccessMessage</div>
+    <script>
+        setTimeout(function () {
+            var alert = document.getElementById("successMessage");
+            if (alert) {
+                alert.style.transition = "opacity 0.5s ease-out";
+                alert.style.opacity = "0";
+                setTimeout(function () {
+                    alert.style.display = "none";
+                }, 500);
+            }
+        }, 1000);
+    </script>
+}
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div id="errorMessage" class="alert alert-danger">@Model.ErrorMessage</div>
+    <script>
+        setTimeout(function () {
+            var alert = document.getElementById("errorMessage");
+            if (alert) {
+                alert.style.transition = "opacity 0.5s ease-out";
+                alert.style.opacity = "0";
+                setTimeout(function () {
+                    alert.style.display = "none";
+                }, 500);
+            }
+        }, 1000);
+    </script>
+}
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Mô tả</th>
+            <th>Giá</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var f in Model.Foods)
+        {
+            <tr>
+                <td>@f.Id</td>
+                <td>@f.Name</td>
+                <td>@f.Description</td>
+                <td>@f.Price.ToString("#,0", new CultureInfo("vi-VN")) ₫</td>
+                <td>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@f.Id" onsubmit="return confirm('Bạn có chắc muốn xóa món ăn này?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

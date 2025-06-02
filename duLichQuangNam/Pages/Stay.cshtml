@@ -1,0 +1,79 @@
+﻿@page
+@model duLichQuangNam.Pages.StayModel
+@using System.Globalization
+@{
+    ViewData["Title"] = "Chỗ ở Quảng Nam";
+
+    var culture = new CultureInfo("vi-VN");
+    var numberFormat = (NumberFormatInfo)culture.NumberFormat.Clone();
+    numberFormat.CurrencyDecimalDigits = 0;
+
+    string FormatPrice(decimal price)
+    {
+        if (price % 1 == 0)
+        {
+            return price.ToString("C", numberFormat);
+        }
+        else
+        {
+            numberFormat.CurrencyDecimalDigits = 2;
+            return price.ToString("C", numberFormat);
+        }
+    }
+}
+
+@if (Model.id.HasValue && Model.SelectedStay != null)
+{
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">@Model.SelectedStay.Name</h2>
+
+        <div class="card mx-auto" style="max-width: 600px;">
+            <img src="@Model.SelectedStay.Images.FirstOrDefault()?.ImgUrl" class="card-img-top" style="height: 300px; object-fit: cover;" />
+            <div class="card-body">
+                <p class="card-text"><strong>Loại:</strong> @Model.SelectedStay.Type</p>
+                <p class="card-text"><strong>Địa chỉ:</strong> @Model.SelectedStay.Address</p>
+                <p class="card-text"><strong>Email:</strong> @Model.SelectedStay.Mail</p>
+                <p class="card-text"><strong>Website:</strong> @Model.SelectedStay.Website</p>
+                <p class="card-text"><strong>Số điện thoại:</strong> @Model.SelectedStay.Phone</p>
+                <p class="card-text"><strong>Mô tả:</strong> @Model.SelectedStay.Description</p>
+                <p class="card-text text-success"><strong>Giá:</strong> @FormatPrice(Model.SelectedStay.Price)</p>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h1 class="text-center mb-5">@ViewData["Title"]</h1>
+    <form method="get" class="mb-4 d-flex justify-content-center">
+        <input type="text"
+               name="SearchName"
+               value="@Model.SearchName"
+               class="form-control w-50"
+               placeholder="Tìm kiếm nơi lưu trú theo tên..." />
+        <button type="submit" class="btn btn-primary ms-2">Tìm</button>
+    </form>
+    @if (Model.StayList != null && Model.StayList.Any())
+    {
+        <div class="row">
+            @foreach (var stay in Model.StayList)
+            {
+                <div class="col-md-4 mb-4">
+                    <a href="@($"/Stay?id={stay.Id}")" class="text-decoration-none">
+                        <div class="card shadow-sm border-light rounded-lg overflow-hidden">
+                            <img src="@stay.Images.FirstOrDefault()?.ImgUrl" class="card-img-top" alt="@stay.Name" style="object-fit: cover; height: 200px;" />
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">@stay.Name</h5>
+                                <p class="card-text">@stay.Address</p>
+                                <p class="card-text text-success"><strong>@FormatPrice(stay.Price)</strong></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="text-center">Không có chỗ ở nào.</p>
+    }
+}

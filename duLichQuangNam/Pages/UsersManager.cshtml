@@ -1,0 +1,79 @@
+﻿@page
+@model duLichQuangNam.Pages.UsersManagerModel
+@{
+    ViewData["Title"] = "Quản lý người dùng";
+}
+
+<h2>Quản lý người dùng</h2>
+
+@if (!string.IsNullOrEmpty(Model.SuccessMessage))
+{
+    <div id="successMessage" class="alert alert-success">@Model.SuccessMessage</div>
+    <script>
+        setTimeout(function () {
+            var alert = document.getElementById("successMessage");
+            if (alert) {
+                alert.style.transition = "opacity 0.5s ease-out";
+                alert.style.opacity = "0";
+                setTimeout(function () {
+                    alert.style.display = "none";
+                }, 500);
+            }
+        }, 1500);
+    </script>
+}
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div id="errorMessage" class="alert alert-danger">@Model.ErrorMessage</div>
+    <script>
+        setTimeout(function () {
+            var alert = document.getElementById("errorMessage");
+            if (alert) {
+                alert.style.transition = "opacity 0.5s ease-out";
+                alert.style.opacity = "0";
+                setTimeout(function () {
+                    alert.style.display = "none";
+                }, 500);
+            }
+        }, 1500);
+    </script>
+}
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Tên đăng nhập</th>
+            <th>Vai trò</th>
+            <th>Tuổi</th>
+            <th>Giới tính</th>
+            <th>Điện thoại</th>
+            <th>Email</th>
+            <th>Địa chỉ</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.Name</td>
+                <td>@user.UserName</td>
+                <td>@user.Role</td>
+                <td>@user.Age</td>
+                <td>@user.Gender</td>
+                <td>@user.Phone</td>
+                <td>@user.Mail</td>
+                <td>@user.Address</td>
+                <td>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@user.Id" onsubmit="return confirm('Bạn có chắc muốn xóa người dùng này?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

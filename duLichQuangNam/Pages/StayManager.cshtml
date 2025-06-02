@@ -1,0 +1,88 @@
+﻿@page
+@model duLichQuangNam.Pages.StayManagerModel
+@using System.Globalization
+@{
+    ViewData["Title"] = "Quản lý chỗ ở";
+}
+
+<h2>Quản lý chỗ ở</h2>
+
+<div class="d-flex justify-content-end mb-3">
+    <a href="https://localhost:7270/CreateStayModel" class="btn btn-primary">Thêm mới</a>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.SuccessMessage))
+{
+    <div id="successMessage" class="alert alert-success">@Model.SuccessMessage</div>
+    <script>
+        setTimeout(function () {
+            var alert = document.getElementById("successMessage");
+            if (alert) {
+                alert.style.transition = "opacity 0.5s ease-out";
+                alert.style.opacity = "0";
+                setTimeout(function () {
+                    alert.style.display = "none";
+                }, 500);
+            }
+        }, 1000);
+    </script>
+}
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div id="errorMessage" class="alert alert-danger">@Model.ErrorMessage</div>
+    <script>
+        setTimeout(function () {
+            var alert = document.getElementById("errorMessage");
+            if (alert) {
+                alert.style.transition = "opacity 0.5s ease-out";
+                alert.style.opacity = "0";
+                setTimeout(function () {
+                    alert.style.display = "none";
+                }, 500);
+            }
+        }, 1000);
+    </script>
+}
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Giá</th>
+            <th>Loại</th>
+            <th>Dịch vụ</th>
+            <th>Địa chỉ</th>
+            <th>Mô tả</th>
+            <th>Email</th>
+            <th>Website</th>
+            <th>Điện thoại</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var stay in Model.Stays)
+        {
+            <tr>
+                <td>@stay.Id</td>
+                <td>@stay.Name</td>
+                <td>@stay.Price.ToString("#,0", new CultureInfo("vi-VN")) ₫</td>
+                <td>@stay.Type</td>
+                <td>@stay.ServiceStay</td>
+                <td>@stay.Address</td>
+                <td>@stay.Description</td>
+                <td>@stay.Mail</td>
+                <td>
+                    <a href="@stay.Website" target="_blank">@stay.Website</a>
+                </td>
+                <td>@stay.Phone</td>
+                <td>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@stay.Id" onsubmit="return confirm('Bạn có chắc muốn xóa chỗ ở này?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

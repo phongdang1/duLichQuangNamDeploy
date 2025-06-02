@@ -1,0 +1,79 @@
+﻿@page
+@model duLichQuangNam.Pages.DestinationModel
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Địa điểm du lịch Quảng Nam";
+    var culture = new CultureInfo("vi-VN");
+}
+
+
+
+@if (Model.id.HasValue && Model.SelectedDestination != null)
+{
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">@Model.SelectedDestination.Name</h2>
+
+        <div class="card mx-auto" style="max-width: 800px;">
+            <img src="@Model.SelectedDestination.Images.FirstOrDefault()?.ImgUrl" class="card-img-top" style="height: 400px; object-fit: cover;" />
+            <div class="card-body">
+                <p class="card-text"><strong>Loại hình:</strong> @Model.SelectedDestination.Type</p>
+                <p class="card-text"><strong>Vị trí:</strong> @Model.SelectedDestination.Location</p>
+                <p class="card-text"><strong>Giờ mở cửa:</strong> @Model.SelectedDestination.OpenTime.ToString("HH:mm")</p>
+                <p class="card-text"><strong>Giờ đóng cửa:</strong> @Model.SelectedDestination.CloseTime.ToString("HH:mm")</p>
+                <p class="card-text text-success">
+                    <strong>
+                        @(Model.SelectedDestination.Price % 1 == 0
+                            ? Model.SelectedDestination.Price.ToString("C0", culture)
+                            : Model.SelectedDestination.Price.ToString("C", culture))
+                    </strong>
+                </p>
+                <p class="card-text"><strong>Email liên hệ:</strong> @Model.SelectedDestination.Mail</p>
+                <p class="card-text"><strong>Mô tả:</strong> @Model.SelectedDestination.Description</p>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h1 class="text-center mb-5">@ViewData["Title"]</h1>
+    <form method="get" class="mb-4 d-flex justify-content-center">
+        <input type="text"
+               name="SearchName"
+               value="@Model.SearchName"
+               class="form-control w-50"
+               placeholder="Tìm kiếm dịch vụ theo tên..." />
+        <button type="submit" class="btn btn-primary ms-2">Tìm</button>
+    </form>
+    @if (Model.DestinationList != null && Model.DestinationList.Any())
+    {
+        <div class="row">
+            @foreach (var destination in Model.DestinationList)
+            {
+                <div class="col-md-4 mb-4">
+                    <a href="/Destination?id=@destination.Id" class="text-decoration-none">
+                        <div class="card shadow-sm border-light rounded-lg overflow-hidden">
+                            <img src="@destination.Images.FirstOrDefault()?.ImgUrl" class="card-img-top" alt="@destination.Name" style="object-fit: cover; height: 200px;" />
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">@destination.Name</h5>
+                                <p class="card-text">@destination.Description</p>
+                                <p class="card-text text-muted"><small>@destination.Type</small></p>
+                                <p class="card-text text-success">
+                                    <strong>
+                                        @(destination.Price % 1 == 0
+                                            ? destination.Price.ToString("C0", culture)
+                                            : destination.Price.ToString("C", culture))
+                                    </strong>
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="text-center">Không có địa điểm nào.</p>
+    }
+}

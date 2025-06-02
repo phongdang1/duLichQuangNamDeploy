@@ -1,0 +1,79 @@
+﻿@page
+@model duLichQuangNam.Pages.ServiceModel
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Danh sách dịch vụ";
+    var culture = new CultureInfo("vi-VN");
+}
+
+@if (Model.id.HasValue && Model.ServiceDetail != null)
+{
+    <!-- Chi tiết dịch vụ -->
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">@Model.ServiceDetail.Name</h1>
+
+        <div class="card mx-auto" style="max-width: 700px;">
+            <img src="@(Model.ServiceDetail.Images != null && Model.ServiceDetail.Images.Any() ? Model.ServiceDetail.Images.First().ImgUrl : "")"
+                 class="card-img-top"
+                 alt="@Model.ServiceDetail.Name"
+                 style="object-fit: cover; height: 200px;" />
+
+            <div class="card-body">
+                <p><strong>Địa điểm:</strong> @Model.ServiceDetail.Location</p>
+                <p><strong>Loại dịch vụ:</strong> @Model.ServiceDetail.Type</p>
+                <p><strong>Thời gian mở cửa:</strong> @Model.ServiceDetail.OpenTime.ToString("HH:mm")</p>
+                <p><strong>Thời gian đóng cửa:</strong> @Model.ServiceDetail.CloseTime.ToString("HH:mm")</p>
+                <p><strong>Email:</strong> @Model.ServiceDetail.Email</p>
+                <p>
+                    <strong>Website:</strong>
+                    <a href="@Model.ServiceDetail.Website" target="_blank">@Model.ServiceDetail.Website</a>
+                </p>
+                <p><strong>Điện thoại:</strong> @Model.ServiceDetail.Phone</p>
+                <p><strong>Dịch vụ chính:</strong> @Model.ServiceDetail.MainService</p>
+                <p><strong>Mô tả:</strong> @Model.ServiceDetail.Description</p>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h1 class="text-center mb-4">@ViewData["Title"]</h1>
+
+    <!-- Thanh Search -->
+    <form method="get" class="mb-4 d-flex justify-content-center">
+        <input type="text"
+               name="SearchName"
+               value="@Model.SearchName"
+               class="form-control w-50"
+               placeholder="Tìm kiếm dịch vụ theo tên..." />
+        <button type="submit" class="btn btn-primary ms-2">Tìm</button>
+    </form>
+
+    <div class="row">
+        @if (Model.ServiceList.Any())
+        {
+            @foreach (var service in Model.ServiceList)
+            {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <a href="/Service?id=@service.Id" class="text-decoration-none text-dark">
+                        <div class="card shadow-sm border-light rounded-lg h-100 d-flex flex-column">
+                            <img src="@(service.Images != null && service.Images.Any() ? service.Images.First().ImgUrl : "")"
+                                 class="card-img-top"
+                                 alt="@service.Name"
+                                 style="object-fit: cover; height: 200px;" />
+                            <div class="card-body">
+                                <h5 class="card-title">@service.Name</h5>
+                                <p class="mb-0"><strong>Địa điểm:</strong> @service.Location</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-center">Không có dịch vụ nào.</p>
+        }
+    </div>
+}

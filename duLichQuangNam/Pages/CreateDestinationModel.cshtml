@@ -1,0 +1,139 @@
+﻿@page
+@model CreateDestinationModel
+@{
+    ViewData["Title"] = "Thêm điểm đến";
+}
+
+<h2 class="mb-4">Thêm điểm đến mới</h2>
+
+<form asp-page-handler="Create"
+      method="post"
+      enctype="multipart/form-data"
+      class="row g-3 needs-validation"
+      novalidate>
+
+    <div class="col-md-6">
+        <label asp-for="Input.Name" class="form-label">Tên địa điểm</label>
+        <input asp-for="Input.Name" class="form-control" required />
+        <span asp-validation-for="Input.Name" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Input.Type" class="form-label">Loại hình</label>
+        <input asp-for="Input.Type" class="form-control" placeholder="Biển, Núi, Di tích..." />
+    </div>
+
+    <div class="col-12">
+        <label asp-for="Input.Description" class="form-label">Mô tả</label>
+        <textarea asp-for="Input.Description" rows="3" class="form-control"></textarea>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Input.Location" class="form-label">Địa chỉ / Tọa độ</label>
+        <input asp-for="Input.Location" class="form-control" />
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="Input.OpenTime" class="form-label">Mở cửa</label>
+        <input asp-for="Input.OpenTime" type="time" class="form-control" required />
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="Input.CloseTime" class="form-label">Đóng cửa</label>
+        <input asp-for="Input.CloseTime" type="time" class="form-control" required />
+    </div>
+
+
+    <div class="col-md-3">
+        <label asp-for="Input.Price" class="form-label">Giá vé (VNĐ)</label>
+        <input asp-for="Input.Price" type="number" class="form-control" min="0" step="1000" />
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="Input.Mail" class="form-label">Email liên hệ</label>
+        <input asp-for="Input.Mail" type="email" class="form-control" />
+    </div>
+
+
+    <div class="col-12">
+        <label class="form-label">Hình ảnh (có thể chọn nhiều)</label>
+        <input asp-for="Input.Images" type="file" class="form-control" multiple accept="image/*" id="imgInput" />
+        <div class="form-text">Chọn ít nhất 1 ảnh. Tick ô “Primary” cho ảnh đại diện.</div>
+    </div>
+
+
+    <div id="preview" class="d-flex flex-wrap gap-3 mt-3"></div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Lưu</button>
+        <a asp-page="/Index" class="btn btn-secondary ms-2">Hủy</a>
+    </div>
+</form>
+
+
+<div aria-live="polite" aria-atomic="true"
+     class="position-fixed top-0 end-0 p-3"
+     style="z-index:1080">
+    <div id="successToast"
+         class="toast align-items-center text-bg-success border-0"
+         role="alert"
+         style="display:none;">
+        <div class="d-flex">
+            <div class="toast-body" id="toastMsg"></div>
+            <button type="button"
+                    class="btn-close btn-close-white me-2 m-auto"
+                    data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        document.getElementById('imgInput').addEventListener('change', e => {
+            const preview = document.getElementById('preview');
+            preview.innerHTML = '';
+            Array.from(e.target.files).forEach((file, idx) => {
+                const url = URL.createObjectURL(file);
+                const div = document.createElement('div');
+                div.className = 'position-relative';
+                div.innerHTML = `
+                    <img src="${url}" class="rounded shadow-sm" style="height:120px;width:auto;">
+                    <div class="form-check position-absolute top-0 start-0 translate-middle">
+                        <input class="form-check-input" type="radio" name="PrimaryIndex" value="${idx}" ${idx === 0 ? 'checked' : ''}>
+                        <label class="form-check-label bg-white small px-1">Primary</label>
+                    </div>`;
+                preview.appendChild(div);
+            });
+        });
+
+     
+        (function () {
+            const successMsg = '@TempData["Success"]';
+            const errorMsg = '@TempData["Error"]';
+            const toastEl = document.getElementById('successToast');
+            const toastMsg = document.getElementById('toastMsg');
+            if (successMsg) {
+                toastMsg.innerText = successMsg;
+                toastEl.classList.remove('text-bg-danger');
+                toastEl.classList.add('text-bg-success');
+                toastEl.style.display = 'flex';
+                const toast = new bootstrap.Toast(toastEl, { delay: 1000 });
+                toast.show();
+
+                toastEl.addEventListener('hidden.bs.toast', () => {
+                    window.location.href = '/Index';
+                });
+            } else if (errorMsg) {
+                toastMsg.innerText = errorMsg;
+                toastEl.classList.remove('text-bg-success');
+                toastEl.classList.add('text-bg-danger');
+                toastEl.style.display = 'flex';
+                const toast = new bootstrap.Toast(toastEl, { delay: 2000 });
+                toast.show();
+            }
+        })();
+    </script>
+}

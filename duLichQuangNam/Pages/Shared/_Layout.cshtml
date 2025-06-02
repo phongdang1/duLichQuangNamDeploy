@@ -1,0 +1,108 @@
+﻿@using System.Security.Claims
+@{
+    
+    var isAuthenticated = User.Identity.IsAuthenticated;
+    var userName = User.Identity.Name;
+    var isAdmin = User.IsInRole("admin");
+
+    
+    var current = Context.Request.Path.ToString().ToLower();
+
+    
+    string Active(string path) =>
+        (path == "/index" && (current == "/" || current == "/index"))
+            || current == path
+            ? "active text-primary fw-bold" : "";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - duLichQuangNam</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/vi/e/e1/Logo_Quang_Nam.PNG" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-page="/Index">duLichQuangNam</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+
+                    @if (isAuthenticated)
+                    {
+                        if (isAdmin)
+                        {
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item"><a class="nav-link @Active("/dashboard")" asp-page="/Dashboard">Dashboard</a></li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item"><a class="nav-link @Active("/index")" asp-page="/Index">Trang chủ</a></li>
+                                <li class="nav-item"><a class="nav-link @Active("/destination")" asp-page="/Destination">Địa điểm du lịch</a></li>
+                                <li class="nav-item"><a class="nav-link @Active("/tour")" asp-page="/Tour">Tour</a></li>
+                                <li class="nav-item"><a class="nav-link @Active("/stay")" asp-page="/Stay">Lưu trú</a></li>
+                                <li class="nav-item"><a class="nav-link @Active("/foods")" asp-page="/Foods">Ẩm thực</a></li>
+                                <li class="nav-item"><a class="nav-link @Active("/service")" asp-page="/Service">Dịch vụ</a></li>
+                            </ul>
+                        }
+                    }
+
+
+                    <ul class="navbar-nav">
+                        @if (!isAuthenticated)
+                        {
+                            <li class="nav-item"><a class="nav-link @Active("/login")" href="/login">Đăng nhập</a></li>
+                            <li class="nav-item"><a class="nav-link @Active("/register")" href="/register">Đăng ký</a></li>
+                        }
+                        else
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                                    <img src="~/images/ava.png" width="30" height="30" class="rounded-circle" /> @userName
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    @if (isAdmin)
+                                    {
+                                        <li><a class="dropdown-item" href="/ChangePassword">Đổi mật khẩu</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a class="dropdown-item" href="/userProfile">Thông tin cá nhân</a></li>
+                                        <li><a class="dropdown-item" href="/schedule">Tạo lịch trình</a></li>
+                                        <li><a class="dropdown-item" href="/MySchedule">Lịch trình của tôi</a></li>
+                                        <li><a class="dropdown-item" href="/ChangePassword">Đổi mật khẩu</a></li>
+                                    }
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <form asp-page="/Logout" method="post" class="d-inline">
+                                    <button type="submit" class="btn nav-link text-danger border-0 bg-transparent">Đăng xuất</button>
+                                </form>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mt-4">@RenderBody()</div>
+
+    <footer class="border-top footer text-muted mt-5">
+        <div class="container">&copy; 2025 - duLichQuangNam</div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

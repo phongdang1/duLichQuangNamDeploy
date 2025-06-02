@@ -1,0 +1,150 @@
+﻿@page
+@model duLichQuangNam.Pages.UserProfileModel
+@{
+    ViewData["Title"] = "Thông tin người dùng";
+}
+
+<h2 class="text-center mb-4">Thông tin người dùng</h2>
+
+@if (Model.User1 != null)
+{
+    <div class="d-flex justify-content-center my-4">
+        <div class="card shadow-sm col-12 col-md-8 col-lg-6">
+            <div class="card-body">
+
+                @if (Model.isEdit)
+                {
+                   
+                    <form method="post">
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label fw-bold" for="Name">Tên:</label>
+                            <div class="col-sm-8">
+                                <input asp-for="User1.Name" class="form-control" id="Name" />
+                                <span asp-validation-for="User1.Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label fw-bold" for="UserName">Username:</label>
+                            <div class="col-sm-8">
+                                <input asp-for="User1.UserName" class="form-control" id="UserName" readonly/>
+                                <span asp-validation-for="User1.UserName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label fw-bold" for="Mail">Email:</label>
+                            <div class="col-sm-8">
+                                <input asp-for="User1.Mail" type="email" class="form-control" id="Mail" readonly/>
+                                <span asp-validation-for="User1.Mail" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label fw-bold" for="Phone">Số điện thoại:</label>
+                            <div class="col-sm-8">
+                                <input asp-for="User1.Phone" class="form-control" id="Phone" />
+                                <span asp-validation-for="User1.Phone" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label fw-bold" for="Address">Địa chỉ:</label>
+                            <div class="col-sm-8">
+                                <input asp-for="User1.Address" class="form-control" id="Address" />
+                                <span asp-validation-for="User1.Address" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label fw-bold" for="Age">Tuổi:</label>
+                            <div class="col-sm-8">
+                                <input asp-for="User1.Age" type="number" min="0" class="form-control" id="Age" />
+                                <span asp-validation-for="User1.Age" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label fw-bold" for="Gender">Giới tính:</label>
+                            <div class="col-sm-8">
+                                <select asp-for="User1.Gender" class="form-select" id="Gender">
+                                    <option value="">-- Chọn giới tính --</option>
+                                    <option value="Nam" selected="@(Model.User1.Gender == "Nam")">Nam</option>
+                                    <option value="Nữ" selected="@(Model.User1.Gender == "Nữ")">Nữ</option>
+                                    <option value="Khác" selected="@(Model.User1.Gender == "Khác")">Khác</option>
+                                </select>
+                                <span asp-validation-for="User1.Gender" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label fw-bold" for="Role">Vai trò:</label>
+                            <div class="col-sm-8">
+                                <input asp-for="User1.Role" class="form-control" id="Role" readonly />
+                               
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-success me-2">Lưu</button>
+                            <a asp-page="/UserProfile" class="btn btn-secondary">Hủy</a>
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label fw-bold">Tên:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext">@Model.User1.Name</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label fw-bold">Username:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext">@Model.User1.UserName</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label fw-bold">Email:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext">@Model.User1.Mail</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label fw-bold">Số điện thoại:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext">@Model.User1.Phone</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label fw-bold">Địa chỉ:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext">@Model.User1.Address</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label fw-bold">Tuổi:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext">@Model.User1.Age</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label fw-bold">Giới tính:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext">@Model.User1.Gender</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label fw-bold">Vai trò:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext">@Model.User1.Role</p>
+                        </div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <a asp-page="/UserProfile" asp-route-isEdit="true" class="btn btn-primary me-2">Chỉnh sửa</a>
+                        <a href="/ChangePassword" class="btn btn-secondary">Đổi mật khẩu</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning text-center">Không tìm thấy người dùng.</div>
+}
+

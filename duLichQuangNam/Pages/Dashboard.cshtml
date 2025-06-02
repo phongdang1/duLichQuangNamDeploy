@@ -1,0 +1,150 @@
+﻿@page
+@model duLichQuangNam.Pages.DashboardModel
+@{
+    ViewData["Title"] = "Trang quản trị";
+}
+
+<div class="container py-4">
+    <h2 class="mb-4 text-primary">Dashboard Quản trị</h2>
+
+
+    <div class="row g-3 mb-4">
+        @foreach (var c in Model.Cards)
+        {
+            <div class="col-md-2 col-6">
+                <div class="card text-center shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="display-6 fw-bold">@c.Count</div>
+                        <div class="small text-uppercase">@c.Title</div>
+                    </div>
+                    <a class="stretched-link" href="@c.ListUrl"></a>
+                </div>
+            </div>
+        }
+    </div>
+
+ 
+    @foreach (var s in Model.Sections)
+    {
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-light d-flex justify-content-between">
+                <h5 class="mb-0">@s.Title</h5>
+                <div>
+                    <a asp-page="@s.CreatePage" class="btn btn-sm btn-primary me-2">Thêm mới</a>
+                    <a href="@s.ListUrl" class="btn btn-sm btn-outline-secondary">Xem tất cả</a>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width:60px;">#</th>
+                            <th>Tên</th>
+                            <th>Mô tả</th>
+                            <th style="width:120px;">Ảnh</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!s.Items.Any())
+                        {
+                            <tr><td colspan="4" class="text-center">Chưa có dữ liệu</td></tr>
+                        }
+                        else
+                        {
+                            @foreach (var (item, i) in s.Items.Select((v, i) => (v, i + 1)))
+                            {
+                                <tr>
+                                    <td>@i</td>
+                                    <td>@item.Name</td>
+                                    <td class="text-truncate" style="max-width:350px;">@item.Description</td>
+                                    <td>
+                                        <img src="@item.ImgUrl" class="rounded" style="height:48px;width:80px;object-fit:cover;">
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+         
+            @if (s.TotalPages > 1)
+            {
+                <nav aria-label="Page navigation" class="mt-3">
+                    <ul class="pagination justify-content-center mb-0">
+                        <li class="page-item @(s.CurrentPage == 1 ? "disabled" : "")">
+                            <a class="page-link" href="@GetPageUrl(s.Title, 1)" aria-label="First">
+                                <span aria-hidden="true">&laquo;&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item @(s.CurrentPage == 1 ? "disabled" : "")">
+                            <a class="page-link" href="@GetPageUrl(s.Title, s.CurrentPage - 1)" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        @{
+                            int startPage = Math.Max(1, s.CurrentPage - 2);
+                            int endPage = Math.Min(s.TotalPages, startPage + 4);
+                            if (endPage - startPage < 4)
+                            {
+                                startPage = Math.Max(1, endPage - 4);
+                            }
+                        }
+                        @for (int p = startPage; p <= endPage; p++)
+                        {
+                            <li class="page-item @(p == s.CurrentPage ? "active" : "")">
+                                <a class="page-link" href="@GetPageUrl(s.Title, p)">@p</a>
+                            </li>
+                        }
+
+                        <li class="page-item @(s.CurrentPage == s.TotalPages ? "disabled" : "")">
+                            <a class="page-link" href="@GetPageUrl(s.Title, s.CurrentPage + 1)" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item @(s.CurrentPage == s.TotalPages ? "disabled" : "")">
+                            <a class="page-link" href="@GetPageUrl(s.Title, s.TotalPages)" aria-label="Last">
+                                <span aria-hidden="true">&raquo;&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            }
+        </div>
+    }
+</div>
+
+@functions {
+    private string GetPageUrl(string sectionTitle, int page)
+    {
+        if (page < 1) page = 1;
+
+        var pageParam = sectionTitle switch
+        {
+            "Destination" => "pageDestination",
+            "Tour" => "pageTour",
+            "Stay" => "pageStay",
+            "Food" => "pageFood",
+            "Service" => "pageService",
+            "Users" => "pageUser",
+            _ => "page"
+        };
+
+        var query = new Dictionary<string, string?>();
+        foreach (var key in HttpContext.Request.Query.Keys)
+        {
+            var val = HttpContext.Request.Query[key].ToString();
+            if (!string.IsNullOrEmpty(val) && key != pageParam)
+            {
+                query[key] = val;
+            }
+        }
+        query[pageParam] = page.ToString();
+
+        var queryString = string.Join("&", query.Select(kv => $"{kv.Key}={kv.Value}"));
+        var url = $"{HttpContext.Request.Path}?{queryString}";
+        return url;
+    }
+}

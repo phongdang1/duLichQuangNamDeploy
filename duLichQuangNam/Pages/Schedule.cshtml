@@ -1,0 +1,234 @@
+﻿@page
+@model duLichQuangNam.Pages.ScheduleModel
+@using System.Security.Claims
+@using System.Globalization
+@{
+    ViewData["Title"] = "Địa điểm du lịch Quảng Nam";
+    var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+}
+
+@if (Model.id.HasValue && Model.SelectedDestination != null)
+{
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">@Model.SelectedDestination.Name</h2>
+        <div class="card mx-auto" style="max-width: 600px;">
+            <img src="@Model.SelectedDestination.Images.FirstOrDefault()?.ImgUrl" class="card-img-top" style="height: 300px; object-fit: cover;" />
+            <div class="card-body">
+                <p><strong>Loại hình:</strong> @Model.SelectedDestination.Type</p>
+                <p><strong>Vị trí:</strong> @Model.SelectedDestination.Location</p>
+                <p><strong>Giờ mở cửa:</strong> @Model.SelectedDestination.OpenTime.ToString("HH:mm")</p>
+                <p><strong>Giờ đóng cửa:</strong> @Model.SelectedDestination.CloseTime.ToString("HH:mm")</p>
+                <p class="text-success"><strong>Giá vé:</strong> @Model.SelectedDestination.Price.ToString("C")</p>
+                <p><strong>Email liên hệ:</strong> @Model.SelectedDestination.Mail</p>
+                <p><strong>Mô tả:</strong> @Model.SelectedDestination.Description</p>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-4 border-end" style="max-height: 80vh; overflow-y: auto;">
+                <h3 class="text-center mt-3 text-primary">Địa điểm</h3>
+
+                <div class="mx-2 mb-3">
+                    <form method="get" class="d-flex">
+                        <input type="text" name="DestinationSearch" value="@Model.DestinationSearch" placeholder="Tìm địa điểm..." class="form-control" />
+                        <button type="submit" class="btn btn-primary ms-2">Tìm</button>
+
+                        @if (!string.IsNullOrEmpty(Model.ServiceSearch))
+                        {
+                            <input type="hidden" name="ServiceSearch" value="@Model.ServiceSearch" />
+                        }
+                    </form>
+                </div>
+
+                @if (Model.PagedDestinations.Any())
+                {
+                    @foreach (var destination in Model.PagedDestinations)
+                    {
+                        <div id="destination-@destination.Id" class="card shadow-sm border-light rounded-lg mb-3 mx-2"
+                             draggable="true" ondragstart="drag(event)">
+                            <img src="@destination.Images.FirstOrDefault()?.ImgUrl" class="card-img-top" style="object-fit: cover; height: 150px;" />
+                            <div class="card-body p-2">
+                                <h5 class="card-title">@destination.Name</h5>
+                                <p style="font-size: 0.9rem;">@destination.Description</p>
+                                <td>@destination.Price.ToString("#,0", new CultureInfo("vi-VN")) ₫</td>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="text-center">Không có địa điểm nào.</p>
+                }
+            </div>
+
+            <div class="col-md-4 border-end" style="max-height: 80vh; overflow-y: auto;">
+                <h3 class="text-center mt-3 text-success">Dịch vụ</h3>
+
+                <div class="mx-2 mb-3">
+                    <form method="get" class="d-flex">
+                        <input type="text" name="ServiceSearch" value="@Model.ServiceSearch" placeholder="Tìm dịch vụ..." class="form-control" />
+                        <button type="submit" class="btn btn-primary ms-2">Tìm</button>
+
+                        @if (!string.IsNullOrEmpty(Model.DestinationSearch))
+                        {
+                            <input type="hidden" name="DestinationSearch" value="@Model.DestinationSearch" />
+                        }
+                    </form>
+                </div>
+
+                @if (Model.PagedServices.Any())
+                {
+                    @foreach (var service in Model.PagedServices)
+                    {
+                        <div id="service-@service.Id" class="card shadow-sm mb-3 mx-2"
+                             draggable="true" ondragstart="drag(event)">
+                            <img src="@service.Images.FirstOrDefault()?.ImgUrl" class="card-img-top" style="object-fit: cover; height: 150px;" />
+                            <div class="card-body p-2">
+                                <h6 class="card-title">@service.Name</h6>
+                                <p style="font-size: 0.85rem;"><strong>Địa điểm:</strong> @service.Location</p>
+                                <p style="font-size: 0.85rem;"><strong>Dịch vụ chính:</strong> @service.MainService</p>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="text-center">Không có dịch vụ nào.</p>
+                }
+            </div>
+
+
+            <div class="col-md-4" style="max-height: 80vh; overflow-y: auto;">
+                <h3 class="text-center mt-3 text-info">Lịch trình của bạn</h3>
+
+                <div class="text-center mb-3">
+                    <label for="startDate" class="form-label">Chọn ngày bắt đầu:</label>
+                    <input type="date" id="startDate" class="form-control w-75 mx-auto" />
+                </div>
+
+                <div id="existingScheduleWarning" class="alert alert-warning d-none text-center mx-3">
+                    Bạn đã có lịch trình cho ngày này. Vui lòng chọn ngày khác.
+                </div>
+
+                <div id="schedulePanel" class="border p-3 rounded bg-light min-vh-50 mx-2" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <p id="emptySchedule" class="text-muted">Kéo địa điểm hoặc dịch vụ vào đây để tạo lịch trình.</p>
+                </div>
+
+                <div class="text-center mt-4">
+                    <div id="trashBin" class="border rounded bg-danger text-white p-2 d-inline-block"
+                         ondrop="removeItem(event)" ondragover="allowDrop(event)">
+                        🗑️ Kéo vào đây để hủy
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center mt-3">
+                    <button class="btn btn-success" onclick="saveSchedule()">Lưu lịch trình</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        let hasExistingSchedule = false;
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            const data = ev.dataTransfer.getData("text");
+            const draggedElement = document.getElementById(data);
+            const clone = draggedElement.cloneNode(true);
+
+            clone.id = clone.id + "-copy-" + Math.random().toString(36).substr(2, 9);
+            clone.setAttribute("draggable", "true");
+            clone.setAttribute("ondragstart", "drag(event)");
+
+            document.getElementById("schedulePanel").appendChild(clone);
+            document.getElementById("emptySchedule").style.display = "none";
+        }
+
+        function removeItem(ev) {
+            ev.preventDefault();
+            const data = ev.dataTransfer.getData("text");
+            const element = document.getElementById(data);
+
+            if (element && element.parentElement.id === "schedulePanel") {
+                element.remove();
+                if (document.querySelectorAll('#schedulePanel .card').length === 0) {
+                    document.getElementById("emptySchedule").style.display = "block";
+                }
+            }
+        }
+
+        function saveSchedule() {
+            const userId = "@userId";
+            const selectedDate = document.getElementById("startDate").value;
+
+            if (!selectedDate) {
+                alert("Vui lòng chọn ngày bắt đầu.");
+                return;
+            }
+
+            if (hasExistingSchedule) {
+                alert("Đã có lịch trình cho ngày này. Vui lòng chọn ngày khác.");
+                return;
+            }
+
+            const cards = document.querySelectorAll('#schedulePanel .card');
+            if (cards.length === 0) {
+                alert("Lịch trình trống. Vui lòng kéo địa điểm hoặc dịch vụ vào.");
+                return;
+            }
+
+            const scheduleItems = [];
+            cards.forEach((card, index) => {
+                const [type, id] = card.id.split("-");
+                scheduleItems.push({
+                    id: 0,
+                    scheduleId: 0,
+                    entityType: type,
+                    entityId: parseInt(id),
+                    dayOrder: index + 1
+                });
+            });
+
+            const schedule = {
+                userId: parseInt(userId),
+                name: "Lịch trình của tôi",
+                startDate: selectedDate,
+                endDate: selectedDate,
+                description: "Tạo từ trình kéo thả",
+                createdAt: new Date().toISOString(),
+                scheduleItems: scheduleItems
+            };
+
+            fetch('https://localhost:7270/api/schedules', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(schedule)
+            })
+            .then(res => res.ok ? res.json() : res.text().then(t => Promise.reject(t)))
+            .then(data => {
+                alert("Lưu lịch trình thành công!");
+                console.log("Đã lưu:", data);
+            })
+            .catch(err => {
+                console.error("Lỗi khi lưu lịch trình:", err);
+                alert("Lỗi khi lưu lịch trình.");
+            });
+        }
+    </script>
+}

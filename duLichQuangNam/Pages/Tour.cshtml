@@ -1,0 +1,60 @@
+﻿@page
+@model duLichQuangNam.Pages.TourModel
+@{
+    ViewData["Title"] = "Tour du lịch Quảng Nam";
+}
+
+@if (Model.id.HasValue && Model.SelectedTour != null)
+{
+    
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">@Model.SelectedTour.Name</h2>
+
+        <div class="card mx-auto" style="max-width: 800px;">
+            <img src="@Model.SelectedTour.Images.FirstOrDefault()?.ImgUrl" class="card-img-top" style="height: 400px; object-fit: cover;" />
+            <div class="card-body">
+                <p class="card-text"><strong>Loại tour:</strong> @Model.SelectedTour.Type</p>
+                <p class="card-text"><strong>Mô tả:</strong> @Model.SelectedTour.Description</p>
+                <p class="card-text"><strong>Chi tiết:</strong> @Model.SelectedTour.Detail</p>
+                <p class="card-text"><strong>Ghi chú:</strong> @Model.SelectedTour.Note</p>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    
+    <h1 class="text-center mb-5">@ViewData["Title"]</h1>
+    <form method="get" class="mb-4 d-flex justify-content-center">
+        <input type="text"
+               name="SearchName"
+               value="@Model.SearchName"
+               class="form-control w-50"
+               placeholder="Tìm kiếm tour theo tên..." />
+        <button type="submit" class="btn btn-primary ms-2">Tìm</button>
+    </form>
+    @if (Model.TourList != null && Model.TourList.Any())
+    {
+        <div class="row">
+            @foreach (var tour in Model.TourList)
+            {
+                <div class="col-md-4 mb-4">
+                    <a href="@($"/Tour?id={tour.Id}")" class="text-decoration-none">
+                        <div class="card shadow-sm border-light rounded-lg overflow-hidden">
+                            <img src="@tour.Images.FirstOrDefault()?.ImgUrl" class="card-img-top" alt="@tour.Name" style="object-fit: cover; height: 200px;" />
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">@tour.Name</h5>
+                                <p class="card-text">@tour.Description</p>
+                                <p class="card-text text-muted"><small>@tour.Type</small></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="text-center">Không có tour nào.</p>
+    }
+}

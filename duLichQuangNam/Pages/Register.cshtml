@@ -1,0 +1,87 @@
+﻿@page
+@model duLichQuangNam.Pages.RegisterModel
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-body">
+                    <h3 class="text-center mb-4">Đăng ký tài khoản</h3>
+
+                    @if (!string.IsNullOrEmpty(Model.Message))
+                    {
+                        <div class="alert alert-danger">
+                            @Model.Message
+                        </div>
+                    }
+
+                    <form method="post">
+                        <div class="form-group mb-3">
+                            <label for="Name">Tên</label>
+                            <input type="text" asp-for="RegisterData.Name" class="form-control rounded-3" />
+                            <span asp-validation-for="RegisterData.Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="UserName">Tên đăng nhập</label>
+                            <input type="text" asp-for="RegisterData.UserName" class="form-control rounded-3" />
+                            <span asp-validation-for="RegisterData.UserName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="Email">Email</label>
+                            <input type="email" asp-for="RegisterData.Mail" class="form-control rounded-3" />
+                            <span asp-validation-for="RegisterData.Mail" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="Password">Mật khẩu</label>
+                            <input type="password" asp-for="RegisterData.Password" class="form-control rounded-3" />
+                            <span asp-validation-for="RegisterData.Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="ConfirmPassword">Xác nhận mật khẩu</label>
+                            <input type="password" asp-for="RegisterData.ConfirmPassword" class="form-control rounded-3" />
+                            <span asp-validation-for="RegisterData.ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="Phone">Điện thoại</label>
+                            <input type="text" asp-for="RegisterData.Phone" class="form-control rounded-3" />
+                            <span asp-validation-for="RegisterData.Phone" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="Address">Địa chỉ</label>
+                            <input type="text" asp-for="RegisterData.Address" class="form-control rounded-3" />
+                            <span asp-validation-for="RegisterData.Address" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="Age">Tuổi</label>
+                            <input type="number" asp-for="RegisterData.Age" class="form-control rounded-3" />
+                            <span asp-validation-for="RegisterData.Age" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="Gender">Giới tính</label>
+                            <select asp-for="RegisterData.Gender" class="form-control rounded-3">
+                                <option value="">-- Chọn giới tính --</option>
+                                <option value="Nam">Nam</option>
+                                <option value="Nữ">Nữ</option>
+                                <option value="Khác">Khác</option>
+                            </select>
+                            <span asp-validation-for="RegisterData.Gender" class="text-danger"></span>
+                        </div>
+
+
+                        <button type="submit" class="btn btn-primary w-100 rounded-3 py-2">Đăng ký</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
