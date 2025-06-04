@@ -93,3 +93,4 @@ C:\Users\phong\source\repos\duLichQuangNam\duLichQuangNam\bin\Debug\net8.0\Micro
 C:\Users\phong\source\repos\duLichQuangNam\duLichQuangNam\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
 C:\Users\phong\source\repos\duLichQuangNam\duLichQuangNam\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
 C:\Users\phong\source\repos\duLichQuangNam\duLichQuangNam\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\phong\source\repos\duLichQuangNam\duLichQuangNam\obj\Debug\net8.0\duLichQuangNam.sourcelink.json
