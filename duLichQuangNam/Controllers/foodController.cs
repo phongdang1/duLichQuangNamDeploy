@@ -10,9 +10,9 @@ namespace duLichQuangNam.Controllers
     {
         private readonly string _connectionString;
 
-        public FoodsController(IConfiguration configuration)
+        public FoodsController()
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection")!;
+            _connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION")!;
         }
 
         [HttpGet]

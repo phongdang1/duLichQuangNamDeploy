@@ -1,5 +1,9 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using DotNetEnv;
 
+
+
+Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -28,7 +32,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// ? Thêm dòng x? lý l?i 404
 app.UseStatusCodePagesWithReExecute("/404");
 
 app.UseStaticFiles();

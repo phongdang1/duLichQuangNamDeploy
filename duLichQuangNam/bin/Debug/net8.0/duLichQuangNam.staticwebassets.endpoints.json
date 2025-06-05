@@ -6973,6 +6973,88 @@
       ]
     },
     {
+      "Route": "uploads/foods/9/60b7b3db-2b66-4ad5-b544-b582e6f67866.png",
+      "AssetFile": "uploads/foods/9/60b7b3db-2b66-4ad5-b544-b582e6f67866.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2781"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"qytB357x9kxruZzQlb8yzACbP+YgPPJAR1hYx/frbAo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 05 Jun 2025 01:33:42 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-qytB357x9kxruZzQlb8yzACbP+YgPPJAR1hYx/frbAo="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/foods/9/60b7b3db-2b66-4ad5-b544-b582e6f67866.vvn7jhij2k.png",
+      "AssetFile": "uploads/foods/9/60b7b3db-2b66-4ad5-b544-b582e6f67866.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2781"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"qytB357x9kxruZzQlb8yzACbP+YgPPJAR1hYx/frbAo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 05 Jun 2025 01:33:42 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "vvn7jhij2k"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-qytB357x9kxruZzQlb8yzACbP+YgPPJAR1hYx/frbAo="
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/foods/9/60b7b3db-2b66-4ad5-b544-b582e6f67866.png"
+        }
+      ]
+    },
+    {
       "Route": "uploads/services/8/33645a8c-60e5-4219-a1b8-45a92d52aa0d.ial5nr0ayx.jpg",
       "AssetFile": "uploads/services/8/33645a8c-60e5-4219-a1b8-45a92d52aa0d.jpg",
       "Selectors": [],

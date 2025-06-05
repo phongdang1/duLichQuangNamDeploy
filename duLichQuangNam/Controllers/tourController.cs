@@ -11,9 +11,9 @@ namespace duLichQuangNam.Controllers
     {
         private readonly string _connectionString;
 
-        public TourController(IConfiguration configuration)
+        public TourController()
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection")!;
+            _connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION")!;
         }
 
         // GET: /api/tours

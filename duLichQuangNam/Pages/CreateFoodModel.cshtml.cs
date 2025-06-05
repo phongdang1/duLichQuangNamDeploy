@@ -45,7 +45,7 @@ public class CreateFoodModel : PageModel
 
         try
         {
-            using var conn = new MySqlConnection(_config.GetConnectionString("DefaultConnection"));
+            using var conn = new MySqlConnection(Environment.GetEnvironmentVariable("DEFAULT_CONNECTION"));
             await conn.OpenAsync();
 
             var insertCmd = new MySqlCommand(@"

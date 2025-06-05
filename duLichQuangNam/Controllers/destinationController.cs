@@ -10,9 +10,9 @@ namespace duLichQuangNam.Controllers
     {
         private readonly string _connectionString;
 
-        public DestinationController(IConfiguration configuration)
+        public DestinationController()
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection")!;
+            _connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION")!;
         }
 
         [HttpGet]

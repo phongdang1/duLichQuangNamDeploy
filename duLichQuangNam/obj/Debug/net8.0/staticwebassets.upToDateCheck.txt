@@ -82,6 +82,7 @@ wwwroot\uploads\foods\5\d0331ae0-eb9a-433c-a8e7-2906f4b99caf.png
 wwwroot\uploads\foods\6\3b75b603-5ca5-4795-847d-05d7d76a2632.jpg
 wwwroot\uploads\foods\7\30d8f20c-ec4b-4f14-8865-007f6e2a9783.JPG
 wwwroot\uploads\foods\8\3ae72a9f-4bc1-41e4-ab75-be56345d9bed.JPG
+wwwroot\uploads\foods\9\60b7b3db-2b66-4ad5-b544-b582e6f67866.png
 wwwroot\uploads\services\8\33645a8c-60e5-4219-a1b8-45a92d52aa0d.jpg
 wwwroot\uploads\services\9\57f64a12-8172-4c4b-8484-70d4285241c5.JPG
 wwwroot\uploads\stays\3\bd223310-d4c3-4c4a-8572-6f66199b801c.jpg

@@ -10,10 +10,9 @@ namespace duLichQuangNam.Controllers
     {
         private readonly string _connectionString;
 
-        public StayController(IConfiguration configuration)
+        public StayController()
         {
-            // Ensure your appsettings.json has a "DefaultConnection" for MySQL
-            _connectionString = configuration.GetConnectionString("DefaultConnection")!;
+            _connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION")!;
         }
 
         // GET: /api/stays

@@ -20,7 +20,7 @@ namespace duLichQuangNam.Controllers
 
         public UsersController(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection")!;
+            _connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION")!;
             _configuration = configuration;
         }
 

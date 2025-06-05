@@ -10,10 +10,9 @@ namespace duLichQuangNam.Controllers
     {
         private readonly string _connectionString;
 
-        public ServiceController(IConfiguration configuration)
+        public ServiceController()
         {
-            // Ensure your appsettings.json has a "DefaultConnection" configured for MySQL.
-            _connectionString = configuration.GetConnectionString("DefaultConnection")!;
+            _connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION")!;
         }
 
         [HttpGet]

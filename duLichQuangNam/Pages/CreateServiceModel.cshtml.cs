@@ -54,7 +54,7 @@ namespace duLichQuangNam.Pages
 
             try
             {
-                await using var conn = new MySqlConnection(_config.GetConnectionString("DefaultConnection"));
+                await using var conn = new MySqlConnection(Environment.GetEnvironmentVariable("DEFAULT_CONNECTION"));
                 await conn.OpenAsync();
 
                 var cmd = new MySqlCommand(@"
