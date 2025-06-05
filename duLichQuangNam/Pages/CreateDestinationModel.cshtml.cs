@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using Microsoft.AspNetCore.Authorization;
 
 
@@ -54,14 +54,14 @@ namespace duLichQuangNam.Pages
 
             try
             {
-                using var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
+                using var conn = new MySqlConnection(_config.GetConnectionString("DefaultConnection"));
                 await conn.OpenAsync();
 
 
-                var insertCmd = new SqlCommand(@"
+                var insertCmd = new MySqlCommand(@"
                 INSERT INTO Destination (Name,Description,Type,Location,Open_Time,Close_Time,Price,Mail,Deleted)
-                OUTPUT INSERTED.Id
-                VALUES (@Name,@Desc,@Type,@Loc,@Open,@Close,@Price,@Mail,0);", conn);
+                VALUES (@Name,@Desc,@Type,@Loc,@Open,@Close,@Price,@Mail,0);
+                SELECT LAST_INSERT_ID();", conn);
 
                 insertCmd.Parameters.AddWithValue("@Name", Input.Name);
                 insertCmd.Parameters.AddWithValue("@Desc", Input.Description);
@@ -72,7 +72,7 @@ namespace duLichQuangNam.Pages
                 insertCmd.Parameters.AddWithValue("@Price", (object?)Input.Price ?? DBNull.Value);
                 insertCmd.Parameters.AddWithValue("@Mail", Input.Mail);
 
-                var newId = (int)await insertCmd.ExecuteScalarAsync();
+                var newId = Convert.ToInt32(await insertCmd.ExecuteScalarAsync());
 
 
                 if (Input.Images?.Count > 0)
@@ -92,7 +92,7 @@ namespace duLichQuangNam.Pages
                             await img.CopyToAsync(fs);
                         }
 
-                        var imgCmd = new SqlCommand(@"
+                        var imgCmd = new MySqlCommand(@"
                         INSERT INTO img (EntityType,EntityId,ImgUrl,IsPrimary)
                         VALUES ('destination',@Id,@Url,@IsPri);", conn);
 

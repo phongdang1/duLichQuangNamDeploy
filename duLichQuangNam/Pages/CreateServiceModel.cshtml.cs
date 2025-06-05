@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using duLichQuangNam.Models;
 using Microsoft.AspNetCore.Authorization;
 
-namespace duLichQuangNam.Pages   
+namespace duLichQuangNam.Pages
 {
     [Authorize(Roles = "admin")]
     public class CreateServiceModel : PageModel
@@ -54,14 +54,13 @@ namespace duLichQuangNam.Pages
 
             try
             {
-                await using var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
+                await using var conn = new MySqlConnection(_config.GetConnectionString("DefaultConnection"));
                 await conn.OpenAsync();
 
-             
-                var cmd = new SqlCommand(@"
-                    INSERT INTO Service (Name,Location,Type,Open_Time,Close_Time,Email,Website,Phone,Main_Service,Description,Deleted)
-                    OUTPUT INSERTED.Id
-                    VALUES (@Name,@Loc,@Type,@Open,@Close,@Email,@Web,@Phone,@Main,@Desc,0);", conn);
+                var cmd = new MySqlCommand(@"
+                    INSERT INTO service (Name,Location,Type,Open_Time,Close_Time,Email,Website,Phone,Main_Service,Description,Deleted)
+                    VALUES (@Name,@Loc,@Type,@Open,@Close,@Email,@Web,@Phone,@Main,@Desc,0);
+                    SELECT LAST_INSERT_ID();", conn);
 
                 cmd.Parameters.AddWithValue("@Name", Input.Name);
                 cmd.Parameters.AddWithValue("@Loc", Input.Location);
@@ -74,9 +73,8 @@ namespace duLichQuangNam.Pages
                 cmd.Parameters.AddWithValue("@Main", Input.MainService);
                 cmd.Parameters.AddWithValue("@Desc", Input.Description);
 
-                var newId = (int)await cmd.ExecuteScalarAsync();
+                var newId = Convert.ToInt32(await cmd.ExecuteScalarAsync());
 
-             
                 if (Input.Images?.Count > 0)
                 {
                     var root = Path.Combine(_env.WebRootPath, "uploads", "services", newId.ToString());
@@ -94,7 +92,7 @@ namespace duLichQuangNam.Pages
                             await img.CopyToAsync(fs);
                         }
 
-                        var imgCmd = new SqlCommand(@"
+                        var imgCmd = new MySqlCommand(@"
                             INSERT INTO img (EntityType,EntityId,ImgUrl,IsPrimary)
                             VALUES ('service',@Id,@Url,@IsPri);", conn);
 

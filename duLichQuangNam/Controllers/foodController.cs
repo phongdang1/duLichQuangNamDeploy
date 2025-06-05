@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using duLichQuangNam.Models;
 
 namespace duLichQuangNam.Controllers
@@ -15,14 +15,13 @@ namespace duLichQuangNam.Controllers
             _connectionString = configuration.GetConnectionString("DefaultConnection")!;
         }
 
-        // GET: /api/foods
         [HttpGet]
         public IActionResult GetAll()
         {
             List<Foods> foods = new();
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                using MySqlConnection connection = new(_connectionString);
                 connection.Open();
 
                 string sql = @"
@@ -34,8 +33,8 @@ namespace duLichQuangNam.Controllers
                     WHERE f.deleted = 0
                     ORDER BY f.Id";
 
-                using SqlCommand command = new(sql, connection);
-                using SqlDataReader reader = command.ExecuteReader();
+                using MySqlCommand command = new(sql, connection);
+                using MySqlDataReader reader = command.ExecuteReader();
 
                 Dictionary<int, Foods> foodDict = new();
 
@@ -80,18 +79,17 @@ namespace duLichQuangNam.Controllers
             }
         }
 
-        // POST: /api/foods/delete/{id}
         [HttpPost("delete/{id}")]
         public IActionResult SoftDelete(int id)
         {
             try
             {
-                using var connection = new SqlConnection(_connectionString);
+                using var connection = new MySqlConnection(_connectionString);
                 connection.Open();
 
                 string sql = "UPDATE food SET Deleted = 1 WHERE Id = @id";
 
-                using var command = new SqlCommand(sql, connection);
+                using var command = new MySqlCommand(sql, connection);
                 command.Parameters.AddWithValue("@id", id);
 
                 int rowsAffected = command.ExecuteNonQuery();
@@ -109,14 +107,12 @@ namespace duLichQuangNam.Controllers
             }
         }
 
-
-        // GET: /api/foods/{id}
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                using MySqlConnection connection = new(_connectionString);
                 connection.Open();
 
                 string sql = @"
@@ -127,10 +123,10 @@ namespace duLichQuangNam.Controllers
                     LEFT JOIN img i ON i.EntityType = 'Food' AND i.EntityId = f.Id
                     WHERE f.id = @id AND f.deleted = 0";
 
-                using SqlCommand command = new(sql, connection);
+                using MySqlCommand command = new(sql, connection);
                 command.Parameters.AddWithValue("@id", id);
 
-                using SqlDataReader reader = command.ExecuteReader();
+                using MySqlDataReader reader = command.ExecuteReader();
 
                 Foods? food = null;
 

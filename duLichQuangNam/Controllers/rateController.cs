@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+using MySqlConnector;
 using duLichQuangNam.Models;
 
 namespace duLichQuangNam.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/rates")]
     public class RateController : ControllerBase
     {
         private readonly string _connectionString;
@@ -15,20 +15,21 @@ namespace duLichQuangNam.Controllers
             _connectionString = configuration.GetConnectionString("DefaultConnection")!;
         }
 
-        // GET: /Rate
+        // GET: /api/rates
         [HttpGet]
         public IActionResult GetAll()
         {
-            List<Rate> rates = new();
+            var rates = new List<Rate>();
 
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                using var connection = new MySqlConnection(_connectionString);
                 connection.Open();
 
-                string sql = "SELECT * FROM rate WHERE deleted = 0";
-                using SqlCommand command = new(sql, connection);
-                using SqlDataReader reader = command.ExecuteReader();
+                string sql = "SELECT Id, UserId, Comment, Star, Deleted FROM rate WHERE Deleted = 0";
+
+                using var command = new MySqlCommand(sql, connection);
+                using var reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
@@ -36,7 +37,7 @@ namespace duLichQuangNam.Controllers
                     {
                         Id = reader.GetInt32(0),
                         UserId = reader.GetInt32(1),
-                        Comment = reader.GetString(2),
+                        Comment = reader.IsDBNull(2) ? null : reader.GetString(2),
                         Star = reader.GetInt32(3),
                         Deleted = reader.GetBoolean(4)
                     });

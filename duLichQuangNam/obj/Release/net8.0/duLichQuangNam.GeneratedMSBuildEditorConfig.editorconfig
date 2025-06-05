@@ -20,8 +20,44 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/Destinations.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVzdGluYXRpb25zLmNzaHRtbA==
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/404.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcNDA0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/ChangePassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2hhbmdlUGFzc3dvcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/CreateDestinationModel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3JlYXRlRGVzdGluYXRpb25Nb2RlbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/CreateFoodModel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3JlYXRlRm9vZE1vZGVsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/CreateServiceModel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3JlYXRlU2VydmljZU1vZGVsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/CreateStayModel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3JlYXRlU3RheU1vZGVsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/CreateTourModel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3JlYXRlVG91ck1vZGVsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/Destination.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVzdGluYXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/DestinationManager.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVzdGluYXRpb25NYW5hZ2VyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/Error.cshtml]
@@ -32,20 +68,68 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRm9vZHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/FoodsManager.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRm9vZHNNYW5hZ2VyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/Services.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VydmljZXMuY3NodG1s
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/Logout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9nb3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/MySchedule.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTXlTY2hlZHVsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/Schedule.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2NoZWR1bGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/Service.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VydmljZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/ServiceManager.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VydmljZU1hbmFnZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/Stay.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3RheS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/StayManager.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3RheU1hbmFnZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/Tour.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVG91ci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/TourManager.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVG91ck1hbmFnZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/UserProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlclByb2ZpbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/UsersManager.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNNYW5hZ2VyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/phong/source/repos/duLichQuangNam/duLichQuangNam/Pages/_ViewImports.cshtml]

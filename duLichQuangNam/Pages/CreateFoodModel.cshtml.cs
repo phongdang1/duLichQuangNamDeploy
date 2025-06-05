@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Authorization;
+using MySql.Data.MySqlClient;
 
 [Authorize(Roles = "admin")]
 public class CreateFoodModel : PageModel
@@ -45,22 +45,20 @@ public class CreateFoodModel : PageModel
 
         try
         {
-            using var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
+            using var conn = new MySqlConnection(_config.GetConnectionString("DefaultConnection"));
             await conn.OpenAsync();
 
-        
-            var insertCmd = new SqlCommand(@"
-                INSERT INTO Food (Name, Description, Price, Deleted)
-                OUTPUT INSERTED.Id
-                VALUES (@Name, @Desc, @Price, 0);", conn);
+            var insertCmd = new MySqlCommand(@"
+                INSERT INTO food (Name, Description, Price, Deleted)
+                VALUES (@Name, @Desc, @Price, 0);
+                SELECT LAST_INSERT_ID();", conn);
 
             insertCmd.Parameters.AddWithValue("@Name", Input.Name);
             insertCmd.Parameters.AddWithValue("@Desc", Input.Description);
             insertCmd.Parameters.AddWithValue("@Price", Input.Price);
 
-            var newId = (int)await insertCmd.ExecuteScalarAsync();
+            var newId = Convert.ToInt32(await insertCmd.ExecuteScalarAsync());
 
-        
             if (Input.Images?.Count > 0)
             {
                 var root = Path.Combine(_env.WebRootPath, "uploads", "foods", newId.ToString());
@@ -78,13 +76,13 @@ public class CreateFoodModel : PageModel
                         await img.CopyToAsync(fs);
                     }
 
-                    var imgCmd = new SqlCommand(@"
+                    var imgCmd = new MySqlCommand(@"
                         INSERT INTO img (EntityType, EntityId, ImgUrl, IsPrimary)
                         VALUES ('food', @Id, @Url, @IsPri);", conn);
 
                     imgCmd.Parameters.AddWithValue("@Id", newId);
                     imgCmd.Parameters.AddWithValue("@Url", relUrl);
-                    imgCmd.Parameters.AddWithValue("@IsPri", i == Input.PrimaryIndex);
+                    imgCmd.Parameters.AddWithValue("@IsPri", i == Input.PrimaryIndex ? 1 : 0);
                     await imgCmd.ExecuteNonQueryAsync();
                 }
             }

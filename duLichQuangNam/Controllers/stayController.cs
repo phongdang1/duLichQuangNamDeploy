@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+using MySql.Data.MySqlClient; // Change from Microsoft.Data.SqlClient
 using duLichQuangNam.Models;
 
 namespace duLichQuangNam.Controllers
@@ -12,6 +12,7 @@ namespace duLichQuangNam.Controllers
 
         public StayController(IConfiguration configuration)
         {
+            // Ensure your appsettings.json has a "DefaultConnection" for MySQL
             _connectionString = configuration.GetConnectionString("DefaultConnection")!;
         }
 
@@ -22,11 +23,12 @@ namespace duLichQuangNam.Controllers
             List<Stay> stays = new();
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                // Use MySqlConnection instead of SqlConnection
+                using MySqlConnection connection = new(_connectionString);
                 connection.Open();
 
                 string sql = @"
-                    SELECT 
+                    SELECT
                         s.Id, s.Name, s.Price, s.Type, s.Service_Stay, s.Address,
                         s.Description, s.Mail, s.Website, s.Phone, s.Deleted,
                         i.ImageId, i.EntityType, i.EntityId, i.ImgUrl, i.IsPrimary
@@ -35,8 +37,10 @@ namespace duLichQuangNam.Controllers
                     WHERE s.deleted = 0
                     ORDER BY s.Id";
 
-                using SqlCommand command = new(sql, connection);
-                using SqlDataReader reader = command.ExecuteReader();
+                // Use MySqlCommand instead of SqlCommand
+                using MySqlCommand command = new(sql, connection);
+                // Use MySqlDataReader instead of SqlDataReader
+                using MySqlDataReader reader = command.ExecuteReader();
 
                 Dictionary<int, Stay> stayDict = new();
 
@@ -64,7 +68,8 @@ namespace duLichQuangNam.Controllers
                         stayDict.Add(stayId, stay);
                     }
 
-                    if (!reader.IsDBNull(12))
+                    // Check if ImageId is DBNull before trying to read it
+                    if (!reader.IsDBNull(11)) // Check for column index of ImageId
                     {
                         var img = new Img
                         {
@@ -86,18 +91,19 @@ namespace duLichQuangNam.Controllers
                 return StatusCode(500, $"Lỗi truy vấn: {ex.Message}");
             }
         }
+
         // POST: /api/stays/delete/{id}
         [HttpPost("delete/{id}")]
         public IActionResult SoftDelete(int id)
         {
             try
             {
-                using var connection = new SqlConnection(_connectionString);
+                using var connection = new MySqlConnection(_connectionString);
                 connection.Open();
 
                 string sql = "UPDATE stay SET Deleted = 1 WHERE Id = @id";
 
-                using var command = new SqlCommand(sql, connection);
+                using var command = new MySqlCommand(sql, connection);
                 command.Parameters.AddWithValue("@id", id);
 
                 int rowsAffected = command.ExecuteNonQuery();
@@ -121,22 +127,22 @@ namespace duLichQuangNam.Controllers
         {
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                using MySqlConnection connection = new(_connectionString);
                 connection.Open();
 
                 string sql = @"
-                    SELECT 
-                        s.Id, s.Name, s.Price, s.Type, s.ServiceStay, s.Address,
+                    SELECT
+                        s.Id, s.Name, s.Price, s.Type, s.Service_Stay, s.Address,
                         s.Description, s.Mail, s.Website, s.Phone, s.Deleted,
                         i.ImageId, i.EntityType, i.EntityId, i.ImgUrl, i.IsPrimary
                     FROM stay s
                     LEFT JOIN img i ON i.EntityType = 'Stay' AND i.EntityId = s.Id
                     WHERE s.id = @id AND s.deleted = 0";
 
-                using SqlCommand command = new(sql, connection);
+                using MySqlCommand command = new(sql, connection);
                 command.Parameters.AddWithValue("@id", id);
 
-                using SqlDataReader reader = command.ExecuteReader();
+                using MySqlDataReader reader = command.ExecuteReader();
 
                 Stay? stay = null;
 
@@ -161,7 +167,8 @@ namespace duLichQuangNam.Controllers
                         };
                     }
 
-                    if (!reader.IsDBNull(12))
+                    // Check if ImageId is DBNull before trying to read it
+                    if (!reader.IsDBNull(11)) // Check for column index of ImageId
                     {
                         var img = new Img
                         {

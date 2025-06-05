@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+using MySql.Data.MySqlClient; // Changed from Microsoft.Data.SqlClient
 using duLichQuangNam.Models;
+using Microsoft.Extensions.Configuration; // Ensure this is present for IConfiguration
 
 namespace duLichQuangNam.Controllers
 {
@@ -22,7 +23,7 @@ namespace duLichQuangNam.Controllers
             List<Tour> tours = new();
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                using MySqlConnection connection = new(_connectionString); // Changed to MySqlConnection
                 connection.Open();
 
                 string sql = @"
@@ -34,8 +35,8 @@ namespace duLichQuangNam.Controllers
                     WHERE t.deleted = 0
                     ORDER BY t.id";
 
-                using SqlCommand command = new(sql, connection);
-                using SqlDataReader reader = command.ExecuteReader();
+                using MySqlCommand command = new(sql, connection); // Changed to MySqlCommand
+                using MySqlDataReader reader = command.ExecuteReader(); // Changed to MySqlDataReader
 
                 Dictionary<int, Tour> tourDict = new();
 
@@ -59,15 +60,20 @@ namespace duLichQuangNam.Controllers
                         tourDict.Add(tourId, tour);
                     }
 
-                    if (!reader.IsDBNull(8))
+                    // Check if image data exists before trying to read it
+                    // The IsDBNull check for reader.IsDBNull(8) is still valid,
+                    // but make sure all subsequent accesses (9, 10, 11) also handle null if they can be null
+                    // based on your 'img' table schema for entityType, entityId, imgUrl, isPrimary.
+                    // Assuming imgUrl and isPrimary can be null from a LEFT JOIN if no match.
+                    if (!reader.IsDBNull(reader.GetOrdinal("imageId"))) // Use column name or ordinal for safety
                     {
                         var img = new Img
                         {
-                            ImageId = reader.GetInt32(7),
-                            EntityType = reader.GetString(8),
-                            EntityId = reader.GetInt32(9),
-                            ImgUrl = reader.GetString(10),
-                            IsPrimary = reader.GetBoolean(11)
+                            ImageId = reader.GetInt32(reader.GetOrdinal("imageId")),
+                            EntityType = reader.GetString(reader.GetOrdinal("entityType")),
+                            EntityId = reader.GetInt32(reader.GetOrdinal("entityId")),
+                            ImgUrl = reader.GetString(reader.GetOrdinal("imgUrl")),
+                            IsPrimary = reader.GetBoolean(reader.GetOrdinal("isPrimary"))
                         };
                         tourDict[tourId].Images.Add(img);
                     }
@@ -88,12 +94,12 @@ namespace duLichQuangNam.Controllers
         {
             try
             {
-                using var connection = new SqlConnection(_connectionString);
+                using MySqlConnection connection = new(_connectionString); // Changed to MySqlConnection
                 connection.Open();
 
                 string sql = "UPDATE tour SET deleted = 1 WHERE id = @id";
 
-                using var command = new SqlCommand(sql, connection);
+                using MySqlCommand command = new(sql, connection); // Changed to MySqlCommand
                 command.Parameters.AddWithValue("@id", id);
 
                 int rowsAffected = command.ExecuteNonQuery();
@@ -111,14 +117,13 @@ namespace duLichQuangNam.Controllers
             }
         }
 
-
         // GET: /api/tours/{id}
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                using MySqlConnection connection = new(_connectionString); // Changed to MySqlConnection
                 connection.Open();
 
                 string sql = @"
@@ -129,10 +134,10 @@ namespace duLichQuangNam.Controllers
                     LEFT JOIN img i ON i.entityType = 'Tour' AND i.entityId = t.id
                     WHERE t.id = @id AND t.deleted = 0";
 
-                using SqlCommand command = new(sql, connection);
+                using MySqlCommand command = new(sql, connection); // Changed to MySqlCommand
                 command.Parameters.AddWithValue("@id", id);
 
-                using SqlDataReader reader = command.ExecuteReader();
+                using MySqlDataReader reader = command.ExecuteReader(); // Changed to MySqlDataReader
 
                 Tour? tour = null;
 
@@ -153,15 +158,15 @@ namespace duLichQuangNam.Controllers
                         };
                     }
 
-                    if (!reader.IsDBNull(8))
+                    if (!reader.IsDBNull(reader.GetOrdinal("imageId"))) // Using column name for robustness
                     {
                         var img = new Img
                         {
-                            ImageId = reader.GetInt32(7),
-                            EntityType = reader.GetString(8),
-                            EntityId = reader.GetInt32(9),
-                            ImgUrl = reader.GetString(10),
-                            IsPrimary = reader.GetBoolean(11)
+                            ImageId = reader.GetInt32(reader.GetOrdinal("imageId")),
+                            EntityType = reader.GetString(reader.GetOrdinal("entityType")),
+                            EntityId = reader.GetInt32(reader.GetOrdinal("entityId")),
+                            ImgUrl = reader.GetString(reader.GetOrdinal("imgUrl")),
+                            IsPrimary = reader.GetBoolean(reader.GetOrdinal("isPrimary"))
                         };
                         tour.Images.Add(img);
                     }

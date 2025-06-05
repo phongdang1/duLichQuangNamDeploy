@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using duLichQuangNam.Models;
 using Microsoft.AspNetCore.Authorization;
 
@@ -20,7 +20,6 @@ namespace duLichQuangNam.Pages
 
         [BindProperty] public InputModel Input { get; set; } = new();
 
-      
         public class InputModel
         {
             [Required, StringLength(200)]
@@ -54,17 +53,16 @@ namespace duLichQuangNam.Pages
 
             try
             {
-                await using var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
+                await using var conn = new MySqlConnection(_config.GetConnectionString("DefaultConnection"));
                 await conn.OpenAsync();
 
-              
-                var cmd = new SqlCommand(@"
-                    INSERT INTO Stay
+                var cmd = new MySqlCommand(@"
+                    INSERT INTO stay
                        (Name,Price,Type,Service_Stay,Address,Description,
                         Mail,Website,Phone,Deleted)
-                    OUTPUT INSERTED.Id
                     VALUES (@Name,@Price,@Type,@Service,@Addr,@Desc,
-                            @Mail,@Web,@Phone,0);", conn);
+                            @Mail,@Web,@Phone,0);
+                    SELECT LAST_INSERT_ID();", conn);
 
                 cmd.Parameters.AddWithValue("@Name", Input.Name);
                 cmd.Parameters.AddWithValue("@Price", Input.Price);
@@ -76,9 +74,8 @@ namespace duLichQuangNam.Pages
                 cmd.Parameters.AddWithValue("@Web", Input.Website);
                 cmd.Parameters.AddWithValue("@Phone", Input.Phone);
 
-                var newId = (int)await cmd.ExecuteScalarAsync();
+                var newId = Convert.ToInt32(await cmd.ExecuteScalarAsync());
 
-              
                 if (Input.Images?.Count > 0)
                 {
                     var root = Path.Combine(_env.WebRootPath, "uploads", "stays", newId.ToString());
@@ -96,7 +93,7 @@ namespace duLichQuangNam.Pages
                             await img.CopyToAsync(fs);
                         }
 
-                        var imgCmd = new SqlCommand(@"
+                        var imgCmd = new MySqlCommand(@"
                             INSERT INTO img (EntityType,EntityId,ImgUrl,IsPrimary)
                             VALUES ('stay',@Id,@Url,@IsPri);", conn);
 

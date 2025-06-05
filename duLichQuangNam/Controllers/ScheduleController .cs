@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using duLichQuangNam.Models;
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,6 @@ namespace duLichQuangNam.Controllers
             _connectionString = configuration.GetConnectionString("DefaultConnection")!;
         }
 
-        // GET: /api/schedules
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -26,19 +25,19 @@ namespace duLichQuangNam.Controllers
 
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                using MySqlConnection connection = new(_connectionString);
                 connection.Open();
 
                 string sql = @"
-                    SELECT 
+                    SELECT
                         s.id, s.user_id, s.name, s.start_date, s.end_date, s.description, s.created_at,
                         si.id AS item_id, si.schedule_id, si.entity_type, si.entity_id, si.day_order
                     FROM schedule s
                     LEFT JOIN schedule_items si ON si.schedule_id = s.id
                     ORDER BY s.id, si.day_order";
 
-                using SqlCommand command = new(sql, connection);
-                using SqlDataReader reader = command.ExecuteReader();
+                using MySqlCommand command = new(sql, connection);
+                using MySqlDataReader reader = command.ExecuteReader();
 
                 Dictionary<int, Schedule> scheduleDict = new();
 
@@ -85,7 +84,6 @@ namespace duLichQuangNam.Controllers
             }
         }
 
-        // POST: /api/schedules
         [HttpPost]
         public IActionResult Create([FromBody] Schedule model)
         {
@@ -94,50 +92,48 @@ namespace duLichQuangNam.Controllers
 
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                using MySqlConnection connection = new(_connectionString);
                 connection.Open();
 
-              
                 string checkScheduleSql = @"
-            SELECT COUNT(*) 
-            FROM schedule 
-            WHERE user_id = @user_id 
-            AND start_date = @start_date";
+                    SELECT COUNT(*)
+                    FROM schedule
+                    WHERE user_id = @user_id
+                    AND start_date = @start_date";
 
-                using SqlCommand checkScheduleCmd = new(checkScheduleSql, connection);
+                using MySqlCommand checkScheduleCmd = new(checkScheduleSql, connection);
                 checkScheduleCmd.Parameters.AddWithValue("@user_id", model.UserId);
                 checkScheduleCmd.Parameters.AddWithValue("@start_date", model.StartDate);
 
-                int existingSchedules = (int)checkScheduleCmd.ExecuteScalar();
+                int existingSchedules = Convert.ToInt32(checkScheduleCmd.ExecuteScalar());
 
                 if (existingSchedules > 0)
                 {
                     return Conflict("Đã có lịch trình được tạo cho ngày này.");
                 }
 
-                
                 string insertScheduleSql = @"
-            INSERT INTO schedule (user_id, name, start_date, end_date, description, created_at)
-            OUTPUT INSERTED.id
-            VALUES (@user_id, @name, @start_date, @end_date, @description, GETDATE())";
+                    INSERT INTO schedule (user_id, name, start_date, end_date, description, created_at)
+                    VALUES (@user_id, @name, @start_date, @end_date, @description, NOW());
+                    SELECT LAST_INSERT_ID();";
 
-                using SqlCommand insertScheduleCmd = new(insertScheduleSql, connection);
+                using MySqlCommand insertScheduleCmd = new(insertScheduleSql, connection);
                 insertScheduleCmd.Parameters.AddWithValue("@user_id", model.UserId);
                 insertScheduleCmd.Parameters.AddWithValue("@name", model.Name);
                 insertScheduleCmd.Parameters.AddWithValue("@start_date", model.StartDate);
                 insertScheduleCmd.Parameters.AddWithValue("@end_date", model.EndDate);
                 insertScheduleCmd.Parameters.AddWithValue("@description", model.Description ?? "");
 
-                int scheduleId = (int)insertScheduleCmd.ExecuteScalar();
+                int scheduleId = Convert.ToInt32(insertScheduleCmd.ExecuteScalar());
 
                 if (model.ScheduleItems != null && model.ScheduleItems.Count > 0)
                 {
                     foreach (var item in model.ScheduleItems)
                     {
                         string insertItemSql = @"
-                    INSERT INTO schedule_items (schedule_id, entity_type, entity_id, day_order)
-                    VALUES (@schedule_id, @entity_type, @entity_id, @day_order)";
-                        using SqlCommand insertItemCmd = new(insertItemSql, connection);
+                            INSERT INTO schedule_items (schedule_id, entity_type, entity_id, day_order)
+                            VALUES (@schedule_id, @entity_type, @entity_id, @day_order)";
+                        using MySqlCommand insertItemCmd = new(insertItemSql, connection);
                         insertItemCmd.Parameters.AddWithValue("@schedule_id", scheduleId);
                         insertItemCmd.Parameters.AddWithValue("@entity_type", item.EntityType);
                         insertItemCmd.Parameters.AddWithValue("@entity_id", item.EntityId);
@@ -159,44 +155,40 @@ namespace duLichQuangNam.Controllers
         {
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                using MySqlConnection connection = new(_connectionString);
                 connection.Open();
 
                 string sql = @"
-        SELECT 
-            s.id, s.user_id, s.name, s.start_date, s.end_date, s.description, s.created_at,
-            si.id AS item_id, si.entity_type, si.entity_id, si.day_order,
+                    SELECT
+                        s.id, s.user_id, s.name, s.start_date, s.end_date, s.description, s.created_at,
+                        si.id AS item_id, si.entity_type, si.entity_id, si.day_order,
 
-            -- Destination info
-            d.name AS destination_name, d.description AS destination_desc, d.location AS destination_location, 
-            d.open_time AS destination_open_time, d.close_time AS destination_close_time, d.price AS destination_price, 
-            d.mail AS destination_mail,
+                        d.name AS destination_name, d.description AS destination_desc, d.location AS destination_location,
+                        d.open_time AS destination_open_time, d.close_time AS destination_close_time, d.price AS destination_price,
+                        d.mail AS destination_mail,
 
-            -- Destination image
-            i_d.ImageId AS destination_img_id, i_d.ImgUrl AS destination_img_url, i_d.IsPrimary AS destination_img_primary,
+                        i_d.ImageId AS destination_img_id, i_d.ImgUrl AS destination_img_url, i_d.IsPrimary AS destination_img_primary,
 
-            -- Service info
-            sv.name AS service_name, sv.description AS service_desc, sv.location AS service_location, 
-            sv.open_time AS service_open_time, sv.close_time AS service_close_time, sv.email AS service_email,
-            sv.website AS service_website, sv.phone AS service_phone, sv.main_service,
+                        sv.name AS service_name, sv.description AS service_desc, sv.location AS service_location,
+                        sv.open_time AS service_open_time, sv.close_time AS service_close_time, sv.email AS service_email,
+                        sv.website AS service_website, sv.phone AS service_phone, sv.main_service,
 
-            -- Service image
-            i_sv.ImageId AS service_img_id, i_sv.ImgUrl AS service_img_url, i_sv.IsPrimary AS service_img_primary
+                        i_sv.ImageId AS service_img_id, i_sv.ImgUrl AS service_img_url, i_sv.IsPrimary AS service_img_primary
 
-        FROM schedule s
-        LEFT JOIN schedule_items si ON si.schedule_id = s.id
-        LEFT JOIN destination d ON si.entity_type = 'destination' AND si.entity_id = d.id
-        LEFT JOIN img i_d ON i_d.EntityType = 'Destination' AND i_d.EntityId = d.id
+                    FROM schedule s
+                    LEFT JOIN schedule_items si ON si.schedule_id = s.id
+                    LEFT JOIN destination d ON si.entity_type = 'destination' AND si.entity_id = d.id
+                    LEFT JOIN img i_d ON i_d.EntityType = 'Destination' AND i_d.EntityId = d.id
 
-        LEFT JOIN service sv ON (si.entity_type IN ('service', 'muasam', 'vanchuyen') AND si.entity_id = sv.id)
-        LEFT JOIN img i_sv ON i_sv.EntityType = 'Service' AND i_sv.EntityId = sv.id
+                    LEFT JOIN service sv ON (si.entity_type IN ('service', 'muasam', 'vanchuyen') AND si.entity_id = sv.id)
+                    LEFT JOIN img i_sv ON i_sv.EntityType = 'Service' AND i_sv.EntityId = sv.id
 
-        WHERE s.user_id = @userId
-        ORDER BY s.id, si.day_order";
+                    WHERE s.user_id = @userId
+                    ORDER BY s.id, si.day_order";
 
-                using SqlCommand command = new(sql, connection);
+                using MySqlCommand command = new(sql, connection);
                 command.Parameters.AddWithValue("@userId", userId);
-                using SqlDataReader reader = command.ExecuteReader();
+                using MySqlDataReader reader = command.ExecuteReader();
 
                 var schedules = new List<Schedule>();
                 Schedule? currentSchedule = null;
@@ -223,7 +215,7 @@ namespace duLichQuangNam.Controllers
                         lastScheduleId = scheduleId;
                     }
 
-                    if (!reader.IsDBNull(7)) 
+                    if (!reader.IsDBNull(7))
                     {
                         string entityType = reader.GetString(8);
                         int entityId = reader.GetInt32(9);
@@ -237,7 +229,6 @@ namespace duLichQuangNam.Controllers
                             DayOrder = dayOrder
                         };
 
-                      
                         if (entityType == "destination" && !reader.IsDBNull(11))
                         {
                             var destination = new Destination
@@ -253,14 +244,14 @@ namespace duLichQuangNam.Controllers
                                 Images = new List<Img>()
                             };
 
-                            if (!reader.IsDBNull(18)) 
+                            if (!reader.IsDBNull(18))
                             {
                                 var img = new Img
                                 {
                                     ImageId = reader.GetInt32(18),
                                     ImgUrl = reader.GetString(19),
                                     IsPrimary = reader.GetBoolean(20),
-                                    EntityType = "destination",
+                                    EntityType = "Destination",
                                     EntityId = destination.Id
                                 };
                                 destination.Images.Add(img);
@@ -268,7 +259,6 @@ namespace duLichQuangNam.Controllers
 
                             item.Destination = destination;
                         }
-                      
                         else if ((entityType == "muasam" || entityType == "vanchuyen" || entityType == "service") && !reader.IsDBNull(21))
                         {
                             var service = new Service
@@ -286,14 +276,14 @@ namespace duLichQuangNam.Controllers
                                 Images = new List<Img>()
                             };
 
-                            if (!reader.IsDBNull(30)) 
+                            if (!reader.IsDBNull(30))
                             {
                                 var img = new Img
                                 {
                                     ImageId = reader.GetInt32(30),
                                     ImgUrl = reader.GetString(31),
                                     IsPrimary = reader.GetBoolean(32),
-                                    EntityType = "service",
+                                    EntityType = "Service",
                                     EntityId = service.Id
                                 };
                                 service.Images.Add(img);
@@ -314,31 +304,26 @@ namespace duLichQuangNam.Controllers
             }
         }
 
-
-
-
-
-        // GET: /api/schedules/user/{userId}
         [HttpGet("user/{userId}")]
         public IActionResult GetByUserId(int userId)
         {
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                using MySqlConnection connection = new(_connectionString);
                 connection.Open();
 
                 string sql = @"
-            SELECT 
-                s.id, s.user_id, s.name, s.start_date, s.end_date, s.description, s.created_at,
-                si.id AS item_id, si.schedule_id, si.entity_type, si.entity_id, si.day_order
-            FROM schedule s
-            LEFT JOIN schedule_items si ON si.schedule_id = s.id
-            WHERE s.user_id = @userId
-            ORDER BY s.id, si.day_order";
+                    SELECT
+                        s.id, s.user_id, s.name, s.start_date, s.end_date, s.description, s.created_at,
+                        si.id AS item_id, si.schedule_id, si.entity_type, si.entity_id, si.day_order
+                    FROM schedule s
+                    LEFT JOIN schedule_items si ON si.schedule_id = s.id
+                    WHERE s.user_id = @userId
+                    ORDER BY s.id, si.day_order";
 
-                using SqlCommand command = new(sql, connection);
+                using MySqlCommand command = new(sql, connection);
                 command.Parameters.AddWithValue("@userId", userId);
-                using SqlDataReader reader = command.ExecuteReader();
+                using MySqlDataReader reader = command.ExecuteReader();
 
                 var schedules = new List<Schedule>();
                 Schedule? currentSchedule = null;
@@ -386,7 +371,5 @@ namespace duLichQuangNam.Controllers
                 return StatusCode(500, $"Lỗi truy vấn: {ex.Message}");
             }
         }
-
-
     }
 }

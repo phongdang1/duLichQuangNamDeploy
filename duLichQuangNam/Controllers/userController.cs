@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+using MySql.Data.MySqlClient; // Changed from Microsoft.Data.SqlClient
 using Microsoft.Extensions.Configuration;
 using duLichQuangNam.Models;
 using System.Security.Cryptography;
@@ -30,13 +30,13 @@ namespace duLichQuangNam.Controllers
         {
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                using MySqlConnection connection = new(_connectionString); // Changed to MySqlConnection
                 connection.Open();
 
                 string checkUsernameSql = "SELECT COUNT(*) FROM users WHERE username = @username";
-                using SqlCommand checkUsernameCommand = new(checkUsernameSql, connection);
+                using MySqlCommand checkUsernameCommand = new(checkUsernameSql, connection); // Changed to MySqlCommand
                 checkUsernameCommand.Parameters.AddWithValue("@username", newUser.UserName);
-                int usernameExists = (int)checkUsernameCommand.ExecuteScalar();
+                int usernameExists = Convert.ToInt32(checkUsernameCommand.ExecuteScalar()); // MySql returns long, so Convert.ToInt32
 
                 if (usernameExists > 0)
                 {
@@ -44,9 +44,9 @@ namespace duLichQuangNam.Controllers
                 }
 
                 string checkMailSql = "SELECT COUNT(*) FROM users WHERE mail = @mail";
-                using SqlCommand checkMailCommand = new(checkMailSql, connection);
+                using MySqlCommand checkMailCommand = new(checkMailSql, connection); // Changed to MySqlCommand
                 checkMailCommand.Parameters.AddWithValue("@mail", newUser.Mail);
-                int mailExists = (int)checkMailCommand.ExecuteScalar();
+                int mailExists = Convert.ToInt32(checkMailCommand.ExecuteScalar()); // MySql returns long, so Convert.ToInt32
 
                 if (mailExists > 0)
                 {
@@ -58,7 +58,7 @@ namespace duLichQuangNam.Controllers
                 string insertSql = @"
                     INSERT INTO users (name, mail, password, phone, role, age, gender, deleted, address, username)
                     VALUES (@name, @mail, @password, @phone, @role, @age, @gender, 0, @address, @username)";
-                using SqlCommand command = new(insertSql, connection);
+                using MySqlCommand command = new(insertSql, connection); // Changed to MySqlCommand
                 command.Parameters.AddWithValue("@name", newUser.Name);
                 command.Parameters.AddWithValue("@mail", newUser.Mail);
                 command.Parameters.AddWithValue("@password", newUser.Password);
@@ -77,20 +77,21 @@ namespace duLichQuangNam.Controllers
                 return StatusCode(500, $"Lỗi truy vấn: {ex.Message}");
             }
         }
+
         // PUT: /api/users/update/{id}
         [HttpPut("update/{id:int}")]
         public IActionResult UpdateUser(int id, [FromBody] Users updatedUser)
         {
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                using MySqlConnection connection = new(_connectionString); // Changed to MySqlConnection
                 connection.Open();
 
                 // Kiểm tra xem user có tồn tại và chưa bị xóa
                 string checkSql = "SELECT COUNT(*) FROM users WHERE id = @id AND deleted = 0";
-                using SqlCommand checkCmd = new(checkSql, connection);
+                using MySqlCommand checkCmd = new(checkSql, connection); // Changed to MySqlCommand
                 checkCmd.Parameters.AddWithValue("@id", id);
-                int userExists = (int)checkCmd.ExecuteScalar();
+                int userExists = Convert.ToInt32(checkCmd.ExecuteScalar()); // MySql returns long, so Convert.ToInt32
 
                 if (userExists == 0)
                 {
@@ -99,10 +100,10 @@ namespace duLichQuangNam.Controllers
 
                 // Kiểm tra username có bị trùng với user khác không (nếu username được phép sửa)
                 string checkUsernameSql = "SELECT COUNT(*) FROM users WHERE username = @username AND id <> @id";
-                using SqlCommand checkUsernameCmd = new(checkUsernameSql, connection);
+                using MySqlCommand checkUsernameCmd = new(checkUsernameSql, connection); // Changed to MySqlCommand
                 checkUsernameCmd.Parameters.AddWithValue("@username", updatedUser.UserName);
                 checkUsernameCmd.Parameters.AddWithValue("@id", id);
-                int usernameExists = (int)checkUsernameCmd.ExecuteScalar();
+                int usernameExists = Convert.ToInt32(checkUsernameCmd.ExecuteScalar()); // MySql returns long, so Convert.ToInt32
 
                 if (usernameExists > 0)
                 {
@@ -111,10 +112,10 @@ namespace duLichQuangNam.Controllers
 
                 // Kiểm tra mail có bị trùng với user khác không (nếu mail được phép sửa)
                 string checkMailSql = "SELECT COUNT(*) FROM users WHERE mail = @mail AND id <> @id";
-                using SqlCommand checkMailCmd = new(checkMailSql, connection);
+                using MySqlCommand checkMailCmd = new(checkMailSql, connection); // Changed to MySqlCommand
                 checkMailCmd.Parameters.AddWithValue("@mail", updatedUser.Mail);
                 checkMailCmd.Parameters.AddWithValue("@id", id);
-                int mailExists = (int)checkMailCmd.ExecuteScalar();
+                int mailExists = Convert.ToInt32(checkMailCmd.ExecuteScalar()); // MySql returns long, so Convert.ToInt32
 
                 if (mailExists > 0)
                 {
@@ -123,18 +124,18 @@ namespace duLichQuangNam.Controllers
 
                 // Câu lệnh UPDATE
                 string updateSql = @"
-            UPDATE users SET
-                name = @name,
-                mail = @mail,
-                phone = @phone,
-                age = @age,
-                gender = @gender,
-                address = @address,
-                username = @username,
-                role = @role
-            WHERE id = @id";
+                    UPDATE users SET
+                        name = @name,
+                        mail = @mail,
+                        phone = @phone,
+                        age = @age,
+                        gender = @gender,
+                        address = @address,
+                        username = @username,
+                        role = @role
+                    WHERE id = @id";
 
-                using SqlCommand updateCmd = new(updateSql, connection);
+                using MySqlCommand updateCmd = new(updateSql, connection); // Changed to MySqlCommand
                 updateCmd.Parameters.AddWithValue("@name", updatedUser.Name);
                 updateCmd.Parameters.AddWithValue("@mail", updatedUser.Mail);
                 updateCmd.Parameters.AddWithValue("@phone", updatedUser.Phone);
@@ -168,13 +169,13 @@ namespace duLichQuangNam.Controllers
         {
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                using MySqlConnection connection = new(_connectionString); // Changed to MySqlConnection
                 connection.Open();
 
                 string checkUserSql = "SELECT * FROM users WHERE username = @username";
-                using SqlCommand checkUserCommand = new(checkUserSql, connection);
+                using MySqlCommand checkUserCommand = new(checkUserSql, connection); // Changed to MySqlCommand
                 checkUserCommand.Parameters.AddWithValue("@username", login.UserName);
-                using SqlDataReader reader = checkUserCommand.ExecuteReader();
+                using MySqlDataReader reader = checkUserCommand.ExecuteReader(); // Changed to MySqlDataReader
 
                 if (!reader.Read())
                 {
@@ -210,21 +211,22 @@ namespace duLichQuangNam.Controllers
                 return StatusCode(500, $"Lỗi truy vấn: {ex.Message}");
             }
         }
+
         // GET: /Users/{id}
         [HttpGet("{id:int}")]
         public IActionResult GetUserById(int id)
         {
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                using MySqlConnection connection = new(_connectionString); // Changed to MySqlConnection
                 connection.Open();
 
                 string sql = "SELECT id, name, mail, phone, role, age, gender, address, username, deleted " +
                              "FROM users WHERE id = @id AND deleted = 0";
-                using SqlCommand cmd = new(sql, connection);
+                using MySqlCommand cmd = new(sql, connection); // Changed to MySqlCommand
                 cmd.Parameters.AddWithValue("@id", id);
 
-                using SqlDataReader reader = cmd.ExecuteReader();
+                using MySqlDataReader reader = cmd.ExecuteReader(); // Changed to MySqlDataReader
                 if (!reader.Read())
                 {
                     return NotFound(new { message = "Không tìm thấy người dùng" });
@@ -251,18 +253,19 @@ namespace duLichQuangNam.Controllers
                 return StatusCode(500, $"Lỗi truy vấn: {ex.Message}");
             }
         }
+
         // POST: api/users/delete/{id}
         [HttpPost("delete/{id}")]
         public IActionResult SoftDeleteUser(int id)
         {
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                using MySqlConnection connection = new(_connectionString); // Changed to MySqlConnection
                 connection.Open();
 
                 string sql = "UPDATE users SET deleted = 1 WHERE id = @id";
 
-                using SqlCommand command = new(sql, connection);
+                using MySqlCommand command = new(sql, connection); // Changed to MySqlCommand
                 command.Parameters.AddWithValue("@id", id);
 
                 int rowsAffected = command.ExecuteNonQuery();
@@ -286,13 +289,13 @@ namespace duLichQuangNam.Controllers
         {
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                using MySqlConnection connection = new(_connectionString); // Changed to MySqlConnection
                 connection.Open();
 
                 string sql = "SELECT id, name, mail, phone, role, age, gender, address, username, deleted FROM users WHERE deleted = 0";
-                using SqlCommand cmd = new(sql, connection);
+                using MySqlCommand cmd = new(sql, connection); // Changed to MySqlCommand
 
-                using SqlDataReader reader = cmd.ExecuteReader();
+                using MySqlDataReader reader = cmd.ExecuteReader(); // Changed to MySqlDataReader
 
                 var users = new List<Users>();
 
@@ -322,19 +325,17 @@ namespace duLichQuangNam.Controllers
             }
         }
 
-
         // POST: /Users/change-password
         [HttpPost("ChangePassword")]
         public IActionResult ChangePassword([FromBody] ChangePasswordViewModel model)
         {
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                using MySqlConnection connection = new(_connectionString); // Changed to MySqlConnection
                 connection.Open();
 
-               
                 string selectSql = "SELECT password FROM users WHERE username = @username";
-                using SqlCommand selectCommand = new(selectSql, connection);
+                using MySqlCommand selectCommand = new(selectSql, connection); // Changed to MySqlCommand
                 selectCommand.Parameters.AddWithValue("@username", model.UserName);
 
                 var storedPasswordObj = selectCommand.ExecuteScalar();
@@ -345,18 +346,15 @@ namespace duLichQuangNam.Controllers
 
                 string storedPassword = storedPasswordObj.ToString()!;
 
-                
                 if (!VerifyPassword(model.OldPassword, storedPassword))
                 {
                     return Unauthorized(new { message = "Mật khẩu cũ không đúng" });
                 }
 
-                
                 string newHashedPassword = HashPassword(model.NewPassword);
 
-              
                 string updateSql = "UPDATE users SET password = @newPassword WHERE username = @username";
-                using SqlCommand updateCommand = new(updateSql, connection);
+                using MySqlCommand updateCommand = new(updateSql, connection); // Changed to MySqlCommand
                 updateCommand.Parameters.AddWithValue("@newPassword", newHashedPassword);
                 updateCommand.Parameters.AddWithValue("@username", model.UserName);
 
@@ -417,8 +415,5 @@ namespace duLichQuangNam.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
     }
-
-
 }

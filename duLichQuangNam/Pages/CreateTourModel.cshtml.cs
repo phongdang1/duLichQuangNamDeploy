@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using duLichQuangNam.Models;
 using Microsoft.AspNetCore.Authorization;
 
-namespace duLichQuangNam.Pages  
+namespace duLichQuangNam.Pages
 {
     [Authorize(Roles = "admin")]
     public class CreateTourModel : PageModel
@@ -20,7 +20,6 @@ namespace duLichQuangNam.Pages
 
         [BindProperty] public InputModel Input { get; set; } = new();
 
-        
         public class InputModel
         {
             [StringLength(100)] public string Type { get; set; } = string.Empty;
@@ -48,14 +47,13 @@ namespace duLichQuangNam.Pages
 
             try
             {
-                await using var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
+                await using var conn = new MySqlConnection(_config.GetConnectionString("DefaultConnection"));
                 await conn.OpenAsync();
 
-               
-                var cmd = new SqlCommand(@"
-                    INSERT INTO Tour (Type,Name,Description,Detail,Note,Deleted)
-                    OUTPUT INSERTED.Id
-                    VALUES (@Type,@Name,@Desc,@Detail,@Note,0);", conn);
+                var cmd = new MySqlCommand(@"
+                    INSERT INTO tour (Type,Name,Description,Detail,Note,Deleted)
+                    VALUES (@Type,@Name,@Desc,@Detail,@Note,0);
+                    SELECT LAST_INSERT_ID();", conn);
 
                 cmd.Parameters.AddWithValue("@Type", Input.Type);
                 cmd.Parameters.AddWithValue("@Name", Input.Name);
@@ -63,9 +61,8 @@ namespace duLichQuangNam.Pages
                 cmd.Parameters.AddWithValue("@Detail", Input.Detail);
                 cmd.Parameters.AddWithValue("@Note", Input.Note);
 
-                var newId = (int)await cmd.ExecuteScalarAsync();
+                var newId = Convert.ToInt32(await cmd.ExecuteScalarAsync());
 
-              
                 if (Input.Images?.Count > 0)
                 {
                     var root = Path.Combine(_env.WebRootPath, "uploads", "tours", newId.ToString());
@@ -83,7 +80,7 @@ namespace duLichQuangNam.Pages
                             await img.CopyToAsync(fs);
                         }
 
-                        var imgCmd = new SqlCommand(@"
+                        var imgCmd = new MySqlCommand(@"
                             INSERT INTO img (EntityType,EntityId,ImgUrl,IsPrimary)
                             VALUES ('tour',@Id,@Url,@IsPri);", conn);
 

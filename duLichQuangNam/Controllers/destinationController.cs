@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using duLichQuangNam.Models;
 
 namespace duLichQuangNam.Controllers
@@ -22,7 +22,7 @@ namespace duLichQuangNam.Controllers
 
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                using MySqlConnection connection = new(_connectionString);
                 connection.Open();
 
                 string sql = @"
@@ -35,8 +35,8 @@ namespace duLichQuangNam.Controllers
                     WHERE d.deleted = 0
                     ORDER BY d.Id";
 
-                using SqlCommand command = new(sql, connection);
-                using SqlDataReader reader = command.ExecuteReader();
+                using MySqlCommand command = new(sql, connection);
+                using MySqlDataReader reader = command.ExecuteReader();
 
                 Dictionary<int, Destination> destinationDict = new();
 
@@ -91,13 +91,13 @@ namespace duLichQuangNam.Controllers
         {
             try
             {
-                using var conn = new SqlConnection(_connectionString);
+                using var conn = new MySqlConnection(_connectionString);
                 conn.Open();
                 var sql = @"INSERT INTO destination
-                    (Name,Description,Type,Location,OpenTime,CloseTime,Price,Mail,Deleted)
-                    OUTPUT INSERTED.Id
-                    VALUES (@Name,@Desc,@Type,@Loc,@Open,@Close,@Price,@Mail,0)";
-                using var cmd = new SqlCommand(sql, conn);
+                    (Name,Description,Type,Location,Open_Time,Close_Time,Price,Mail,Deleted)
+                    VALUES (@Name,@Desc,@Type,@Loc,@Open,@Close,@Price,@Mail,0);
+                    SELECT LAST_INSERT_ID();";
+                using var cmd = new MySqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@Name", dto.Name);
                 cmd.Parameters.AddWithValue("@Desc", dto.Description);
                 cmd.Parameters.AddWithValue("@Type", dto.Type);
@@ -106,7 +106,7 @@ namespace duLichQuangNam.Controllers
                 cmd.Parameters.AddWithValue("@Close", (object?)dto.CloseTime ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@Price", (object?)dto.Price ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@Mail", dto.Mail);
-                var newId = (int)cmd.ExecuteScalar()!;
+                var newId = Convert.ToInt32(cmd.ExecuteScalar());
                 return Ok(newId);
             }
             catch (Exception ex)
@@ -120,11 +120,11 @@ namespace duLichQuangNam.Controllers
         {
             try
             {
-                using var conn = new SqlConnection(_connectionString);
+                using var conn = new MySqlConnection(_connectionString);
                 conn.Open();
 
                 var sql = "UPDATE destination SET Deleted = 1 WHERE Id = @Id";
-                using var cmd = new SqlCommand(sql, conn);
+                using var cmd = new MySqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@Id", id);
 
                 int rowsAffected = cmd.ExecuteNonQuery();
@@ -141,13 +141,12 @@ namespace duLichQuangNam.Controllers
             }
         }
 
-
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                using MySqlConnection connection = new(_connectionString);
                 connection.Open();
 
                 string sql = @"
@@ -159,10 +158,10 @@ namespace duLichQuangNam.Controllers
                     LEFT JOIN img i ON i.EntityType = 'Destination' AND i.EntityId = d.Id
                     WHERE d.id = @id AND d.deleted = 0";
 
-                using SqlCommand command = new(sql, connection);
+                using MySqlCommand command = new(sql, connection);
                 command.Parameters.AddWithValue("@id", id);
 
-                using SqlDataReader reader = command.ExecuteReader();
+                using MySqlDataReader reader = command.ExecuteReader();
 
                 Destination? destination = null;
 

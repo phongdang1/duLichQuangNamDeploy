@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+using MySql.Data.MySqlClient; // Change from Microsoft.Data.SqlClient
 using duLichQuangNam.Models;
 
 namespace duLichQuangNam.Controllers
@@ -12,9 +12,10 @@ namespace duLichQuangNam.Controllers
 
         public ServiceController(IConfiguration configuration)
         {
+            // Ensure your appsettings.json has a "DefaultConnection" configured for MySQL.
             _connectionString = configuration.GetConnectionString("DefaultConnection")!;
         }
-       
+
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -22,22 +23,25 @@ namespace duLichQuangNam.Controllers
 
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                // Use MySqlConnection instead of SqlConnection
+                using MySqlConnection connection = new(_connectionString);
                 connection.Open();
 
                 string sql = @"
-            SELECT 
-                s.Id, s.Name, s.Location, s.Type, s.Open_Time, s.Close_Time, 
-                s.Email, s.Website, s.Phone, s.Main_Service, s.Deleted, s.description,
-                i.ImageId, i.EntityType, i.EntityId, i.ImgUrl, i.IsPrimary
-            FROM service s
-            LEFT JOIN img i 
-                ON i.EntityType = 'Service' AND i.EntityId = s.Id
-            WHERE s.Deleted = 0
-            ORDER BY s.Id";
+                    SELECT
+                        s.Id, s.Name, s.Location, s.Type, s.Open_Time, s.Close_Time,
+                        s.Email, s.Website, s.Phone, s.Main_Service, s.Deleted, s.description,
+                        i.ImageId, i.EntityType, i.EntityId, i.ImgUrl, i.IsPrimary
+                    FROM service s
+                    LEFT JOIN img i
+                        ON i.EntityType = 'Service' AND i.EntityId = s.Id
+                    WHERE s.Deleted = 0
+                    ORDER BY s.Id";
 
-                using SqlCommand command = new(sql, connection);
-                using SqlDataReader reader = command.ExecuteReader();
+                // Use MySqlCommand instead of SqlCommand
+                using MySqlCommand command = new(sql, connection);
+                // Use MySqlDataReader instead of SqlDataReader
+                using MySqlDataReader reader = command.ExecuteReader();
 
                 Dictionary<int, Service> serviceDict = new();
 
@@ -67,8 +71,8 @@ namespace duLichQuangNam.Controllers
                         serviceDict.Add(serviceId, service);
                     }
 
-                    
-                    if (!reader.IsDBNull(12))
+                    // Check if ImageId is DBNull before trying to read it
+                    if (!reader.IsDBNull(12)) // Column index for ImageId in the query
                     {
                         var image = new Img
                         {
@@ -98,12 +102,14 @@ namespace duLichQuangNam.Controllers
         {
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                // Use MySqlConnection instead of SqlConnection
+                using MySqlConnection connection = new(_connectionString);
                 connection.Open();
 
                 string sql = "UPDATE service SET Deleted = 1 WHERE Id = @id";
 
-                using SqlCommand command = new(sql, connection);
+                // Use MySqlCommand instead of SqlCommand
+                using MySqlCommand command = new(sql, connection);
                 command.Parameters.AddWithValue("@id", id);
 
                 int rowsAffected = command.ExecuteNonQuery();
@@ -126,23 +132,26 @@ namespace duLichQuangNam.Controllers
         {
             try
             {
-                using SqlConnection connection = new(_connectionString);
+                // Use MySqlConnection instead of SqlConnection
+                using MySqlConnection connection = new(_connectionString);
                 connection.Open();
 
                 string sql = @"
-            SELECT 
-                s.Id, s.Name, s.Location, s.Type, s.Open_Time, s.Close_Time, 
-                s.Email, s.Website, s.Phone, s.Main_Service, s.Deleted, s.Description,
-                i.ImageId, i.EntityType, i.EntityId, i.ImgUrl, i.IsPrimary
-            FROM service s
-            LEFT JOIN img i 
-                ON i.EntityType = 'Service' AND i.EntityId = s.Id
-            WHERE s.Id = @id AND s.Deleted = 0";
+                    SELECT
+                        s.Id, s.Name, s.Location, s.Type, s.Open_Time, s.Close_Time,
+                        s.Email, s.Website, s.Phone, s.Main_Service, s.Deleted, s.Description,
+                        i.ImageId, i.EntityType, i.EntityId, i.ImgUrl, i.IsPrimary
+                    FROM service s
+                    LEFT JOIN img i
+                        ON i.EntityType = 'Service' AND i.EntityId = s.Id
+                    WHERE s.Id = @id AND s.Deleted = 0";
 
-                using SqlCommand command = new(sql, connection);
+                // Use MySqlCommand instead of SqlCommand
+                using MySqlCommand command = new(sql, connection);
                 command.Parameters.AddWithValue("@id", id);
 
-                using SqlDataReader reader = command.ExecuteReader();
+                // Use MySqlDataReader instead of SqlDataReader
+                using MySqlDataReader reader = command.ExecuteReader();
 
                 Service? service = null;
 
@@ -168,7 +177,7 @@ namespace duLichQuangNam.Controllers
                         };
                     }
 
-                    if (!reader.IsDBNull(12))
+                    if (!reader.IsDBNull(12)) // Column index for ImageId in the query
                     {
                         var img = new Img
                         {
@@ -194,8 +203,5 @@ namespace duLichQuangNam.Controllers
                 return StatusCode(500, $"Lỗi truy vấn CSDL: {ex.Message}");
             }
         }
-
-
-        
     }
 }
