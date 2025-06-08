@@ -26,7 +26,6 @@ C:\Users\phong\source\repos\duLichQuangNam\duLichQuangNam\obj\Debug\net8.0\stati
 C:\Users\phong\source\repos\duLichQuangNam\duLichQuangNam\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.duLichQuangNam.props
 C:\Users\phong\source\repos\duLichQuangNam\duLichQuangNam\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.duLichQuangNam.props
 C:\Users\phong\source\repos\duLichQuangNam\duLichQuangNam\obj\Debug\net8.0\staticwebassets.pack.json
-C:\Users\phong\source\repos\duLichQuangNam\duLichQuangNam\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\phong\source\repos\duLichQuangNam\duLichQuangNam\obj\Debug\net8.0\duLichQuangNam.dll
 C:\Users\phong\source\repos\duLichQuangNam\duLichQuangNam\obj\Debug\net8.0\refint\duLichQuangNam.dll
 C:\Users\phong\source\repos\duLichQuangNam\duLichQuangNam\obj\Debug\net8.0\duLichQuangNam.pdb
