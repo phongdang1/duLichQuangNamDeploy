@@ -388,11 +388,11 @@ namespace duLichQuangNam.Controllers
             return hashedInputPassword == storedPassword;
         }
 
-        private string GenerateJwtToken(Users user)
+        private static string GenerateJwtToken(Users user)
         {
-            var secretKey = _configuration["Jwt:SecretKey"];
-            var issuer = _configuration["Jwt:Issuer"];
-            var audience = _configuration["Jwt:Audience"];
+            var secretKey = Environment.GetEnvironmentVariable("JWT_SECRETKEY");
+            var issuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
+            var audience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey!));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
