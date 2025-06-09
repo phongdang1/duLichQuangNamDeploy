@@ -390,7 +390,7 @@ namespace duLichQuangNam.Controllers
 
         private static string GenerateJwtToken(Users user)
         {
-            var secretKey = Environment.GetEnvironmentVariable("JWT_SECRETKEY");
+            var secretKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY");
             var issuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
             var audience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
 
