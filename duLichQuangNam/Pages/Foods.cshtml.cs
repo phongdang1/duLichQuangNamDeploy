@@ -30,7 +30,7 @@ namespace duLichQuangNam.Pages
 
             if (id.HasValue)
             {
-                var response = await client.GetAsync($"https://localhost:7270/api/foods/{id.Value}");
+                var response = await client.GetAsync($"https://localhost:8080/api/foods/{id.Value}");
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
@@ -39,7 +39,7 @@ namespace duLichQuangNam.Pages
             }
             else
             {
-                var response = await client.GetAsync("https://localhost:7270/api/foods");
+                var response = await client.GetAsync("https://localhost:8080/api/foods");
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();

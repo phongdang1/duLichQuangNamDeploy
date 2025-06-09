@@ -30,7 +30,7 @@ namespace duLichQuangNam.Pages
 
             try
             {
-                var response = await client.GetAsync("https://localhost:7270/api/foods");
+                var response = await client.GetAsync("https://localhost:8080/api/foods");
                 if (response.IsSuccessStatusCode)
                 {
                     var list = await response.Content.ReadFromJsonAsync<List<Foods>>();
@@ -56,7 +56,7 @@ namespace duLichQuangNam.Pages
 
             try
             {
-                var response = await client.PostAsync($"https://localhost:7270/api/foods/delete/{id}", null); 
+                var response = await client.PostAsync($"https://localhost:8080/api/foods/delete/{id}", null); 
                 if (response.IsSuccessStatusCode)
                 {
                     SuccessMessage = $"Deleted Successfully ID = {id}";

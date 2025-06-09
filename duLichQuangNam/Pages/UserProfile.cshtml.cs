@@ -33,7 +33,7 @@ namespace duLichQuangNam.Pages
                 return RedirectToPage("/Login");
             }
 
-            var apiUrl = $"https://localhost:7270/api/Users/{userIdClaim}";
+            var apiUrl = $"https://localhost:8080/api/Users/{userIdClaim}";
             try
             {
                 var user = await _httpClient.GetFromJsonAsync<Users>(apiUrl);
@@ -65,7 +65,7 @@ namespace duLichQuangNam.Pages
                 return RedirectToPage("/Login");
             }
 
-            var apiUrl = $"https://localhost:7270/api/Users/update/{userIdClaim}";
+            var apiUrl = $"https://localhost:8080/api/Users/update/{userIdClaim}";
             try
             {
                 var response = await _httpClient.PutAsJsonAsync(apiUrl, User1);

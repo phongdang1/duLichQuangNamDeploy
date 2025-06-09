@@ -27,7 +27,7 @@ namespace duLichQuangNam.Pages
         public async Task OnGetAsync()
         {
             var client = _clientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7270/api/destinations");
+            var response = await client.GetAsync("https://localhost:8080/api/destinations");
 
             if (response.IsSuccessStatusCode)
             {

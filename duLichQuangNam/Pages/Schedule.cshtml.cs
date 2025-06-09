@@ -63,7 +63,7 @@ namespace duLichQuangNam.Pages
         {
             var client = _clientFactory.CreateClient();
 
-            var destinationResponse = await client.GetAsync("https://localhost:7270/api/destinations");
+            var destinationResponse = await client.GetAsync("https://localhost:8080/api/destinations");
             if (destinationResponse.IsSuccessStatusCode)
             {
                 var json = await destinationResponse.Content.ReadAsStringAsync();
@@ -89,7 +89,7 @@ namespace duLichQuangNam.Pages
                 }
             }
 
-            var serviceResponse = await client.GetAsync("https://localhost:7270/api/services");
+            var serviceResponse = await client.GetAsync("https://localhost:8080/api/services");
             if (serviceResponse.IsSuccessStatusCode)
             {
                 var json = await serviceResponse.Content.ReadAsStringAsync();

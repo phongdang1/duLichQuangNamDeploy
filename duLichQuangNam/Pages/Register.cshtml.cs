@@ -40,7 +40,7 @@ namespace duLichQuangNam.Pages
                 var client = _httpClientFactory.CreateClient();
 
                
-                var response = await client.PostAsJsonAsync("https://localhost:7270/api/Users/register", RegisterData);
+                var response = await client.PostAsJsonAsync("https://localhost:8080/api/Users/register", RegisterData);
 
                
                 if (response.IsSuccessStatusCode)

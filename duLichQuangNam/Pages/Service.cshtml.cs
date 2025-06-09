@@ -56,7 +56,7 @@ namespace duLichQuangNam.Pages
 
             if (id.HasValue)
             {
-                var response = await client.GetAsync($"https://localhost:7270/api/services/{id.Value}");
+                var response = await client.GetAsync($"https://localhost:8080/api/services/{id.Value}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -70,7 +70,7 @@ namespace duLichQuangNam.Pages
             }
             else
             {
-                var response = await client.GetAsync("https://localhost:7270/api/services");
+                var response = await client.GetAsync("https://localhost:8080/api/services");
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();

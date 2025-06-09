@@ -16,7 +16,7 @@ public class IndexModel : PageModel
         using (var client = new HttpClient())
         {
            
-            var foodResponse = await client.GetAsync("https://localhost:7270/api/foods");
+            var foodResponse = await client.GetAsync("https://localhost:8080/api/foods");
             if (foodResponse.IsSuccessStatusCode)
             {
                 var json = await foodResponse.Content.ReadAsStringAsync();
@@ -24,7 +24,7 @@ public class IndexModel : PageModel
             }
 
            
-            var tourResponse = await client.GetAsync("https://localhost:7270/api/tours");
+            var tourResponse = await client.GetAsync("https://localhost:8080/api/tours");
             if (tourResponse.IsSuccessStatusCode)
             {
                 var json = await tourResponse.Content.ReadAsStringAsync();
@@ -32,7 +32,7 @@ public class IndexModel : PageModel
             }
 
           
-            var stayResponse = await client.GetAsync("https://localhost:7270/api/stays");
+            var stayResponse = await client.GetAsync("https://localhost:8080/api/stays");
             if (stayResponse.IsSuccessStatusCode)
             {
                 var json = await stayResponse.Content.ReadAsStringAsync();
@@ -40,7 +40,7 @@ public class IndexModel : PageModel
             }
 
             
-            var destinationResponse = await client.GetAsync("https://localhost:7270/api/destinations");
+            var destinationResponse = await client.GetAsync("https://localhost:8080/api/destinations");
             if (destinationResponse.IsSuccessStatusCode)
             {
                 var json = await destinationResponse.Content.ReadAsStringAsync();
@@ -48,7 +48,7 @@ public class IndexModel : PageModel
             }
 
           
-            var serviceResponse = await client.GetAsync("https://localhost:7270/api/services");
+            var serviceResponse = await client.GetAsync("https://localhost:8080/api/services");
             if (serviceResponse.IsSuccessStatusCode)
             {
                 var json = await serviceResponse.Content.ReadAsStringAsync();
