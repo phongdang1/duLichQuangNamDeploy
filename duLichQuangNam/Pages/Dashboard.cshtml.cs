@@ -70,7 +70,7 @@ namespace duLichQuangNam.Pages
             {
                 try
                 {
-                    var url = $"https://localhost:8080/api/{m.api}";
+                    var url = $"https://dulichquangnamdeploy.onrender.com/api/{m.api}";
                     var data = await client.GetFromJsonAsync<List<ApiItem>>(url) ?? new();
 
                     Cards.Add(new CardVM(m.title, data.Count, m.list));

@@ -33,7 +33,7 @@ namespace duLichQuangNam.Pages
                 return RedirectToPage("/Login");
             }
 
-            var apiUrl = $"https://localhost:8080/api/Users/{userIdClaim}";
+            var apiUrl = $"https://dulichquangnamdeploy.onrender.com/api/Users/{userIdClaim}";
             try
             {
                 var user = await _httpClient.GetFromJsonAsync<Users>(apiUrl);
@@ -64,7 +64,7 @@ namespace duLichQuangNam.Pages
                 return RedirectToPage("/Login");
             }
 
-            var apiUrlGetUser = $"https://localhost:8080/api/Users/{userIdClaim}";
+            var apiUrlGetUser = $"https://dulichquangnamdeploy.onrender.com/api/Users/{userIdClaim}";
             var user = await _httpClient.GetFromJsonAsync<Users>(apiUrlGetUser);
             if (user == null)
             {
@@ -74,7 +74,7 @@ namespace duLichQuangNam.Pages
             Input.UserName = user.UserName;
 
 
-            var apiUrlChangePass = "https://localhost:8080/api/Users/ChangePassword";
+            var apiUrlChangePass = "https://dulichquangnamdeploy.onrender.com/api/Users/ChangePassword";
 
             var response = await _httpClient.PostAsJsonAsync(apiUrlChangePass, Input);
 

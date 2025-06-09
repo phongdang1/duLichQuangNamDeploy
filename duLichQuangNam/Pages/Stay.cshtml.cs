@@ -27,7 +27,7 @@ namespace duLichQuangNam.Pages
         public async Task OnGetAsync()
         {
             var client = _clientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:8080/api/stays");
+            var response = await client.GetAsync("https://dulichquangnamdeploy.onrender.com/api/stays");
 
             if (response.IsSuccessStatusCode)
             {

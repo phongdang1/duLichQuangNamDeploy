@@ -27,7 +27,7 @@ namespace duLichQuangNam.Pages
             var client = _httpClientFactory.CreateClient();
             try
             {
-                var response = await client.GetAsync("https://localhost:8080/api/destinations"); // ??i l?i URL API c?a b?n
+                var response = await client.GetAsync("https://dulichquangnamdeploy.onrender.com/api/destinations"); // ??i l?i URL API c?a b?n
                 if (response.IsSuccessStatusCode)
                 {
                     var list = await response.Content.ReadFromJsonAsync<List<Destination>>();
@@ -53,7 +53,7 @@ namespace duLichQuangNam.Pages
 
             try
             {
-                var response = await client.PostAsync($"https://localhost:8080/api/destinations/delete/{id}", null); // POST soft delete
+                var response = await client.PostAsync($"https://dulichquangnamdeploy.onrender.com/api/destinations/delete/{id}", null); // POST soft delete
                 if (response.IsSuccessStatusCode)
                 {
                     SuccessMessage = $"Deleted Successfully ID = {id}";

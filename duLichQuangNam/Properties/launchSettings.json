@@ -16,7 +16,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:8080;http://localhost:5298"
+      "applicationUrl": "https://dulichquangnamdeploy.onrender.com/;http://localhost:5298"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -30,8 +30,8 @@
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "environmentVariables": {
-        "ASPNETCORE_HTTPS_PORTS": "8081",
-        "ASPNETCORE_HTTP_PORTS": "8080"
+        "ASPNETCORE_HTTPS_PORTS": "8080",
+        "ASPNETCORE_HTTP_PORTS": "8081"
       },
       "publishAllPorts": true,
       "useSSL": true

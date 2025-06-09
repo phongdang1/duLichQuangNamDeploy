@@ -30,7 +30,7 @@ namespace duLichQuangNam.Pages
 
             try
             {
-                var response = await client.GetAsync("https://localhost:8080/api/stays");
+                var response = await client.GetAsync("https://dulichquangnamdeploy.onrender.com/api/stays");
                 if (response.IsSuccessStatusCode)
                 {
                     var list = await response.Content.ReadFromJsonAsync<List<Stay>>();
@@ -56,7 +56,7 @@ namespace duLichQuangNam.Pages
 
             try
             {
-                var response = await client.PostAsync($"https://localhost:8080/api/stays/delete/{id}", null); 
+                var response = await client.PostAsync($"https://dulichquangnamdeploy.onrender.com/api/stays/delete/{id}", null); 
                 if (response.IsSuccessStatusCode)
                 {
                     SuccessMessage = $"Deleted Successfully ID = {id}";

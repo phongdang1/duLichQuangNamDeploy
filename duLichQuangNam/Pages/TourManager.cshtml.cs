@@ -30,7 +30,7 @@ namespace duLichQuangNam.Pages
 
             try
             {
-                var response = await client.GetAsync("https://localhost:8080/api/tours");
+                var response = await client.GetAsync("https://dulichquangnamdeploy.onrender.com/api/tours");
                 if (response.IsSuccessStatusCode)
                 {
                     var list = await response.Content.ReadFromJsonAsync<List<Tour>>();
@@ -56,7 +56,7 @@ namespace duLichQuangNam.Pages
 
             try
             {
-                var response = await client.PostAsync($"https://localhost:8080/api/tours/delete/{id}", null); 
+                var response = await client.PostAsync($"https://dulichquangnamdeploy.onrender.com/api/tours/delete/{id}", null); 
                 if (response.IsSuccessStatusCode)
                 {
                     SuccessMessage = $"Deleted Successfully ID = {id}";

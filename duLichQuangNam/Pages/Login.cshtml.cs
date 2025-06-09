@@ -36,7 +36,7 @@ namespace duLichQuangNam.Pages
             try
             {
                 var client = _httpClientFactory.CreateClient();
-                var response = await client.PostAsJsonAsync("https://localhost:8080/api/Users/login", LoginData);
+                var response = await client.PostAsJsonAsync("https://dulichquangnamdeploy.onrender.com/api/Users/login", LoginData);
 
                 if (response.IsSuccessStatusCode)
                 {

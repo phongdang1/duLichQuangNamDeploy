@@ -28,7 +28,7 @@ namespace duLichQuangNam.Pages
 
             try
             {
-                var response = await client.GetAsync("https://localhost:8080/api/services"); 
+                var response = await client.GetAsync("https://dulichquangnamdeploy.onrender.com/api/services"); 
                 if (response.IsSuccessStatusCode)
                 {
                     var list = await response.Content.ReadFromJsonAsync<List<Service>>();
@@ -54,7 +54,7 @@ namespace duLichQuangNam.Pages
 
             try
             {
-                var response = await client.PostAsync($"https://localhost:8080/api/services/delete/{id}", null); 
+                var response = await client.PostAsync($"https://dulichquangnamdeploy.onrender.com/api/services/delete/{id}", null); 
                 if (response.IsSuccessStatusCode)
                 {
                     SuccessMessage = $"Deleted successfully ID = {id}";

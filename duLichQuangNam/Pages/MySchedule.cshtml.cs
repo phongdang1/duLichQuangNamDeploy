@@ -32,7 +32,7 @@ namespace duLichQuangNam.Pages
             }
 
             var response = await _httpClient.GetFromJsonAsync<List<Schedule>>(
-                $"https://localhost:8080/api/schedules/user/{userId}/details");
+                $"https://dulichquangnamdeploy.onrender.com/api/schedules/user/{userId}/details");
 
             if (response != null)
             {
