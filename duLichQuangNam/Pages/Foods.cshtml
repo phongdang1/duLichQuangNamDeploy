@@ -19,11 +19,37 @@
                 <p class="card-text text-success">
                     <strong>
                         @(Model.SelectedFood.Price % 1 == 0
-                            ? Model.SelectedFood.Price.ToString("C0", culture) 
-                            : Model.SelectedFood.Price.ToString("C", culture)) 
+                            ? Model.SelectedFood.Price.ToString("C0", culture)
+                            : Model.SelectedFood.Price.ToString("C", culture))
                     </strong>
                 </p>
             </div>
+        </div>
+
+        <!-- PHẦN HIỂN THỊ ĐÁNH GIÁ -->
+        <div class="mt-5">
+            <h4 class="text-center mb-3">Đánh giá món ăn</h4>
+
+            @if (Model.FoodRates != null && Model.FoodRates.Any())
+            {
+                <ul class="list-group">
+                    @foreach (var rate in Model.FoodRates)
+                    {
+                        <li class="list-group-item">
+                            <img src="~/images/ava.png" width="30" height="30" class="rounded-circle" />
+                            <strong>Số sao:</strong> <span class="text-warning">@rate.Star ★</span><br />
+                            @if (!string.IsNullOrWhiteSpace(rate.Comment))
+                            {
+                                <strong>Bình luận:</strong> @rate.Comment
+                            }
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-muted text-center">Chưa có đánh giá nào cho món ăn này.</p>
+            }
         </div>
     </div>
 }
@@ -38,6 +64,7 @@ else
                placeholder="Tìm kiếm món ăn theo tên..." />
         <button type="submit" class="btn btn-primary ms-2">Tìm</button>
     </form>
+
     @if (Model.FoodList != null && Model.FoodList.Any())
     {
         <div class="row">

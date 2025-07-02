@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: dulichquangnam
+    env: docker
+    plan: free
+    dockerfilePath: duLichQuangNam/Dockerfile
