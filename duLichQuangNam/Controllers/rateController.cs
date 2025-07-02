@@ -48,12 +48,12 @@ namespace duLichQuangNam.Controllers
                     rates.Add(new Rate
                     {
                         Id = reader.GetInt32("Id"),
-                        UserId = reader.GetInt32("UserId"),
+                        UserId = reader.GetInt32("User_Id"),
                         Comment = reader.IsDBNull("Comment") ? null : reader.GetString("Comment"),
                         Star = reader.GetInt32("Star"),
                         Deleted = reader.GetBoolean("Deleted"),
-                        EntityType = reader.GetString("EntityType"),
-                        EntityId = reader.GetInt32("EntityId")
+                        EntityType = reader.GetString("Entity_Type"),
+                        EntityId = reader.GetInt32("Entity_Id")
                     });
                 }
 
