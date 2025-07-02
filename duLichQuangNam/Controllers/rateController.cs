@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
 using duLichQuangNam.Models;
+using System.Data;
 
 namespace duLichQuangNam.Controllers
 {
@@ -15,31 +16,44 @@ namespace duLichQuangNam.Controllers
             _connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION")!;
         }
 
-        // GET: /api/rates
+        // GET: /api/rates?entityType=food&entityId=5
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetByEntity([FromQuery] string entityType, [FromQuery] int entityId)
         {
             var rates = new List<Rate>();
+
+            if (string.IsNullOrWhiteSpace(entityType) || entityId <= 0)
+            {
+                return BadRequest("Thiếu hoặc sai tham số entityType và entityId.");
+            }
 
             try
             {
                 using var connection = new MySqlConnection(_connectionString);
                 connection.Open();
 
-                string sql = "SELECT Id, UserId, Comment, Star, Deleted FROM rate WHERE Deleted = 0";
+                string sql = @"
+                    SELECT Id, User_Id, Comment, Star, Deleted, Entity_Type, Entity_Id 
+                    FROM rate 
+                    WHERE Deleted = 0 AND Entity_Type = @entityType AND Entity_Id = @entityId";
 
                 using var command = new MySqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@entityType", entityType);
+                command.Parameters.AddWithValue("@entityId", entityId);
+
                 using var reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
                     rates.Add(new Rate
                     {
-                        Id = reader.GetInt32(0),
-                        UserId = reader.GetInt32(1),
-                        Comment = reader.IsDBNull(2) ? null : reader.GetString(2),
-                        Star = reader.GetInt32(3),
-                        Deleted = reader.GetBoolean(4)
+                        Id = reader.GetInt32("Id"),
+                        UserId = reader.GetInt32("UserId"),
+                        Comment = reader.IsDBNull("Comment") ? null : reader.GetString("Comment"),
+                        Star = reader.GetInt32("Star"),
+                        Deleted = reader.GetBoolean("Deleted"),
+                        EntityType = reader.GetString("EntityType"),
+                        EntityId = reader.GetInt32("EntityId")
                     });
                 }
 

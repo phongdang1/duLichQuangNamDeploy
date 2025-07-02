@@ -255,6 +255,7 @@ namespace duLichQuangNam.Controllers
         }
 
         // POST: api/users/delete/{id}
+        [Authorize(Roles = "admin,adminUser")]
         [HttpPost("delete/{id}")]
         public IActionResult SoftDeleteUser(int id)
         {

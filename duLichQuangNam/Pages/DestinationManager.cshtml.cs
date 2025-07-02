@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using duLichQuangNam.Models;
 using System.Net.Http.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace duLichQuangNam.Pages
 {
+    [Authorize(Roles = "adminDes,admin")]
     public class DestinationManagerModel : PageModel
     {
         private readonly IHttpClientFactory _httpClientFactory;

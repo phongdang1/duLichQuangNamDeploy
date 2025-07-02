@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace duLichQuangNam.Pages
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "adminUser,admin")]
     public class UsersManagerModel : PageModel
     {
         private readonly IHttpClientFactory _httpClientFactory;

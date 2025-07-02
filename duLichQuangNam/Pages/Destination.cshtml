@@ -21,8 +21,9 @@
                 <p class="card-text"><strong>Vị trí:</strong> @Model.SelectedDestination.Location</p>
                 <p class="card-text"><strong>Giờ mở cửa:</strong> @Model.SelectedDestination.OpenTime.ToString("HH:mm")</p>
                 <p class="card-text"><strong>Giờ đóng cửa:</strong> @Model.SelectedDestination.CloseTime.ToString("HH:mm")</p>
-                <p class="card-text text-success">
+                <p class="card-text">
                     <strong>
+                        Giá:
                         @(Model.SelectedDestination.Price % 1 == 0
                             ? Model.SelectedDestination.Price.ToString("C0", culture)
                             : Model.SelectedDestination.Price.ToString("C", culture))

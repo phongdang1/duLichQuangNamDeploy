@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using duLichQuangNam.Models;
@@ -17,6 +17,7 @@ namespace duLichQuangNam.Pages
 
         public List<Foods> FoodList { get; set; } = new();
         public Foods? SelectedFood { get; set; }
+        public List<Rate> FoodRates { get; set; } = new();
 
         [BindProperty(SupportsGet = true)]
         public int? id { get; set; }
@@ -30,11 +31,20 @@ namespace duLichQuangNam.Pages
 
             if (id.HasValue)
             {
+                // Lấy thông tin món ăn
                 var response = await client.GetAsync($"https://dulichquangnamdeploy.onrender.com/api/foods/{id.Value}");
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
                     SelectedFood = JsonConvert.DeserializeObject<Foods>(json);
+                }
+
+                // Gọi API lấy đánh giá theo entityType=food và entityId
+                var rateResponse = await client.GetAsync($"https://dulichquangnamdeploy.onrender.com/api/rates?entityType=food&entityId={id.Value}");
+                if (rateResponse.IsSuccessStatusCode)
+                {
+                    var rateJson = await rateResponse.Content.ReadAsStringAsync();
+                    FoodRates = JsonConvert.DeserializeObject<List<Rate>>(rateJson) ?? new();
                 }
             }
             else
@@ -64,7 +74,6 @@ namespace duLichQuangNam.Pages
             }
         }
 
-
         private string RemoveVietnameseSigns(string text)
         {
             if (string.IsNullOrEmpty(text)) return text;
@@ -83,7 +92,7 @@ namespace duLichQuangNam.Pages
             }
 
             var noDiacritics = sb.ToString().Normalize(System.Text.NormalizationForm.FormC);
-            noDiacritics = Regex.Replace(noDiacritics, @"[^\w\s]", ""); 
+            noDiacritics = Regex.Replace(noDiacritics, @"[^\w\s]", "");
 
             return noDiacritics;
         }

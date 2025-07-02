@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace duLichQuangNam.Pages
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "adminTour,admin")]
     public class TourManagerModel : PageModel
     {
         private readonly IHttpClientFactory _httpClientFactory;

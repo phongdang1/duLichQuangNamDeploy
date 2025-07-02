@@ -1,14 +1,14 @@
 ﻿@using System.Security.Claims
 @{
-    
+
     var isAuthenticated = User.Identity.IsAuthenticated;
     var userName = User.Identity.Name;
     var isAdmin = User.IsInRole("admin");
 
-    
+
     var current = Context.Request.Path.ToString().ToLower();
 
-    
+
     string Active(string path) =>
         (path == "/index" && (current == "/" || current == "/index"))
             || current == path
@@ -38,13 +38,8 @@
 
                     @if (isAuthenticated)
                     {
-                        if (isAdmin)
-                        {
-                            <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item"><a class="nav-link @Active("/dashboard")" asp-page="/Dashboard">Dashboard</a></li>
-                            </ul>
-                        }
-                        else
+
+                        if (User.IsInRole("user"))
                         {
                             <ul class="navbar-nav flex-grow-1">
                                 <li class="nav-item"><a class="nav-link @Active("/index")" asp-page="/Index">Trang chủ</a></li>
@@ -53,6 +48,12 @@
                                 <li class="nav-item"><a class="nav-link @Active("/stay")" asp-page="/Stay">Lưu trú</a></li>
                                 <li class="nav-item"><a class="nav-link @Active("/foods")" asp-page="/Foods">Ẩm thực</a></li>
                                 <li class="nav-item"><a class="nav-link @Active("/service")" asp-page="/Service">Dịch vụ</a></li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item"><a class="nav-link @Active("/dashboard")" asp-page="/Dashboard">Dashboard</a></li>
                             </ul>
                         }
                     }
