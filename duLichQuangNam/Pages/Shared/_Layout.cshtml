@@ -59,31 +59,31 @@
                         if (User.IsInRole("adminUser"))
                         {
                             <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item"><a class="nav-link @Active("/UserManager")" asp-page="/UserManager">UserManager</a></li>
+                                <li class="nav-item"><a class="nav-link @Active("/userManager")" asp-page="/userManager">userManager</a></li>
                             </ul>
                         }
                         if (User.IsInRole("adminDes"))
                         {
                             <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item"><a class="nav-link @Active("/DestinationManager")" asp-page="/DestinationManager">DestinationManager</a></li>
+                                <li class="nav-item"><a class="nav-link @Active("/destinationManager")" asp-page="/destinationManager">destinationManager</a></li>
                             </ul>
                         }
                         if (User.IsInRole("adminTour"))
                         {
                             <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item"><a class="nav-link @Active("/TourManager")" asp-page="/TourManager">TourManager</a></li>
+                                <li class="nav-item"><a class="nav-link @Active("/tourManager")" asp-page="/tourManager">tourManager</a></li>
                             </ul>
                         }
                         if (User.IsInRole("adminStay"))
                         {
                             <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item"><a class="nav-link @Active("/StayManager")" asp-page="/StayManager">StayManager</a></li>
+                                <li class="nav-item"><a class="nav-link @Active("/stayManager")" asp-page="/stayManager">stayManager</a></li>
                             </ul>
                         }
                         if (User.IsInRole("adminService"))
                         {
                             <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item"><a class="nav-link @Active("/ServiceManager")" asp-page="/ServiceManager">ServiceManager</a></li>
+                                <li class="nav-item"><a class="nav-link @Active("/serviceManager")" asp-page="/serviceManager">serviceManager</a></li>
                             </ul>
                         }
                     }
