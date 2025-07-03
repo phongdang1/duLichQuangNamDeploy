@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using duLichQuangNam.Models;
@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Security.Claims;
 
 namespace duLichQuangNam.Pages
 {
@@ -21,8 +22,13 @@ namespace duLichQuangNam.Pages
         public List<Service> ServiceList { get; set; } = new();
 
         public Service? ServiceDetail { get; set; }
+        // Thuộc tính bind từ form đánh giá
+        [BindProperty]
+        public int Star { get; set; }
 
-        public List<Rate> Rates { get; set; } = new(); // Danh s�ch ?�nh gi�
+        [BindProperty]
+        public string? Comment { get; set; }
+        public List<Rate> Rates { get; set; } = new(); // Danh sách ?ánh giá
 
         [BindProperty(SupportsGet = true)]
         public int? id { get; set; }
@@ -52,6 +58,53 @@ namespace duLichQuangNam.Pages
             return noDiacritics;
         }
 
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!id.HasValue || Star < 1 || Star > 5)
+            {
+                ModelState.AddModelError("", "Dữ liệu đánh giá không hợp lệ.");
+                return await ReloadAndReturn(); // load lại dữ liệu
+            }
+
+            if (!User.Identity?.IsAuthenticated ?? true || !User.IsInRole("user"))
+            {
+                return Forbid(); // Chặn nếu không phải user
+            }
+
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            {
+                return Forbid(); // Không lấy được UserId
+            }
+
+            var rate = new Rate
+            {
+                UserId = userId,
+                EntityType = "food",
+                EntityId = id.Value,
+                Star = Star,
+                Comment = Comment
+            };
+
+            var client = _clientFactory.CreateClient();
+            var jsonContent = new StringContent(JsonConvert.SerializeObject(rate), Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("https://dulichquangnamdeploy.onrender.com/api/rates", jsonContent);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                ModelState.AddModelError("", "Không thể gửi đánh giá. Vui lòng thử lại.");
+            }
+
+            return await ReloadAndReturn(); // Gửi xong load lại dữ liệu
+        }
+
+        private async Task<IActionResult> ReloadAndReturn()
+        {
+            await OnGetAsync();
+            return Page();
+        }
+
         public async Task OnGetAsync()
         {
             var client = _clientFactory.CreateClient();
@@ -67,7 +120,7 @@ namespace duLichQuangNam.Pages
                     ServiceDetail = JsonConvert.DeserializeObject<Service>(json);
                 }
 
-                // L?y ?�nh gi� cho d?ch v? hi?n t?i
+                // L?y ?ánh giá cho d?ch v? hi?n t?i
                 var rateResponse = await client.GetAsync($"https://dulichquangnamdeploy.onrender.com/api/rates?entityType=service&entityId={id.Value}");
                 if (rateResponse.IsSuccessStatusCode)
                 {

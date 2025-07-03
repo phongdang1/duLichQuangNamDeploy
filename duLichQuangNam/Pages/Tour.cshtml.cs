@@ -3,6 +3,8 @@ using Newtonsoft.Json;
 using duLichQuangNam.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
+using System.Security.Claims;
+using System.Text;
 
 namespace duLichQuangNam.Pages
 {
@@ -17,7 +19,12 @@ namespace duLichQuangNam.Pages
 
         public List<Tour> TourList { get; set; } = new();
         public Tour? SelectedTour { get; set; }
+        // Thuộc tính bind từ form đánh giá
+        [BindProperty]
+        public int Star { get; set; }
 
+        [BindProperty]
+        public string? Comment { get; set; }
         // Danh sách đánh giá của tour (gọi từ /api/rates)
         public List<Rate> TourRates { get; set; } = new();
 
@@ -67,6 +74,53 @@ namespace duLichQuangNam.Pages
                     }
                 }
             }
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!id.HasValue || Star < 1 || Star > 5)
+            {
+                ModelState.AddModelError("", "Dữ liệu đánh giá không hợp lệ.");
+                return await ReloadAndReturn(); // load lại dữ liệu
+            }
+
+            if (!User.Identity?.IsAuthenticated ?? true || !User.IsInRole("user"))
+            {
+                return Forbid(); // Chặn nếu không phải user
+            }
+
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            {
+                return Forbid(); // Không lấy được UserId
+            }
+
+            var rate = new Rate
+            {
+                UserId = userId,
+                EntityType = "food",
+                EntityId = id.Value,
+                Star = Star,
+                Comment = Comment
+            };
+
+            var client = _clientFactory.CreateClient();
+            var jsonContent = new StringContent(JsonConvert.SerializeObject(rate), Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("https://dulichquangnamdeploy.onrender.com/api/rates", jsonContent);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                ModelState.AddModelError("", "Không thể gửi đánh giá. Vui lòng thử lại.");
+            }
+
+            return await ReloadAndReturn(); // Gửi xong load lại dữ liệu
+        }
+
+        private async Task<IActionResult> ReloadAndReturn()
+        {
+            await OnGetAsync();
+            return Page();
         }
 
         private string RemoveVietnameseSigns(string text)
