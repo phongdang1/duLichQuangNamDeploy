@@ -50,6 +50,12 @@
                                 <li class="nav-item"><a class="nav-link @Active("/service")" asp-page="/Service">Dịch vụ</a></li>
                             </ul>
                         }
+                        if (User.IsInRole("admin"))
+                        {
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item"><a class="nav-link @Active("/Dashboard")" asp-page="/Dashboard">Dashboard</a></li>
+                            </ul>
+                        }
                         if (User.IsInRole("adminUser"))
                         {
                             <ul class="navbar-nav flex-grow-1">
