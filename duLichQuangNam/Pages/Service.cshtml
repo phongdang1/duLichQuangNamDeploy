@@ -44,7 +44,10 @@
                 @foreach (var rate in Model.Rates)
                 {
                     <div class="border rounded p-3 mb-3">
-                        <img src="~/images/ava.png" width="30" height="30" class="rounded-circle" />
+                        <div class="d-flex align-items-center mb-1">
+                            <img src="~/images/ava.png" width="30" height="30" class="rounded-circle me-2" />
+                            <strong>@rate.UserNameCmt</strong>
+                        </div>
                         <strong>Số sao:</strong> <span class="text-warning">@rate.Star ★</span><br />
                         <p class="mb-0"><strong>Bình luận:</strong> @rate.Comment</p>
                     </div>
