@@ -100,7 +100,7 @@ namespace duLichQuangNam.Pages
             var rate = new Rate
             {
                 UserId = userId,
-                EntityType = "food",
+                EntityType = "destination",
                 EntityId = id.Value,
                 Star = Star,
                 Comment = Comment

@@ -2,6 +2,7 @@
 @model duLichQuangNam.Pages.TourModel
 @{
     ViewData["Title"] = "Tour du lịch Quảng Nam";
+    var isUser = User.Identity?.IsAuthenticated == true && User.IsInRole("user");
 }
 
 @if (Model.id.HasValue && Model.SelectedTour != null)

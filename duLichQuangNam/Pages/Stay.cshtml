@@ -3,7 +3,7 @@
 @using System.Globalization
 @{
     ViewData["Title"] = "Chỗ ở Quảng Nam";
-
+    var isUser = User.Identity?.IsAuthenticated == true && User.IsInRole("user");
     var culture = new CultureInfo("vi-VN");
     var numberFormat = (NumberFormatInfo)culture.NumberFormat.Clone();
     numberFormat.CurrencyDecimalDigits = 0;
