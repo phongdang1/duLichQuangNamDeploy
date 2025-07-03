@@ -35,7 +35,7 @@ namespace duLichQuangNam.Controllers
                 string sql = @"
             SELECT r.Id, r.User_Id, u.Name, r.Comment, r.Star, r.Deleted, r.Entity_Type, r.Entity_Id 
             FROM rate r
-            JOIN user u ON r.User_Id = u.Id
+            JOIN users u ON r.User_Id = u.Id
             WHERE r.Deleted = 0 AND r.Entity_Type = @entityType AND r.Entity_Id = @entityId";
 
                 using var command = new MySqlCommand(sql, connection);
