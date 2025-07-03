@@ -50,10 +50,10 @@
                                 <li class="nav-item"><a class="nav-link @Active("/service")" asp-page="/Service">Dịch vụ</a></li>
                             </ul>
                         }
-                        else
+                        if (User.IsInRole("adminUser"))
                         {
                             <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item"><a class="nav-link @Active("/dashboard")" asp-page="/Dashboard">Dashboard</a></li>
+                                <li class="nav-item"><a class="nav-link @Active("/UserManager")" asp-page="/User Manager">Dashboard</a></li>
                             </ul>
                         }
                     }
