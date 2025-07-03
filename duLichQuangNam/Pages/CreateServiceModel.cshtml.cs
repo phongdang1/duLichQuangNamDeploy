@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace duLichQuangNam.Pages
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin, adminService")]
     public class CreateServiceModel : PageModel
     {
         private readonly IConfiguration _config;

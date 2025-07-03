@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using MySql.Data.MySqlClient;
 
-[Authorize(Roles = "admin")]
+[Authorize(Roles = "admin, adminFood")]
 public class CreateFoodModel : PageModel
 {
     private readonly IConfiguration _config;

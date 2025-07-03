@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace duLichQuangNam.Pages
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin, adminTour")]
     public class CreateTourModel : PageModel
     {
         private readonly IConfiguration _config;

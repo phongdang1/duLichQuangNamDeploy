@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace duLichQuangNam.Pages
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin, adminStay")]
     public class CreateStayModel : PageModel
     {
         private readonly IConfiguration _config;

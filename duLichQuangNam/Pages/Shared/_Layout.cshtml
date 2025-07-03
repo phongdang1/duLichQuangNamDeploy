@@ -59,7 +59,7 @@
                         if (User.IsInRole("adminUser"))
                         {
                             <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item"><a class="nav-link @Active("/userManager")" asp-page="/userManager">userManager</a></li>
+                                <li class="nav-item"><a class="nav-link @Active("/usersManager")" asp-page="/userManager">userManager</a></li>
                             </ul>
                         }
                         if (User.IsInRole("adminDes"))
@@ -84,6 +84,12 @@
                         {
                             <ul class="navbar-nav flex-grow-1">
                                 <li class="nav-item"><a class="nav-link @Active("/serviceManager")" asp-page="/serviceManager">serviceManager</a></li>
+                            </ul>
+                        }
+                        if (User.IsInRole("adminFood"))
+                        {
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item"><a class="nav-link @Active("/foodManager")" asp-page="/foodManager">foodManager</a></li>
                             </ul>
                         }
                     }
