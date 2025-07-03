@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using duLichQuangNam.Models;
 using System.Text.RegularExpressions;
+using System.Net.Http;
+using System.Text;
+using System.Security.Claims;
 
 namespace duLichQuangNam.Pages
 {
@@ -25,13 +28,19 @@ namespace duLichQuangNam.Pages
         [BindProperty(SupportsGet = true)]
         public string? SearchName { get; set; }
 
+        // Thuộc tính bind từ form đánh giá
+        [BindProperty]
+        public int Star { get; set; }
+
+        [BindProperty]
+        public string? Comment { get; set; }
+
         public async Task OnGetAsync()
         {
             var client = _clientFactory.CreateClient();
 
             if (id.HasValue)
             {
-                // Lấy thông tin món ăn
                 var response = await client.GetAsync($"https://dulichquangnamdeploy.onrender.com/api/foods/{id.Value}");
                 if (response.IsSuccessStatusCode)
                 {
@@ -39,7 +48,6 @@ namespace duLichQuangNam.Pages
                     SelectedFood = JsonConvert.DeserializeObject<Foods>(json);
                 }
 
-                // Gọi API lấy đánh giá theo entityType=food và entityId
                 var rateResponse = await client.GetAsync($"https://dulichquangnamdeploy.onrender.com/api/rates?entityType=food&entityId={id.Value}");
                 if (rateResponse.IsSuccessStatusCode)
                 {
@@ -72,6 +80,53 @@ namespace duLichQuangNam.Pages
                     }
                 }
             }
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!id.HasValue || Star < 1 || Star > 5)
+            {
+                ModelState.AddModelError("", "Dữ liệu đánh giá không hợp lệ.");
+                return await ReloadAndReturn(); // load lại dữ liệu
+            }
+
+            if (!User.Identity?.IsAuthenticated ?? true || !User.IsInRole("user"))
+            {
+                return Forbid(); // Chặn nếu không phải user
+            }
+
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            {
+                return Forbid(); // Không lấy được UserId
+            }
+
+            var rate = new Rate
+            {
+                UserId = userId,
+                EntityType = "food",
+                EntityId = id.Value,
+                Star = Star,
+                Comment = Comment
+            };
+
+            var client = _clientFactory.CreateClient();
+            var jsonContent = new StringContent(JsonConvert.SerializeObject(rate), Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("https://dulichquangnamdeploy.onrender.com/api/rates", jsonContent);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                ModelState.AddModelError("", "Không thể gửi đánh giá. Vui lòng thử lại.");
+            }
+
+            return await ReloadAndReturn(); // Gửi xong load lại dữ liệu
+        }
+
+        private async Task<IActionResult> ReloadAndReturn()
+        {
+            await OnGetAsync();
+            return Page();
         }
 
         private string RemoveVietnameseSigns(string text)

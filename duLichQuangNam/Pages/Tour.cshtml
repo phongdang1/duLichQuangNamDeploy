@@ -6,7 +6,6 @@
 
 @if (Model.id.HasValue && Model.SelectedTour != null)
 {
-    
     <div class="container mt-5">
         <h2 class="text-center mb-4">@Model.SelectedTour.Name</h2>
 
@@ -19,11 +18,36 @@
                 <p class="card-text"><strong>Ghi chú:</strong> @Model.SelectedTour.Note</p>
             </div>
         </div>
+
+        <!-- PHẦN ĐÁNH GIÁ -->
+        <div class="mt-5">
+            <h4 class="text-center mb-3">Đánh giá tour</h4>
+
+            @if (Model.TourRates != null && Model.TourRates.Any())
+            {
+                <ul class="list-group">
+                    @foreach (var rate in Model.TourRates)
+                    {
+                        <li class="list-group-item">
+                            <img src="~/images/ava.png" width="30" height="30" class="rounded-circle" />
+                            <strong>Số sao:</strong> <span class="text-warning">@rate.Star ★</span><br />
+                            @if (!string.IsNullOrWhiteSpace(rate.Comment))
+                            {
+                                <strong>Bình luận:</strong> @rate.Comment
+                            }
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-muted text-center">Chưa có đánh giá nào cho tour này.</p>
+            }
+        </div>
     </div>
 }
 else
 {
-    
     <h1 class="text-center mb-5">@ViewData["Title"]</h1>
     <form method="get" class="mb-4 d-flex justify-content-center">
         <input type="text"

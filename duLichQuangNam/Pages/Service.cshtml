@@ -34,6 +34,26 @@
                 <p><strong>Mô tả:</strong> @Model.ServiceDetail.Description</p>
             </div>
         </div>
+
+        <!-- Hiển thị đánh giá -->
+        <div class="mt-5">
+            <h4 class="text-primary">Đánh giá</h4>
+            @if (Model.Rates != null && Model.Rates.Any())
+            {
+                @foreach (var rate in Model.Rates)
+                {
+                    <div class="border rounded p-3 mb-3">
+                        <img src="~/images/ava.png" width="30" height="30" class="rounded-circle" />
+                        <strong>Số sao:</strong> <span class="text-warning">@rate.Star ★</span><br />
+                        <p class="mb-0"><strong>Bình luận:</strong> @rate.Comment</p>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="text-muted">Chưa có đánh giá nào cho dịch vụ này.</p>
+            }
+        </div>
     </div>
 }
 else

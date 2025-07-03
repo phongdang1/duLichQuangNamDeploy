@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using duLichQuangNam.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +17,9 @@ namespace duLichQuangNam.Pages
 
         public List<Tour> TourList { get; set; } = new();
         public Tour? SelectedTour { get; set; }
+
+        // Danh sách đánh giá của tour (gọi từ /api/rates)
+        public List<Rate> TourRates { get; set; } = new();
 
         [BindProperty(SupportsGet = true)]
         public int? id { get; set; }
@@ -53,11 +56,19 @@ namespace duLichQuangNam.Pages
                 if (id.HasValue)
                 {
                     SelectedTour = TourList.FirstOrDefault(t => t.Id == id.Value);
+
+                    // GỌI API ĐÁNH GIÁ CỦA TOUR
+                    var rateUrl = $"https://dulichquangnamdeploy.onrender.com/api/rates?entityType=tour&entityId={id.Value}";
+                    var rateResponse = await client.GetAsync(rateUrl);
+                    if (rateResponse.IsSuccessStatusCode)
+                    {
+                        var rateJson = await rateResponse.Content.ReadAsStringAsync();
+                        TourRates = JsonConvert.DeserializeObject<List<Rate>>(rateJson) ?? new();
+                    }
                 }
             }
         }
 
-        
         private string RemoveVietnameseSigns(string text)
         {
             if (string.IsNullOrEmpty(text)) return text;

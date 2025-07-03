@@ -64,5 +64,51 @@ namespace duLichQuangNam.Controllers
                 return StatusCode(500, $"Lỗi truy vấn: {ex.Message}");
             }
         }
+
+        // POST: /api/rates
+        [HttpPost]
+        public IActionResult CreateRate([FromBody] Rate newRate)
+        {
+            if (newRate == null ||
+                newRate.UserId <= 0 ||
+                string.IsNullOrWhiteSpace(newRate.EntityType) ||
+                newRate.EntityId <= 0 ||
+                newRate.Star < 1 || newRate.Star > 5)
+            {
+                return BadRequest("Thông tin đánh giá không hợp lệ.");
+            }
+
+            try
+            {
+                using var connection = new MySqlConnection(_connectionString);
+                connection.Open();
+
+                string insertSql = @"
+                    INSERT INTO rate (User_Id, Comment, Star, Deleted, Entity_Type, Entity_Id)
+                    VALUES (@userId, @comment, @star, 0, @entityType, @entityId)";
+
+                using var command = new MySqlCommand(insertSql, connection);
+                command.Parameters.AddWithValue("@userId", newRate.UserId);
+                command.Parameters.AddWithValue("@comment", (object?)newRate.Comment ?? DBNull.Value);
+                command.Parameters.AddWithValue("@star", newRate.Star);
+                command.Parameters.AddWithValue("@entityType", newRate.EntityType);
+                command.Parameters.AddWithValue("@entityId", newRate.EntityId);
+
+                int rowsAffected = command.ExecuteNonQuery();
+
+                if (rowsAffected > 0)
+                {
+                    return Ok(new { message = "Đánh giá đã được thêm thành công." });
+                }
+                else
+                {
+                    return StatusCode(500, "Không thể thêm đánh giá.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi khi thêm đánh giá: {ex.Message}");
+            }
+        }
     }
 }

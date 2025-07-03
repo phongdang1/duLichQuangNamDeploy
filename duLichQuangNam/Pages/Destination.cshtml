@@ -7,8 +7,6 @@
     var culture = new CultureInfo("vi-VN");
 }
 
-
-
 @if (Model.id.HasValue && Model.SelectedDestination != null)
 {
     <div class="container mt-5">
@@ -32,6 +30,31 @@
                 <p class="card-text"><strong>Email liên hệ:</strong> @Model.SelectedDestination.Mail</p>
                 <p class="card-text"><strong>Mô tả:</strong> @Model.SelectedDestination.Description</p>
             </div>
+        </div>
+
+        <!-- ĐÁNH GIÁ -->
+        <div class="mt-5">
+            <h4 class="text-center mb-3">Đánh giá địa điểm</h4>
+            @if (Model.DestinationRates != null && Model.DestinationRates.Any())
+            {
+                <ul class="list-group">
+                    @foreach (var rate in Model.DestinationRates)
+                    {
+                        <li class="list-group-item">
+                            <img src="~/images/ava.png" width="30" height="30" class="rounded-circle" />
+                            <strong>Số sao:</strong> <span class="text-warning">@rate.Star ★</span><br />
+                            @if (!string.IsNullOrWhiteSpace(rate.Comment))
+                            {
+                                <strong>Bình luận:</strong> @rate.Comment
+                            }
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-muted text-center">Chưa có đánh giá nào cho địa điểm này.</p>
+            }
         </div>
     </div>
 }

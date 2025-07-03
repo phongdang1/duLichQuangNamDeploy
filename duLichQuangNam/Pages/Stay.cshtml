@@ -39,6 +39,32 @@
                 <p class="card-text text-success"><strong>Giá:</strong> @FormatPrice(Model.SelectedStay.Price)</p>
             </div>
         </div>
+
+        <!-- PHẦN HIỂN THỊ ĐÁNH GIÁ -->
+        <div class="mt-5">
+            <h4 class="text-center mb-3">Đánh giá chỗ ở</h4>
+
+            @if (Model.StayRates != null && Model.StayRates.Any())
+            {
+                <ul class="list-group">
+                    @foreach (var rate in Model.StayRates)
+                    {
+                        <li class="list-group-item">
+                            <img src="~/images/ava.png" width="30" height="30" class="rounded-circle" />
+                            <strong>Số sao:</strong> <span class="text-warning">@rate.Star ★</span><br />
+                            @if (!string.IsNullOrWhiteSpace(rate.Comment))
+                            {
+                                <strong>Bình luận:</strong> @rate.Comment
+                            }
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-muted text-center">Chưa có đánh giá nào cho chỗ ở này.</p>
+            }
+        </div>
     </div>
 }
 else

@@ -22,6 +22,8 @@ namespace duLichQuangNam.Pages
 
         public Service? ServiceDetail { get; set; }
 
+        public List<Rate> Rates { get; set; } = new(); // Danh sách ?ánh giá
+
         [BindProperty(SupportsGet = true)]
         public int? id { get; set; }
 
@@ -56,16 +58,21 @@ namespace duLichQuangNam.Pages
 
             if (id.HasValue)
             {
-                var response = await client.GetAsync($"https://dulichquangnamdeploy.onrender.com/api/services/{id.Value}");
+                // L?y chi ti?t d?ch v?
+                var serviceResponse = await client.GetAsync($"https://dulichquangnamdeploy.onrender.com/api/services/{id.Value}");
 
-                if (response.IsSuccessStatusCode)
+                if (serviceResponse.IsSuccessStatusCode)
                 {
-                    var json = await response.Content.ReadAsStringAsync();
+                    var json = await serviceResponse.Content.ReadAsStringAsync();
                     ServiceDetail = JsonConvert.DeserializeObject<Service>(json);
                 }
-                else
+
+                // L?y ?ánh giá cho d?ch v? hi?n t?i
+                var rateResponse = await client.GetAsync($"https://dulichquangnamdeploy.onrender.com/api/rates?entityType=service&entityId={id.Value}");
+                if (rateResponse.IsSuccessStatusCode)
                 {
-                    ServiceDetail = null;
+                    var rateJson = await rateResponse.Content.ReadAsStringAsync();
+                    Rates = JsonConvert.DeserializeObject<List<Rate>>(rateJson) ?? new();
                 }
             }
             else
