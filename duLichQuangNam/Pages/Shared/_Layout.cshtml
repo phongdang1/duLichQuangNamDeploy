@@ -53,7 +53,31 @@
                         if (User.IsInRole("adminUser"))
                         {
                             <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item"><a class="nav-link @Active("/UserManager")" asp-page="/User Manager">Dashboard</a></li>
+                                <li class="nav-item"><a class="nav-link @Active("/UserManager")" asp-page="/UserManager">UserManager</a></li>
+                            </ul>
+                        }
+                        if (User.IsInRole("adminDes"))
+                        {
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item"><a class="nav-link @Active("/DestinationManager")" asp-page="/DestinationManager">DestinationManager</a></li>
+                            </ul>
+                        }
+                        if (User.IsInRole("adminTour"))
+                        {
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item"><a class="nav-link @Active("/TourManager")" asp-page="/TourManager">TourManager</a></li>
+                            </ul>
+                        }
+                        if (User.IsInRole("adminStay"))
+                        {
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item"><a class="nav-link @Active("/StayManager")" asp-page="/StayManager">StayManager</a></li>
+                            </ul>
+                        }
+                        if (User.IsInRole("adminService"))
+                        {
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item"><a class="nav-link @Active("/ServiceManager")" asp-page="/ServiceManager">ServiceManager</a></li>
                             </ul>
                         }
                     }
