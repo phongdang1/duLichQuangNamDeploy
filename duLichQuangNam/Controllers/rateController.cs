@@ -33,9 +33,10 @@ namespace duLichQuangNam.Controllers
                 connection.Open();
 
                 string sql = @"
-                    SELECT Id, User_Id, Comment, Star, Deleted, Entity_Type, Entity_Id 
-                    FROM rate 
-                    WHERE Deleted = 0 AND Entity_Type = @entityType AND Entity_Id = @entityId";
+            SELECT r.Id, r.User_Id, u.Name, r.Comment, r.Star, r.Deleted, r.Entity_Type, r.Entity_Id 
+            FROM rate r
+            JOIN user u ON r.User_Id = u.Id
+            WHERE r.Deleted = 0 AND r.Entity_Type = @entityType AND r.Entity_Id = @entityId";
 
                 using var command = new MySqlCommand(sql, connection);
                 command.Parameters.AddWithValue("@entityType", entityType);
@@ -53,6 +54,7 @@ namespace duLichQuangNam.Controllers
                         Star = reader.GetInt32("Star"),
                         Deleted = reader.GetBoolean("Deleted"),
                         EntityType = reader.GetString("Entity_Type"),
+                        UserNameCmt = reader.GetString("Name"),
                         EntityId = reader.GetInt32("Entity_Id")
                     });
                 }
@@ -64,6 +66,7 @@ namespace duLichQuangNam.Controllers
                 return StatusCode(500, $"Lỗi truy vấn: {ex.Message}");
             }
         }
+
 
         // POST: /api/rates
         [HttpPost]
