@@ -58,14 +58,23 @@ namespace duLichQuangNam.Pages
 
             try
             {
-                // Lấy JWT token từ Claims của người dùng đã đăng nhập
-                // LoginModel của bạn đã lưu JWT vào một claim tên là "token"
-                var jwtToken = await HttpContext.GetTokenAsync("token");
+                string? jwtToken = null;
 
+                // Kiểm tra xem người dùng đã được xác thực chưa
+                if (User.Identity?.IsAuthenticated == true)
+                {
+                    // Tìm Claim có loại "token" (tên mà bạn đã dùng khi lưu trong LoginModel)
+                    var tokenClaim = User.FindFirst("token");
+                    if (tokenClaim != null)
+                    {
+                        jwtToken = tokenClaim.Value;
+                    }
+                }
+
+                // Nếu không tìm thấy JWT trong claims, có thể người dùng chưa đăng nhập đúng cách
+                // hoặc phiên cookie không chứa JWT.
                 if (string.IsNullOrEmpty(jwtToken))
                 {
-                    // Nếu không tìm thấy JWT trong claims, có thể người dùng chưa đăng nhập đúng cách
-                    // hoặc phiên cookie không chứa JWT.
                     ErrorMessage = "Không tìm thấy token xác thực. Vui lòng đăng nhập lại.";
                     return RedirectToPage(new { ErrorMessage, SuccessMessage });
                 }
@@ -106,7 +115,6 @@ namespace duLichQuangNam.Pages
                         detailedErrorMessage = errorContent;
                     }
 
-                    // Cập nhật ErrorMessage với thông báo chi tiết hơn
                     ErrorMessage = $"Lỗi xóa: {response.StatusCode} - {detailedErrorMessage}";
                 }
             }
@@ -119,4 +127,5 @@ namespace duLichQuangNam.Pages
             return RedirectToPage(new { ErrorMessage, SuccessMessage });
         }
     }
+
 }
