@@ -97,7 +97,6 @@ namespace duLichQuangNam.Controllers
         }
 
         // POST: api/services/delete/{id}
-        [Authorize(Roles = "admin,adminService")]
         [HttpPost("delete/{id}")]
         public IActionResult DeleteService(int id)
         {

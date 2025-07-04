@@ -89,7 +89,6 @@ namespace duLichQuangNam.Controllers
         }
 
         // POST: /api/tours/delete/{id}
-        [Authorize(Roles = "admin,adminTour")]
         [HttpPost("delete/{id}")]
         public IActionResult SoftDelete(int id)
         {

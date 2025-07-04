@@ -79,7 +79,7 @@ namespace duLichQuangNam.Controllers
                 return StatusCode(500, $"Lỗi truy vấn: {ex.Message}");
             }
         }
-        [Authorize(Roles = "admin,adminFood")]
+        
         [HttpPost("delete/{id}")]
         public IActionResult SoftDelete(int id)
         {

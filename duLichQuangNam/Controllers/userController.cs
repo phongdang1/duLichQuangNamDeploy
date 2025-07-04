@@ -254,32 +254,19 @@ namespace duLichQuangNam.Controllers
             }
         }
 
-        [Authorize]
+        // POST: api/users/delete/{id}
+        
         [HttpPost("delete/{id}")]
         public IActionResult SoftDeleteUser(int id)
         {
-            if (User?.Identity == null || !User.Identity.IsAuthenticated)
-            {
-                // Trường hợp chưa đăng nhập / chưa có token
-                return Unauthorized(new { message = "Bạn chưa đăng nhập hoặc token không hợp lệ." });
-            }
-
-            // Lấy claim role (có thể là "role" hoặc ClaimTypes.Role tùy cấu hình JWT)
-            var roleClaim = User.Claims.FirstOrDefault(c =>
-                c.Type == ClaimTypes.Role || c.Type == "role");
-
-            if (roleClaim == null || roleClaim.Value != "admin")
-            {
-                return Forbid("Bạn không có quyền xóa người dùng.");
-            }
-
             try
             {
-                using MySqlConnection connection = new(_connectionString);
+                using MySqlConnection connection = new(_connectionString); // Changed to MySqlConnection
                 connection.Open();
 
                 string sql = "UPDATE users SET deleted = 1 WHERE id = @id";
-                using MySqlCommand command = new(sql, connection);
+
+                using MySqlCommand command = new(sql, connection); // Changed to MySqlCommand
                 command.Parameters.AddWithValue("@id", id);
 
                 int rowsAffected = command.ExecuteNonQuery();
@@ -289,14 +276,13 @@ namespace duLichQuangNam.Controllers
                     return NotFound($"Không tìm thấy người dùng với ID = {id}");
                 }
 
-                return Ok($"Người dùng với ID = {id} đã bị đánh dấu là đã xóa.");
+                return Ok($"Người dùng với ID = {id} đã được đánh dấu là đã xóa.");
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Lỗi khi xóa người dùng: {ex.Message}");
+                return StatusCode(500, $"Lỗi xóa người dùng: {ex.Message}");
             }
         }
-
 
         // GET: /Users
         [HttpGet]
@@ -416,7 +402,7 @@ namespace duLichQuangNam.Controllers
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim("name", user.Name),
-                new Claim(ClaimTypes.Role, user.Role),
+                new Claim("role", user.Role),
                 new Claim("username", user.UserName)
             };
 
