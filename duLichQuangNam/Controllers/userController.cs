@@ -254,19 +254,25 @@ namespace duLichQuangNam.Controllers
             }
         }
 
-        // POST: api/users/delete/{id}
-        [Authorize(Roles = "admin,adminUser")]
+        [Authorize]
         [HttpPost("delete/{id}")]
         public IActionResult SoftDeleteUser(int id)
         {
+            // Lấy claim role (trường hợp chỉ có 1 role là chuỗi)
+            var roleClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role || c.Type == "role");
+
+            if (roleClaim == null || roleClaim.Value != "admin")
+            {
+                return Forbid("Bạn không có quyền xóa người dùng.");
+            }
+
             try
             {
-                using MySqlConnection connection = new(_connectionString); // Changed to MySqlConnection
+                using MySqlConnection connection = new(_connectionString);
                 connection.Open();
 
                 string sql = "UPDATE users SET deleted = 1 WHERE id = @id";
-
-                using MySqlCommand command = new(sql, connection); // Changed to MySqlCommand
+                using MySqlCommand command = new(sql, connection);
                 command.Parameters.AddWithValue("@id", id);
 
                 int rowsAffected = command.ExecuteNonQuery();
@@ -276,11 +282,11 @@ namespace duLichQuangNam.Controllers
                     return NotFound($"Không tìm thấy người dùng với ID = {id}");
                 }
 
-                return Ok($"Người dùng với ID = {id} đã được đánh dấu là đã xóa.");
+                return Ok($"Người dùng với ID = {id} đã bị đánh dấu là đã xóa.");
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Lỗi xóa người dùng: {ex.Message}");
+                return StatusCode(500, $"Lỗi khi xóa người dùng: {ex.Message}");
             }
         }
 
