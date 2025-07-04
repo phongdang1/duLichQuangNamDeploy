@@ -8,6 +8,7 @@ using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace duLichQuangNam.Controllers
 {
@@ -255,7 +256,7 @@ namespace duLichQuangNam.Controllers
         }
 
         // POST: api/users/delete/{id}
-        [Authorize(Roles = "admin")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
         [HttpPost("delete/{id}")]
         public IActionResult SoftDeleteUser(int id)
         {
