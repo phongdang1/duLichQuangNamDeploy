@@ -258,8 +258,15 @@ namespace duLichQuangNam.Controllers
         [HttpPost("delete/{id}")]
         public IActionResult SoftDeleteUser(int id)
         {
-            // Lấy claim role (trường hợp chỉ có 1 role là chuỗi)
-            var roleClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role || c.Type == "role");
+            if (User?.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                // Trường hợp chưa đăng nhập / chưa có token
+                return Unauthorized(new { message = "Bạn chưa đăng nhập hoặc token không hợp lệ." });
+            }
+
+            // Lấy claim role (có thể là "role" hoặc ClaimTypes.Role tùy cấu hình JWT)
+            var roleClaim = User.Claims.FirstOrDefault(c =>
+                c.Type == ClaimTypes.Role || c.Type == "role");
 
             if (roleClaim == null || roleClaim.Value != "admin")
             {
@@ -289,6 +296,7 @@ namespace duLichQuangNam.Controllers
                 return StatusCode(500, $"Lỗi khi xóa người dùng: {ex.Message}");
             }
         }
+
 
         // GET: /Users
         [HttpGet]
