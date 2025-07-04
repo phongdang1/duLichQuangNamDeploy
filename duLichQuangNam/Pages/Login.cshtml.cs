@@ -47,11 +47,7 @@ namespace duLichQuangNam.Pages
                     var id = jsonDoc.RootElement.GetProperty("id").GetInt32();
                     var role = jsonDoc.RootElement.GetProperty("role").GetString();
 
-<<<<<<< HEAD
 
-=======
-                   
->>>>>>> 304d7952140cc9b60aadaae4bb49477f9a4dfdc8
                     var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.NameIdentifier, id.ToString()),
@@ -62,30 +58,17 @@ namespace duLichQuangNam.Pages
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     var authProperties = new AuthenticationProperties
                     {
-<<<<<<< HEAD
                         IsPersistent = true,
                         ExpiresUtc = DateTimeOffset.UtcNow.AddHours(2)
                     };
 
 
-=======
-                        IsPersistent = true, 
-                        ExpiresUtc = DateTimeOffset.UtcNow.AddHours(2)
-                    };
-
-                    
->>>>>>> 304d7952140cc9b60aadaae4bb49477f9a4dfdc8
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(claimsIdentity),
                         authProperties);
 
-<<<<<<< HEAD
 
                     return RedirectToPage("/Index");
-=======
-                    
-                    return RedirectToPage("/Index"); 
->>>>>>> 304d7952140cc9b60aadaae4bb49477f9a4dfdc8
                 }
                 else
                 {
