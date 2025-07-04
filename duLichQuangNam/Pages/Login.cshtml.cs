@@ -84,7 +84,6 @@
 //        }
 //    }
 //}
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using duLichQuangNam.Models; // Đảm bảo namespace này chứa UsersLoginViewModel
@@ -92,7 +91,7 @@ using System.Net.Http;
 using System.Net.Http.Json; // Cần thiết cho PostAsJsonAsync
 using System.Threading.Tasks;
 using System.Text.Json; // Cần thiết cho JsonDocument
-using Microsoft.AspNetCore.Authentication; // Cần thiết cho HttpContext.SignInAsync
+using Microsoft.AspNetCore.Authentication; // Cần thiết cho HttpContext.SignInAsync, AuthenticationProperties, AuthenticationToken
 using Microsoft.AspNetCore.Authentication.Cookies; // Cần thiết cho CookieAuthenticationDefaults.AuthenticationScheme
 using System.Security.Claims; // Cần thiết cho Claims, ClaimsIdentity, ClaimsPrincipal
 
@@ -159,10 +158,8 @@ namespace duLichQuangNam.Pages
                         // Claim cho định danh người dùng (ID).
                         new Claim(ClaimTypes.NameIdentifier, id.ToString()),
                         // Claim cho vai trò của người dùng.
-                        new Claim(ClaimTypes.Role, role),
-                        // Lưu trữ JWT token gốc dưới dạng một claim.
-                        // Điều này hữu ích nếu bạn cần JWT để gọi các API backend khác từ server-side.
-                        new Claim("token", token ?? "")
+                        new Claim(ClaimTypes.Role, role)
+                        // Không thêm JWT token ở đây như một Claim thông thường nữa
                     };
 
                     // Tạo một ClaimsIdentity từ các claims và scheme xác thực Cookie.
@@ -176,6 +173,16 @@ namespace duLichQuangNam.Pages
                         // Thời gian hết hạn của cookie (2 giờ kể từ thời điểm hiện tại).
                         ExpiresUtc = DateTimeOffset.UtcNow.AddHours(2)
                     };
+
+                    // --- THAY ĐỔI QUAN TRỌNG: LƯU TRỮ JWT TOKEN DƯỚI DẠNG AUTHENTICATION TOKEN ---
+                    // Lưu trữ JWT token để có thể truy xuất sau này bằng HttpContext.GetTokenAsync("access_token").
+                    // Tên "access_token" là một quy ước phổ biến, bạn có thể dùng tên khác nhưng phải nhất quán.
+                    authProperties.StoreTokens(new[]
+                    {
+                        new AuthenticationToken { Name = "access_token", Value = token }
+                    });
+                    // --- KẾT THÚC THAY ĐỔI QUAN TRỌNG ---
+
 
                     // Thực hiện đăng nhập người dùng vào hệ thống bằng Cookie Authentication.
                     // Điều này sẽ tạo một authentication cookie và gửi nó về trình duyệt.
