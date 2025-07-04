@@ -6,7 +6,6 @@ using MySql.Data.MySqlClient;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 [Authorize(Roles = "admin, adminFood")]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, adminFood")]
 public class CreateFoodModel : PageModel
 {
     private readonly IConfiguration _config;

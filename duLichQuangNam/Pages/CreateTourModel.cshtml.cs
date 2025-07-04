@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 namespace duLichQuangNam.Pages
 {
     [Authorize(Roles = "admin, adminTour")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, adminTour")]
     public class CreateTourModel : PageModel
     {
         private readonly IConfiguration _config;

@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 namespace duLichQuangNam.Pages
 {
     [Authorize(Roles = "admin, adminStay")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, adminStay")]
     public class CreateStayModel : PageModel
     {
         private readonly IConfiguration _config;

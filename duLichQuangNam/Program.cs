@@ -48,7 +48,6 @@ if (string.IsNullOrEmpty(jwtAudience))
     throw new InvalidOperationException("Biến môi trường 'JWT_AUDIENCE' chưa được thiết lập.");
 }
 
-// Cấu hình JWT Bearer Authentication (thường dùng cho các API)
 builder.Services.AddAuthentication() // Gọi AddAuthentication() để có thể thêm nhiều scheme
     .AddJwtBearer(options =>
     {

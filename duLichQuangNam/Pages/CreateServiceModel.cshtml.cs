@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 namespace duLichQuangNam.Pages
 {
     [Authorize(Roles = "admin, adminService")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, adminService")]
     public class CreateServiceModel : PageModel
     {
         private readonly IConfiguration _config;
