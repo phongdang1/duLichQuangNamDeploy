@@ -1,8 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using duLichQuangNam.Models;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Authorization;
+using System.Text.Json;
 
 namespace duLichQuangNam.Pages
 {
@@ -56,26 +57,66 @@ namespace duLichQuangNam.Pages
 
             try
             {
-                var response = await client.PostAsync($"https://dulichquangnamdeploy.onrender.com/api/services/delete/{id}", null); 
+                string? jwtToken = null;
+
+                if (User.Identity?.IsAuthenticated == true)
+                {
+
+                    var tokenClaim = User.FindFirst("token");
+                    if (tokenClaim != null)
+                    {
+                        jwtToken = tokenClaim.Value;
+                    }
+                }
+
+
+                if (string.IsNullOrEmpty(jwtToken))
+                {
+                    ErrorMessage = "Không tìm thấy token xác thực. Vui lòng đăng nhập lại.";
+                    return RedirectToPage(new { ErrorMessage, SuccessMessage });
+                }
+
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", jwtToken);
+
+                var response = await client.PostAsync($"https://dulichquangnamdeploy.onrender.com/api/services/delete/{id}", null);
+
                 if (response.IsSuccessStatusCode)
                 {
-                    SuccessMessage = $"Deleted successfully ID = {id}";
-                }
-                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                {
-                    ErrorMessage = $"Not Found ID = {id}";
+                    SuccessMessage = $"Xóa thành công ID = {id}";
                 }
                 else
                 {
-                    ErrorMessage = $"Error deleted: {response.ReasonPhrase}";
+
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    string detailedErrorMessage = response.ReasonPhrase ?? "Lỗi không xác định.";
+
+                    try
+                    {
+                        using var jsonDoc = JsonDocument.Parse(errorContent);
+                        if (jsonDoc.RootElement.TryGetProperty("message", out var messageElement))
+                        {
+                            detailedErrorMessage = messageElement.GetString() ?? detailedErrorMessage;
+                        }
+                        else
+                        {
+                            detailedErrorMessage = errorContent;
+                        }
+                    }
+                    catch (JsonException)
+                    {
+                        detailedErrorMessage = errorContent;
+                    }
+
+                    ErrorMessage = $"Lỗi xóa: {response.StatusCode} - {detailedErrorMessage}";
                 }
             }
             catch (Exception ex)
             {
-                ErrorMessage = $"Error connect API: {ex.Message}";
+                ErrorMessage = $"Lỗi kết nối API: {ex.Message}";
             }
 
             return RedirectToPage(new { ErrorMessage, SuccessMessage });
         }
     }
+
 }

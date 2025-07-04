@@ -60,10 +60,9 @@ namespace duLichQuangNam.Pages
             {
                 string? jwtToken = null;
 
-                // Kiểm tra xem người dùng đã được xác thực chưa
                 if (User.Identity?.IsAuthenticated == true)
                 {
-                    // Tìm Claim có loại "token" (tên mà bạn đã dùng khi lưu trong LoginModel)
+                   
                     var tokenClaim = User.FindFirst("token");
                     if (tokenClaim != null)
                     {
@@ -71,18 +70,15 @@ namespace duLichQuangNam.Pages
                     }
                 }
 
-                // Nếu không tìm thấy JWT trong claims, có thể người dùng chưa đăng nhập đúng cách
-                // hoặc phiên cookie không chứa JWT.
+                
                 if (string.IsNullOrEmpty(jwtToken))
                 {
                     ErrorMessage = "Không tìm thấy token xác thực. Vui lòng đăng nhập lại.";
                     return RedirectToPage(new { ErrorMessage, SuccessMessage });
                 }
 
-                // Thêm JWT token vào header Authorization của HttpClient
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", jwtToken);
 
-                // Gửi yêu cầu POST đến API xóa món ăn
                 var response = await client.PostAsync($"https://dulichquangnamdeploy.onrender.com/api/foods/delete/{id}", null);
 
                 if (response.IsSuccessStatusCode)
@@ -91,13 +87,12 @@ namespace duLichQuangNam.Pages
                 }
                 else
                 {
-                    // Đọc thông báo lỗi chi tiết từ body phản hồi của API
+                   
                     string errorContent = await response.Content.ReadAsStringAsync();
                     string detailedErrorMessage = response.ReasonPhrase ?? "Lỗi không xác định.";
 
                     try
                     {
-                        // Cố gắng phân tích JSON để lấy thông báo lỗi tùy chỉnh
                         using var jsonDoc = JsonDocument.Parse(errorContent);
                         if (jsonDoc.RootElement.TryGetProperty("message", out var messageElement))
                         {
@@ -105,13 +100,11 @@ namespace duLichQuangNam.Pages
                         }
                         else
                         {
-                            // Nếu không có thuộc tính "message", sử dụng toàn bộ nội dung lỗi
                             detailedErrorMessage = errorContent;
                         }
                     }
                     catch (JsonException)
                     {
-                        // Nếu nội dung không phải JSON, sử dụng toàn bộ nội dung lỗi
                         detailedErrorMessage = errorContent;
                     }
 
@@ -123,7 +116,6 @@ namespace duLichQuangNam.Pages
                 ErrorMessage = $"Lỗi kết nối API: {ex.Message}";
             }
 
-            // Chuyển hướng về trang hiện tại hoặc trang danh sách món ăn, mang theo thông báo
             return RedirectToPage(new { ErrorMessage, SuccessMessage });
         }
     }
