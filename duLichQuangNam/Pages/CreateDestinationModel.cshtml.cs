@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using MySql.Data.MySqlClient;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 
 namespace duLichQuangNam.Pages
 {
     [Authorize(Roles = "admin, adminDes")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, adminDes")]
     public class CreateDestinationModel : PageModel
     {
         private readonly IConfiguration _config;

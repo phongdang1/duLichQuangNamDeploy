@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using MySql.Data.MySqlClient;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 [Authorize(Roles = "admin, adminFood")]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, adminFood")]
 public class CreateFoodModel : PageModel
 {
     private readonly IConfiguration _config;

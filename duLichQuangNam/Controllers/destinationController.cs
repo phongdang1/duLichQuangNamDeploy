@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using duLichQuangNam.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace duLichQuangNam.Controllers
 {
@@ -115,6 +117,7 @@ namespace duLichQuangNam.Controllers
             }
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, adminDes")]
         [HttpPost("delete/{id}")]
         public IActionResult SoftDelete(int id)
         {

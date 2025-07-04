@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using duLichQuangNam.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace duLichQuangNam.Controllers
 {
@@ -79,7 +80,8 @@ namespace duLichQuangNam.Controllers
                 return StatusCode(500, $"Lỗi truy vấn: {ex.Message}");
             }
         }
-        
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, adminFood")]
         [HttpPost("delete/{id}")]
         public IActionResult SoftDelete(int id)
         {

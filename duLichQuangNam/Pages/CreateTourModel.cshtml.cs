@@ -4,10 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using MySql.Data.MySqlClient;
 using duLichQuangNam.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace duLichQuangNam.Pages
 {
     [Authorize(Roles = "admin, adminTour")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, adminTour")]
     public class CreateTourModel : PageModel
     {
         private readonly IConfiguration _config;

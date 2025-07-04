@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient; // Changed from Microsoft.Data.SqlClient
 using duLichQuangNam.Models;
 using Microsoft.Extensions.Configuration; // Ensure this is present for IConfiguration
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 namespace duLichQuangNam.Controllers
 {
     [ApiController]
@@ -89,6 +90,7 @@ namespace duLichQuangNam.Controllers
         }
 
         // POST: /api/tours/delete/{id}
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, adminTour")]
         [HttpPost("delete/{id}")]
         public IActionResult SoftDelete(int id)
         {

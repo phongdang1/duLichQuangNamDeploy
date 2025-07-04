@@ -256,7 +256,7 @@ namespace duLichQuangNam.Controllers
         }
 
         // POST: api/users/delete/{id}
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, adminUser")]
         [HttpPost("delete/{id}")]
         public IActionResult SoftDeleteUser(int id)
         {
