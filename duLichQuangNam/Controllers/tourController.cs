@@ -90,7 +90,7 @@ namespace duLichQuangNam.Controllers
         }
 
         // POST: /api/tours/delete/{id}
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, adminTour")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin,adminTour")]
         [HttpPost("delete/{id}")]
         public IActionResult SoftDelete(int id)
         {

@@ -98,7 +98,7 @@ namespace duLichQuangNam.Controllers
         }
 
         // POST: api/services/delete/{id}
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, adminService")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin,adminService")]
         [HttpPost("delete/{id}")]
         public IActionResult DeleteService(int id)
         {

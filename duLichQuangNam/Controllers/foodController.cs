@@ -81,7 +81,7 @@ namespace duLichQuangNam.Controllers
             }
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, adminFood")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin,adminFood")]
         [HttpPost("delete/{id}")]
         public IActionResult SoftDelete(int id)
         {
