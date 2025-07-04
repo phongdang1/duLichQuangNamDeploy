@@ -163,7 +163,7 @@ namespace duLichQuangNam.Controllers
             }
         }
 
-        // POST: /Users/login
+        // POST: /users/login
         [HttpPost("login")]
         public IActionResult Login([FromBody] UsersLoginViewModel login)
         {
@@ -255,7 +255,7 @@ namespace duLichQuangNam.Controllers
         }
 
         // POST: api/users/delete/{id}
-        [Authorize(Roles = "admin,adminUser")]
+        
         [HttpPost("delete/{id}")]
         public IActionResult SoftDeleteUser(int id)
         {
