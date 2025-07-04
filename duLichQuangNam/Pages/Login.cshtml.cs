@@ -4,9 +4,6 @@ using duLichQuangNam.Models;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 
 namespace duLichQuangNam.Pages
@@ -51,29 +48,11 @@ namespace duLichQuangNam.Pages
                 var id = jsonDoc.RootElement.GetProperty("id").GetInt32();
                 var role = jsonDoc.RootElement.GetProperty("role").GetString();
 
-                // ✅ Lưu token vào Session để dùng khi gọi API sau này
+                // ✅ Lưu vào Session hoặc Cookie
                 HttpContext.Session.SetString("JWT_TOKEN", token!);
                 HttpContext.Session.SetString("USER_ID", id.ToString());
                 HttpContext.Session.SetString("USER_ROLE", role!);
 
-                // ✅ Claims cho cookie authentication (nếu cần sử dụng [Authorize])
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.NameIdentifier, id.ToString()),
-                    new Claim(ClaimTypes.Role, role!),
-                    new Claim("token", token!)
-                };
-
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                var authProperties = new AuthenticationProperties
-                {
-                    IsPersistent = true,
-                    ExpiresUtc = DateTimeOffset.UtcNow.AddHours(2)
-                };
-
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(claimsIdentity),
-                    authProperties);
 
                 return RedirectToPage("/Index");
             }
